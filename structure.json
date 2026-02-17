@@ -1,0 +1,2332 @@
+[
+  {
+    "type": "file",
+    "name": ".env.local"
+  },
+  {
+    "type": "file",
+    "name": ".gitignore"
+  },
+  {
+    "type": "file",
+    "name": "components.json"
+  },
+  {
+    "type": "file",
+    "name": "credentials.md"
+  },
+  {
+    "type": "file",
+    "name": "eslint.config.mjs"
+  },
+  {
+    "type": "file",
+    "name": "get_project_structure.js"
+  },
+  {
+    "type": "file",
+    "name": "next-env.d.ts"
+  },
+  {
+    "type": "file",
+    "name": "next.config.ts"
+  },
+  {
+    "type": "file",
+    "name": "package-lock.json"
+  },
+  {
+    "type": "file",
+    "name": "package.json"
+  },
+  {
+    "type": "file",
+    "name": "postcss.config.mjs"
+  },
+  {
+    "type": "folder",
+    "name": "public",
+    "children": [
+      {
+        "type": "file",
+        "name": "file.svg"
+      },
+      {
+        "type": "file",
+        "name": "globe.svg"
+      },
+      {
+        "type": "folder",
+        "name": "images",
+        "children": [
+          {
+            "type": "file",
+            "name": "AI AGENT_new.png"
+          },
+          {
+            "type": "file",
+            "name": "ai_agent_vision.png"
+          },
+          {
+            "type": "file",
+            "name": "CHAT_FEATURE_new.png"
+          },
+          {
+            "type": "file",
+            "name": "DASHBOARD_new.png"
+          },
+          {
+            "type": "file",
+            "name": "HIWBG.jpg"
+          },
+          {
+            "type": "file",
+            "name": "logo-bgr.png"
+          },
+          {
+            "type": "file",
+            "name": "logo.png"
+          },
+          {
+            "type": "file",
+            "name": "placeholder.jpg"
+          },
+          {
+            "type": "file",
+            "name": "STOREFRONT_new.png"
+          },
+          {
+            "type": "file",
+            "name": "Thumb.jpg"
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "name": "next.svg"
+      },
+      {
+        "type": "file",
+        "name": "vercel.svg"
+      },
+      {
+        "type": "file",
+        "name": "window.svg"
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "name": "README.md"
+  },
+  {
+    "type": "folder",
+    "name": "scripts",
+    "children": [
+      {
+        "type": "file",
+        "name": "debug-pricing.js"
+      },
+      {
+        "type": "file",
+        "name": "migrate_responses_log.js"
+      },
+      {
+        "type": "file",
+        "name": "seed-models.ts"
+      }
+    ]
+  },
+  {
+    "type": "folder",
+    "name": "src",
+    "children": [
+      {
+        "type": "folder",
+        "name": "app",
+        "children": [
+          {
+            "type": "folder",
+            "name": "about",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "about-old",
+            "children": [
+              {
+                "type": "file",
+                "name": "layout.tsx"
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "admin",
+            "children": [
+              {
+                "type": "folder",
+                "name": "audit-logs",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "customers",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "[id]",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "dashboard",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "layout.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "login",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "components",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "AdminLoginForm.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "organizers",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "[id]",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "search",
+                "children": []
+              },
+              {
+                "type": "folder",
+                "name": "settings",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "transactions",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "api",
+            "children": [
+              {
+                "type": "folder",
+                "name": "admin",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "audit-logs",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "auth",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "login",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "folder",
+                        "name": "logout",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "folder",
+                        "name": "me",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "customers",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      },
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "dashboard",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "organizers",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      },
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "stats",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "transactions",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "bookings",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "availability",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "create",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "draft",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "validate-promo",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "checkout",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "calculate-price",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "validate-promo",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "contact",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "route.ts"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "organizer",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "discounts",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          },
+                          {
+                            "type": "folder",
+                            "name": "toggle",
+                            "children": [
+                              {
+                                "type": "file",
+                                "name": "route.ts"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "folder",
+                            "name": "usage",
+                            "children": [
+                              {
+                                "type": "file",
+                                "name": "route.ts"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "promo-codes",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "route.ts"
+                      },
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "auth",
+            "children": [
+              {
+                "type": "folder",
+                "name": "callback",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "route.ts"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "signout",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "route.ts"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "dashboard",
+            "children": [
+              {
+                "type": "folder",
+                "name": "account",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "ai-agent",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "actions.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "analytics",
+                "children": []
+              },
+              {
+                "type": "folder",
+                "name": "bookings",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "calendar",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "customers",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "[id]",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "discounts",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "layout.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "messages",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "promo-codes",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "promotions",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "reviews",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "services",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "new",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "[id]",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "edit",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "page.tsx"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "storefront",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "storefront-builder",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "actions.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "steps",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "AuthPagesStep.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "BusinessInfoStep.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "ContentStep.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "DesignStep.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "StorefrontBuilderWizard.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "favicon.ico"
+          },
+          {
+            "type": "file",
+            "name": "globals.css"
+          },
+          {
+            "type": "folder",
+            "name": "how-it-works",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "layout.tsx"
+          },
+          {
+            "type": "folder",
+            "name": "login",
+            "children": [
+              {
+                "type": "file",
+                "name": "actions.ts"
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "my-bookings",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "not-found.tsx"
+          },
+          {
+            "type": "folder",
+            "name": "onboarding",
+            "children": [
+              {
+                "type": "file",
+                "name": "actions.ts"
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "our-team",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "page.tsx"
+          },
+          {
+            "type": "folder",
+            "name": "privacy",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "services",
+            "children": [
+              {
+                "type": "folder",
+                "name": "[id]",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "ServiceDetailClient.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "signup",
+            "children": [
+              {
+                "type": "file",
+                "name": "actions.ts"
+              },
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "storefront",
+            "children": [
+              {
+                "type": "folder",
+                "name": "[subdomain]",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "auth",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "callback",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "route.ts"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "booking-confirmation",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "page.tsx"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "customer",
+                    "children": [
+                      {
+                        "type": "folder",
+                        "name": "bookings",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "page.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "file",
+                        "name": "layout.tsx"
+                      },
+                      {
+                        "type": "folder",
+                        "name": "messages",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "page.tsx"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "layout.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "login",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "services",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "StorefrontServices.tsx"
+                      },
+                      {
+                        "type": "folder",
+                        "name": "[id]",
+                        "children": [
+                          {
+                            "type": "file",
+                            "name": "page.tsx"
+                          },
+                          {
+                            "type": "file",
+                            "name": "StorefrontServiceDetail.tsx"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "signup",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "actions.ts"
+                      },
+                      {
+                        "type": "file",
+                        "name": "page.tsx"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "terms",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "test-upload",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "tools",
+            "children": [
+              {
+                "type": "folder",
+                "name": "admin-generator",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "actions.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "page.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "unauthorized",
+            "children": [
+              {
+                "type": "file",
+                "name": "page.tsx"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "components",
+        "children": [
+          {
+            "type": "folder",
+            "name": "admin",
+            "children": [
+              {
+                "type": "file",
+                "name": "admin-header.tsx"
+              },
+              {
+                "type": "file",
+                "name": "data-table.tsx"
+              },
+              {
+                "type": "file",
+                "name": "stat-card.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "booking",
+            "children": [
+              {
+                "type": "file",
+                "name": "AddonSelector.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BookingDetailModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BookingOverviewModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BookingPricingSummary.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BookingStatusModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BookingStepIndicator.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PackageSelector.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "pickers",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "CustomDatePicker.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "CustomTimePicker.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "PromoCodeInput.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "steps",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "BookingStep1.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "BookingStep2.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "BookingStep3.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "BookingStep4.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Step1CustomizeService.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Step2PlanEvent.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Step3ReviewBooking.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Step4Payment.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "calendar",
+            "children": [
+              {
+                "type": "file",
+                "name": "DateDetailPanel.tsx"
+              },
+              {
+                "type": "file",
+                "name": "DateTimePickerGroup.tsx"
+              },
+              {
+                "type": "file",
+                "name": "EnhancedDatePicker.tsx"
+              },
+              {
+                "type": "file",
+                "name": "EnhancedTimePicker.tsx"
+              },
+              {
+                "type": "file",
+                "name": "StatusLegend.tsx"
+              },
+              {
+                "type": "file",
+                "name": "TimeSlotDropdown.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "chat",
+            "children": [
+              {
+                "type": "file",
+                "name": "ChatInput.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ChatList.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ChatWindow.tsx"
+              },
+              {
+                "type": "file",
+                "name": "CompleteBookingModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ConfirmBookingModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ManageQuoteModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "MessageBubble.tsx"
+              },
+              {
+                "type": "file",
+                "name": "MessageSearch.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ReactionPicker.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "dashboard",
+            "children": [
+              {
+                "type": "folder",
+                "name": "ai-agent",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "ai-models.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiAgentChat.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiAgentSidebar.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiConfiguration.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiConfirmation.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiModelsView.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiOrb.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AiToolResult.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "BookingDetailCard.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "BookingsTable.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "MarkdownMessage.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "ModelSelector.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "QuickActions.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "customers",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "CustomerBookingHistory.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "CustomerProfile.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "CustomersTable.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "DiscountForm.tsx"
+              },
+              {
+                "type": "file",
+                "name": "DiscountList.tsx"
+              },
+              {
+                "type": "file",
+                "name": "DiscountsClient.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PastePreviewModal.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "pricing",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "FixedPriceConfig.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "index.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PackageCardV2.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PackageComparisonView.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PackagesConfig.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PackagesConfigV2.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PerPersonConfig.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PricingAiAssistant.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PricingConfigurator.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PricingPreview.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "ProgressStepper.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PromoCodeForm.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PromoCodeList.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PromoCodesClient.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "services",
+                "children": [
+                  {
+                    "type": "folder",
+                    "name": "pricing",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "CompactPackageCard.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "PricingModelSelector.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "file",
+                    "name": "ServiceWorkflowLayout.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "shared",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "FeatureTagInput.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "ModernInput.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "ModernTextarea.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "ProvinceDropdown.tsx"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "folder",
+                    "name": "steps",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "GeneralInfoStep.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "PricingBuilderStep.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "shared",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "AdvancedImageUpload.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "storefront-builder",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "TemplateSelector.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "discount",
+            "children": [
+              {
+                "type": "file",
+                "name": "DiscountBadge.tsx"
+              },
+              {
+                "type": "file",
+                "name": "PromoCodeInput.tsx"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "ImageUpload.tsx"
+          },
+          {
+            "type": "folder",
+            "name": "layout",
+            "children": [
+              {
+                "type": "file",
+                "name": "index.ts"
+              },
+              {
+                "type": "file",
+                "name": "LandingFooter.tsx"
+              },
+              {
+                "type": "file",
+                "name": "LandingNavbar.tsx"
+              },
+              {
+                "type": "file",
+                "name": "Navbar.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "marketing",
+            "children": [
+              {
+                "type": "file",
+                "name": "AiFeaturesSection.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BeforeAfterSlider.tsx"
+              },
+              {
+                "type": "file",
+                "name": "FAQ.tsx"
+              },
+              {
+                "type": "file",
+                "name": "Features.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "illustrations",
+                "children": []
+              },
+              {
+                "type": "file",
+                "name": "InteractiveSteps.tsx"
+              },
+              {
+                "type": "file",
+                "name": "Metrics.tsx"
+              },
+              {
+                "type": "file",
+                "name": "MissionVisionScroll.tsx"
+              },
+              {
+                "type": "file",
+                "name": "MissionVisionStatic.tsx"
+              },
+              {
+                "type": "file",
+                "name": "TeamSection.tsx"
+              },
+              {
+                "type": "file",
+                "name": "VideoModal.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "marketplace",
+            "children": [
+              {
+                "type": "folder",
+                "name": "booking",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "BookingConfigurationView.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "MarketplaceBookingModal.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PricingBreakdown.tsx"
+                  },
+                  {
+                    "type": "folder",
+                    "name": "steps",
+                    "children": [
+                      {
+                        "type": "file",
+                        "name": "BookingStep1.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "BookingStep2.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "BookingStep3.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "BookingStep4.tsx"
+                      },
+                      {
+                        "type": "file",
+                        "name": "DynamicBookingForm.tsx"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "MarketplaceServiceCard.tsx"
+              },
+              {
+                "type": "file",
+                "name": "MarketplaceServiceDetail.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ServiceCard.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ServiceFilter.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "pricing",
+            "children": [
+              {
+                "type": "folder",
+                "name": "builder",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "CustomSelect.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "DependencyGraph.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "RuleConfigModal.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "RuleList.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "SaveConfigModal.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "ServiceBuilder.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StepList.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StepNode.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "preview",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "ConsumerPreview.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PriceBreakdown.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StepSelector.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "folder",
+                "name": "ui",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "CustomSelect.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Input.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "Modal.tsx"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "reviews",
+            "children": [
+              {
+                "type": "file",
+                "name": "index.ts"
+              },
+              {
+                "type": "file",
+                "name": "ReviewCard.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ReviewForm.tsx"
+              },
+              {
+                "type": "file",
+                "name": "ReviewModal.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "service-detail",
+            "children": [
+              {
+                "type": "file",
+                "name": "ServiceDetailLayout.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "shared",
+            "children": []
+          },
+          {
+            "type": "folder",
+            "name": "storefront",
+            "children": [
+              {
+                "type": "file",
+                "name": "BlockLayout.tsx"
+              },
+              {
+                "type": "file",
+                "name": "CarouselGallery.tsx"
+              },
+              {
+                "type": "file",
+                "name": "GalleryModal.tsx"
+              },
+              {
+                "type": "file",
+                "name": "GoogleFontsLoader.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "pricing",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "FixedPricingDisplay.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "index.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "PerPersonPricingDisplay.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StorefrontAddonsList.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StorefrontPackageCards.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StorefrontVolumeTable.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "ReviewsSection.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "sections",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "AboutSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "AboutSection2.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "ContactSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "CTASection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "FeaturesSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "GallerySection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "HeroSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "ServicesSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "StatsSection.tsx"
+                  },
+                  {
+                    "type": "file",
+                    "name": "TestimonialsSection.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "StorefrontGlobalStyles.tsx"
+              },
+              {
+                "type": "file",
+                "name": "StorefrontNav.tsx"
+              },
+              {
+                "type": "folder",
+                "name": "templates",
+                "children": [
+                  {
+                    "type": "file",
+                    "name": "index.ts"
+                  },
+                  {
+                    "type": "file",
+                    "name": "VariantClaudeSonnet4.tsx"
+                  }
+                ]
+              },
+              {
+                "type": "file",
+                "name": "ThemeProvider.tsx"
+              }
+            ]
+          },
+          {
+            "type": "folder",
+            "name": "ui",
+            "children": [
+              {
+                "type": "file",
+                "name": "AiCircuitIcon.tsx"
+              },
+              {
+                "type": "file",
+                "name": "alert.tsx"
+              },
+              {
+                "type": "file",
+                "name": "avatar.tsx"
+              },
+              {
+                "type": "file",
+                "name": "BackButton.tsx"
+              },
+              {
+                "type": "file",
+                "name": "badge.tsx"
+              },
+              {
+                "type": "file",
+                "name": "button.tsx"
+              },
+              {
+                "type": "file",
+                "name": "card.tsx"
+              },
+              {
+                "type": "file",
+                "name": "checkbox.tsx"
+              },
+              {
+                "type": "file",
+                "name": "collapsible.tsx"
+              },
+              {
+                "type": "file",
+                "name": "dialog.tsx"
+              },
+              {
+                "type": "file",
+                "name": "dropdown-menu.tsx"
+              },
+              {
+                "type": "file",
+                "name": "form.tsx"
+              },
+              {
+                "type": "file",
+                "name": "image-uploader.tsx"
+              },
+              {
+                "type": "file",
+                "name": "input.tsx"
+              },
+              {
+                "type": "file",
+                "name": "label.tsx"
+              },
+              {
+                "type": "file",
+                "name": "popover.tsx"
+              },
+              {
+                "type": "file",
+                "name": "scroll-area.tsx"
+              },
+              {
+                "type": "file",
+                "name": "select.tsx"
+              },
+              {
+                "type": "file",
+                "name": "separator.tsx"
+              },
+              {
+                "type": "file",
+                "name": "sheet.tsx"
+              },
+              {
+                "type": "file",
+                "name": "slider.tsx"
+              },
+              {
+                "type": "file",
+                "name": "sonner.tsx"
+              },
+              {
+                "type": "file",
+                "name": "switch.tsx"
+              },
+              {
+                "type": "file",
+                "name": "table.tsx"
+              },
+              {
+                "type": "file",
+                "name": "tabs.tsx"
+              },
+              {
+                "type": "file",
+                "name": "textarea.tsx"
+              },
+              {
+                "type": "file",
+                "name": "tooltip.tsx"
+              },
+              {
+                "type": "file",
+                "name": "visually-hidden.tsx"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "contexts",
+        "children": [
+          {
+            "type": "file",
+            "name": "BookingContext.tsx"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "hooks",
+        "children": [
+          {
+            "type": "file",
+            "name": "use-form-persistence.ts"
+          },
+          {
+            "type": "file",
+            "name": "useBlockedDates.ts"
+          },
+          {
+            "type": "file",
+            "name": "useCalendarRealtime.ts"
+          },
+          {
+            "type": "file",
+            "name": "useScrollAnimation.ts"
+          },
+          {
+            "type": "file",
+            "name": "useTypingIndicator.ts"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "lib",
+        "children": [
+          {
+            "type": "file",
+            "name": "admin-auth.ts"
+          },
+          {
+            "type": "file",
+            "name": "booking-actions.ts"
+          },
+          {
+            "type": "file",
+            "name": "booking-lifecycle.ts"
+          },
+          {
+            "type": "file",
+            "name": "booking-server-actions.ts"
+          },
+          {
+            "type": "file",
+            "name": "canadian-tax.ts"
+          },
+          {
+            "type": "file",
+            "name": "color-profiles.ts"
+          },
+          {
+            "type": "file",
+            "name": "database.types.ts"
+          },
+          {
+            "type": "file",
+            "name": "default-storefront-data.ts"
+          },
+          {
+            "type": "file",
+            "name": "discount-engine.ts"
+          },
+          {
+            "type": "file",
+            "name": "font-options.ts"
+          },
+          {
+            "type": "file",
+            "name": "premium-demo-data.ts"
+          },
+          {
+            "type": "folder",
+            "name": "pricing",
+            "children": [
+              {
+                "type": "file",
+                "name": "data.ts"
+              },
+              {
+                "type": "file",
+                "name": "pricing-engine.ts"
+              },
+              {
+                "type": "file",
+                "name": "sample-data.ts"
+              },
+              {
+                "type": "file",
+                "name": "server-pricing.ts"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "pricing-utils.ts"
+          },
+          {
+            "type": "file",
+            "name": "quote-actions.ts"
+          },
+          {
+            "type": "file",
+            "name": "review-actions.ts"
+          },
+          {
+            "type": "file",
+            "name": "storefront-blocks.ts"
+          },
+          {
+            "type": "file",
+            "name": "storefront-renderer.ts"
+          },
+          {
+            "type": "folder",
+            "name": "supabase",
+            "children": [
+              {
+                "type": "file",
+                "name": "admin.ts"
+              },
+              {
+                "type": "file",
+                "name": "client.ts"
+              },
+              {
+                "type": "file",
+                "name": "index.ts"
+              },
+              {
+                "type": "file",
+                "name": "middleware.ts"
+              },
+              {
+                "type": "file",
+                "name": "server.ts"
+              }
+            ]
+          },
+          {
+            "type": "file",
+            "name": "supabase-chat.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-data-server.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-data.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-discounts-client.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-discounts.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-pricing.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-storage-auth.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase-storage.ts"
+          },
+          {
+            "type": "file",
+            "name": "template-configs.ts"
+          },
+          {
+            "type": "file",
+            "name": "typography-profiles.ts"
+          },
+          {
+            "type": "file",
+            "name": "utils.ts"
+          }
+        ]
+      },
+      {
+        "type": "file",
+        "name": "middleware.ts"
+      },
+      {
+        "type": "folder",
+        "name": "schemas",
+        "children": [
+          {
+            "type": "file",
+            "name": "auth.ts"
+          },
+          {
+            "type": "file",
+            "name": "onboarding.ts"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "styles",
+        "children": [
+          {
+            "type": "file",
+            "name": "datepicker.css"
+          },
+          {
+            "type": "file",
+            "name": "storefront-animations.css"
+          },
+          {
+            "type": "file",
+            "name": "storefront-themes.css"
+          },
+          {
+            "type": "file",
+            "name": "storefront-typography.css"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "name": "types",
+        "children": [
+          {
+            "type": "file",
+            "name": "index.ts"
+          },
+          {
+            "type": "file",
+            "name": "pricing.ts"
+          },
+          {
+            "type": "file",
+            "name": "supabase.ts"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "file",
+    "name": "tsconfig.json"
+  },
+  {
+    "type": "file",
+    "name": "tsconfig.tsbuildinfo"
+  }
+]

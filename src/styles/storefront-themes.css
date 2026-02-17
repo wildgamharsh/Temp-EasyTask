@@ -1,0 +1,370 @@
+/**
+ * Storefront Theme System
+ * CSS custom properties and theme utilities for all template categories
+ */
+
+/* ============================================
+   BASE THEME VARIABLES
+   ============================================ */
+
+:root {
+  /* Color variables - will be overridden by template-specific values */
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-accent: #000000;
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-muted: #666666;
+  --color-border: #e5e7eb;
+
+  /* Color variants - auto-generated */
+  --color-primary-hover: #1a1a1a;
+  --color-primary-active: #000000;
+  --color-secondary-hover: #f5f5f5;
+  --color-secondary-active: #e5e5e5;
+  --color-accent-hover: #1a1a1a;
+  --color-accent-active: #000000;
+  --color-background-alt: #f9f9f9;
+  --color-text-light: rgba(0, 0, 0, 0.7);
+  --color-text-lighter: rgba(0, 0, 0, 0.5);
+
+  /* Typography variables */
+  --font-heading: 'Roboto', sans-serif;
+  --font-body: 'Roboto', sans-serif;
+  --font-display: 'Roboto', sans-serif;
+  --font-weight-heading: 700;
+  --font-weight-body: 400;
+  --line-height-heading: 1.2;
+  --line-height-body: 1.6;
+  --letter-spacing-heading: -0.02em;
+  --letter-spacing-body: 0;
+
+  /* Layout variables */
+  --spacing-unit: 1rem;
+  --container-width: 1200px;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 2rem;
+
+  /* Animation variables */
+  --transition-fast: 0.15s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+  --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   TEMPLATE: MINIMAL MODERN
+   ============================================ */
+
+.template-minimal_modern {
+  /* Colors */
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-accent: #000000;
+  --color-background: #ffffff;
+  --color-text: #000000;
+  --color-muted: #666666;
+  --color-border: #000000;
+
+  /* Layout */
+  --spacing-unit: 1.5rem;
+  --container-width: 1400px;
+  --border-radius-sm: 1rem;
+  --border-radius-md: 2rem;
+  --border-radius-lg: 4rem;
+
+  /* Animations */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.2s;
+  --transition-slow: 0.2s;
+}
+
+/* ============================================
+   TEMPLATE: DARK ELEGANT
+   ============================================ */
+
+.template-dark_elegant {
+  /* Colors */
+  --color-primary: #111827;
+  --color-secondary: #1f2933;
+  --color-accent: #D4AF37;
+  --color-background: #0a0a0a;
+  --color-text: #f9fafb;
+  --color-muted: #9ca3af;
+  --color-border: #2C2C2C;
+
+  /* Layout */
+  --spacing-unit: 1.5rem;
+  --container-width: 1200px;
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 1rem;
+  --border-radius-lg: 1.5rem;
+
+  /* Animations */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+}
+
+/* ============================================
+   TEMPLATE: LUXURY PREMIUM
+   ============================================ */
+
+.template-luxury_premium {
+  /* Colors */
+  --color-primary: #121212;
+  --color-secondary: #0a0a0a;
+  --color-accent: #C5A059;
+  --color-background: #0a0a0a;
+  --color-text: #F9F7F2;
+  --color-muted: #9ca3af;
+  --color-border: #2C2C2C;
+
+  /* Layout */
+  --spacing-unit: 1rem;
+  --container-width: 1400px;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+
+  /* Animations */
+  --transition-fast: 0.3s;
+  --transition-normal: 0.5s;
+  --transition-slow: 0.7s;
+}
+
+/* ============================================
+   TEMPLATE: WARM SOPHISTICATED
+   ============================================ */
+
+.template-warm_sophisticated {
+  /* Colors */
+  --color-primary: #2C3E50;
+  --color-secondary: #FDFBF8;
+  --color-accent: #D4AF37;
+  --color-background: #FDFBF8;
+  --color-text: #333333;
+  --color-muted: #6b7280;
+  --color-border: #e5e7eb;
+
+  /* Layout */
+  --spacing-unit: 1rem;
+  --container-width: 1200px;
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 0.75rem;
+
+  /* Animations */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.4s;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Background utilities */
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-secondary {
+  background-color: var(--color-secondary);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.bg-background {
+  background-color: var(--color-background);
+}
+
+/* Text color utilities */
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-secondary {
+  color: var(--color-secondary);
+}
+
+.text-accent {
+  color: var(--color-accent);
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+/* Border utilities */
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+.border-default {
+  border-color: var(--color-border);
+}
+
+/* Gradient utilities */
+.gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+}
+
+.gradient-text-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Shadow utilities */
+.shadow-accent {
+  box-shadow: 0 10px 30px rgba(var(--color-accent), 0.2);
+}
+
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.shadow-medium {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+
+.shadow-strong {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+/* Transition utilities */
+.transition-fast {
+  transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.transition-normal {
+  transition: all var(--transition-normal) var(--transition-timing);
+}
+
+.transition-slow {
+  transition: all var(--transition-slow) var(--transition-timing);
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform var(--transition-normal) var(--transition-timing);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+.hover-scale {
+  transition: transform var(--transition-normal) var(--transition-timing);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Border radius utilities */
+.rounded-sm {
+  border-radius: var(--border-radius-sm);
+}
+
+.rounded-md {
+  border-radius: var(--border-radius-md);
+}
+
+.rounded-lg {
+  border-radius: var(--border-radius-lg);
+}
+
+.rounded-xl {
+  border-radius: var(--border-radius-xl);
+}
+
+/* Container utilities */
+.container-template {
+  max-width: var(--container-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-unit);
+  padding-right: var(--spacing-unit);
+}
+
+/* Spacing utilities */
+.spacing-compact {
+  padding: calc(var(--spacing-unit) * 0.75);
+}
+
+.spacing-standard {
+  padding: var(--spacing-unit);
+}
+
+.spacing-generous {
+  padding: calc(var(--spacing-unit) * 1.5);
+}
+
+/* ============================================
+   RESPONSIVE UTILITIES
+   ============================================ */
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-unit: 0.75rem;
+    --container-width: 100%;
+  }
+
+  .template-minimal_modern,
+  .template-dark_elegant,
+  .template-luxury_premium,
+  .template-warm_sophisticated {
+    --spacing-unit: 0.75rem;
+  }
+}
+
+/* ============================================
+   DARK MODE SUPPORT
+   ============================================ */
+
+@media (prefers-color-scheme: dark) {
+  .template-warm_sophisticated {
+    --color-background: #1a1a1a;
+    --color-text: #f9fafb;
+    --color-border: #2C2C2C;
+  }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+  .template-minimal_modern,
+  .template-dark_elegant,
+  .template-luxury_premium,
+  .template-warm_sophisticated {
+    --color-background: #ffffff;
+    --color-text: #000000;
+    --color-border: #000000;
+  }
+}
