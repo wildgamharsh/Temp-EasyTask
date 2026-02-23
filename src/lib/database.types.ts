@@ -162,6 +162,7 @@ export interface Organizer {
     total_reviews: number;
     onboarding_completed: boolean;
     storefront_settings?: StorefrontSettings;
+    locations_covered?: string[];
     created_at: string;
     updated_at: string;
 }
@@ -239,7 +240,8 @@ export interface Booking {
     end_time?: string;
     status: BookingStatus;
     payment_status: PaymentStatus;
-    pricing_display?: boolean; // Controls whether price is shown (added in 024-migration)
+    pricing_display?: boolean;
+    location?: string;
     created_at: string;
 
     // Completion Confirmation
@@ -294,6 +296,7 @@ export interface OrganizerProfile {
     onboarding_completed?: boolean;
     created_at: string;
     storefront_settings?: StorefrontSettings;
+    locations_covered?: string[];
 }
 
 // Template categories based on converted HTML templates
@@ -816,6 +819,7 @@ export interface DraftBooking {
     notes?: string;
 
     proposed_price?: number;
+    location?: string;
 
 
 

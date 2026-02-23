@@ -12,11 +12,11 @@ import {
     Menu,
     ChevronRight,
     LogOut,
-    Ticket,
     User,
     Users,
     MessageSquare,
     Bot,
+    Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -47,9 +47,9 @@ const sidebarItems = [
     { href: "/dashboard/customers", icon: Users, label: "Customers" },
     { href: "/dashboard/messages", icon: MessageSquare, label: "Messages" },
     { href: "/dashboard/calendar", icon: Calendar, label: "Calendar" },
-    { href: "/dashboard/promotions", icon: Ticket, label: "Promotions" },
     { href: "/dashboard/storefront-builder", icon: Store, label: "Storefront" },
     { href: "/dashboard/ai-agent", icon: Bot, label: "AI Agent" },
+    { href: "/dashboard/preferences", icon: Settings, label: "Preferences" },
     { href: "/dashboard/account", icon: User, label: "Manage Account" },
 ];
 

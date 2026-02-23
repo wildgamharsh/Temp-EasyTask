@@ -73,7 +73,6 @@ export default function StorefrontBuilderWizard({ profile, initialSettings }: St
         contactPhone: initialSettings?.contact_phone || "",
         address: initialSettings?.address || "",
         socialLinks: initialSettings?.social_links || {},
-        pricingDisplay: initialSettings?.pricing_display ?? true,
     });
 
     const [contentData, setContentData] = useState({

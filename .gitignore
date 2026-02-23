@@ -46,7 +46,6 @@ yarn-error.log*
 reference/
 scripts/
 guiding_light/
-migrations/
 .agent/
 
 cred_main_hosted

@@ -17,6 +17,7 @@ export interface Organizer {
     description?: string;
     category: "catering" | "decoration";
     location?: string;
+    locations_covered?: string[];
     stripe_account_id?: string;
     is_verified: boolean;
     created_at: string;

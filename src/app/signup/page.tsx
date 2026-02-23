@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { signup } from "./actions";
 import { Loader2, Eye, EyeOff, Mail, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { PhoneInput } from "@/components/ui/phone-input";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -17,6 +18,7 @@ export default function SignupPage() {
     const [showEmailVerification, setShowEmailVerification] = useState(false);
     const [userEmail, setUserEmail] = useState("");
     const [agreedToTerms, setAgreedToTerms] = useState(false);
+    const [phoneValue, setPhoneValue] = useState<string>("");
     const supabase = createClient();
 
     const handleGoogleLogin = async () => {
@@ -44,7 +46,7 @@ export default function SignupPage() {
             toast.error("You must agree to the Terms and Conditions and Privacy Policy to continue.");
             return;
         }
-        
+
         setIsLoading(true);
         try {
             const result = await signup(formData);
@@ -242,19 +244,19 @@ export default function SignupPage() {
                                             Phone Number
                                         </label>
                                         <div className="relative">
-                                            <input
+                                            <input type="hidden" name="phone" value={phoneValue} />
+                                            <PhoneInput
                                                 id="phone"
-                                                name="phone"
-                                                type="tel"
+                                                defaultCountry="CA"
+                                                value={phoneValue}
+                                                onChange={(val) => setPhoneValue(val as string || "")}
+                                                placeholder="(+1) 234-567-89"
+                                                className="focus-within:ring-2 focus-within:ring-green-400 focus-within:bg-white rounded-3xl overflow-hidden transition-all shadow-sm"
                                                 required
-                                                placeholder="Enter your phone number"
-                                                pattern="^\+?[1-9]\d{1,14}$"
-                                                title="Please enter a valid phone number (e.g., +1234567890)"
-                                                className="block w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 placeholder:text-slate-400 focus:bg-white focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 outline-none transition-all"
                                             />
                                         </div>
                                         <p className="text-xs text-slate-500">
-                                            We'll validation this during onboarding.
+                                            We'll validate this during onboarding.
                                         </p>
                                     </div>
 

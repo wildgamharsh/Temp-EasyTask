@@ -21,7 +21,6 @@ interface StorefrontBuilderData {
         contactPhone: string;
         address: string;
         socialLinks: Record<string, string>;
-        pricingDisplay?: boolean;
     };
     contentData: {
         testimonials: Array<{
@@ -180,6 +179,13 @@ export async function saveStorefrontSettings(data: StorefrontBuilderData) {
             };
         }
 
+        // Get current settings to preserve pricing_display
+        const { data: currentSettings } = await supabase
+            .from('storefront_settings')
+            .select('pricing_display')
+            .eq('organizer_id', userId)
+            .single();
+
         // 2. Update or create storefront settings
         const settingsData = {
             organizer_id: userId,
@@ -187,7 +193,7 @@ export async function saveStorefrontSettings(data: StorefrontBuilderData) {
             tagline: data.businessData.shortDescription,
             logo_url: data.businessData.logoUrl,
             banner_url: data.contentData.bannerUrl,
-            pricing_display: data.businessData.pricingDisplay ?? true, // Default to true
+            pricing_display: currentSettings?.pricing_display ?? true, // Preserve existing or default to true
 
             // Template & Theme
             template: data.designData.template,

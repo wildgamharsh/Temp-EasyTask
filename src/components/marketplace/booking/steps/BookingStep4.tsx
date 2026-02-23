@@ -147,6 +147,7 @@ export function BookingStep4({ service, pricingConfig, bookingData, onClose, isQ
                     eventDate: bookingData.event_date,
                     startTime: bookingData.start_time,
                     endTime: bookingData.end_time,
+                    location: bookingData.location,
                     // guestCount removed
                     // notes removed
 

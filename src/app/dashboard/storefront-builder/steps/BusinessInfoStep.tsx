@@ -15,7 +15,6 @@ import {
     Globe, Loader2, CheckCircle, XCircle, Sparkles, Settings2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { Popover, PopoverContent, PopoverTrigger } from "../../../../components/ui/popover";
 import { toast } from "sonner";
 import { checkSubdomainAvailability } from "../actions";
@@ -31,7 +30,6 @@ export interface BusinessInfoData {
     contactPhone: string;
     address: string;
     socialLinks: Record<string, string>;
-    pricingDisplay: boolean;
 }
 
 interface BusinessInfoStepProps {
@@ -111,29 +109,6 @@ export default function BusinessInfoStep({ data, onChange, onAiGenerate }: Busin
                         required
                     />
                 </div>
-
-                {/* Pricing Display Toggle */}
-                <div className="flex items-center justify-between p-4 border rounded-lg bg-green-50 border-green-200">
-                    <div className="space-y-0.5">
-                        <Label htmlFor="pricingDisplay" className="text-base font-semibold text-green-900">
-                            Pricing Display
-                        </Label>
-                        <p className="text-sm text-green-700">
-                            Show prices on your storefront. Turn off to switch to "Quotation Only" mode.
-                        </p>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                        <Switch
-                            id="pricingDisplay"
-                            checked={data.pricingDisplay ?? true}
-                            onCheckedChange={(checked) => handleChange("pricingDisplay", checked)}
-                        />
-                        <span className="text-sm font-medium text-green-900">
-                            {data.pricingDisplay !== false ? "Visible" : "Hidden"}
-                        </span>
-                    </div>
-                </div>
-
 
                 {/* AI Generation Control */}
                 {onAiGenerate && (

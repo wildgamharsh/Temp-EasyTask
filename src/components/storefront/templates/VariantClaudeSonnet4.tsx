@@ -526,7 +526,8 @@ export default function VariantClaudeSonnet4({ organizer, services, settings }: 
                 </div>
             </section>
 
-            {/* Services Section */}
+{/* Services Section */}
+            {services && services.length > 0 && (
             <section id="services" className="py-20 bg-lightGray">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-16">
@@ -591,6 +592,7 @@ export default function VariantClaudeSonnet4({ organizer, services, settings }: 
                     </div>
                 </div>
             </section>
+            )}
 
             {/* Gallery Section */}
             {settings.show_gallery !== false && (

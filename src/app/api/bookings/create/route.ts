@@ -11,6 +11,7 @@ interface CreateBookingRequest {
     eventDate: string;
     startTime: string; // 24h format HH:mm
     endTime: string;   // 24h format HH:mm
+    location?: string;
     // guestCount removed
     // notes removed
 
@@ -50,6 +51,7 @@ export async function POST(request: NextRequest) {
             eventDate,
             startTime,
             endTime,
+            location,
             pricingModel,
             selectionState,
             stepQuantities,
@@ -126,6 +128,7 @@ export async function POST(request: NextRequest) {
             event_date: eventDate,
             start_time: startTime,
             end_time: endTime,
+            location: location || null,
             status: 'pending' as const,
             payment_status: 'pending' as const,
 

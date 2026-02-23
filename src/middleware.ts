@@ -122,7 +122,7 @@ function redirectWithCookies(url: URL, sourceResponse: NextResponse) {
 }
 
 function isPublicRoute(path: string) {
-    if (path === "/" || path === "/about" || path === "/how-it-works" || path === "/privacy" || path === "/terms" || path === "/our-team") return true;
+    if (path === "/" || path === "/about" || path === "/how-it-works" || path === "/privacy" || path === "/privacy-policy" || path === "/terms" || path === "/terms-and-conditions" || path === "/our-team") return true;
     if (path.startsWith("/login") || path.startsWith("/signup")) return true;
     if (path.startsWith("/auth/callback")) return true;
     if (path.startsWith("/storefront")) return true;

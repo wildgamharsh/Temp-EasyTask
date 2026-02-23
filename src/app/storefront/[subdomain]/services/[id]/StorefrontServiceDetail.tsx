@@ -305,6 +305,29 @@ export function StorefrontServiceDetail({ service, organizer, subdomain, startin
                                     {service.title}
                                 </h1>
 
+                                {/* Locations Available */}
+                                {organizer.locations_covered && organizer.locations_covered.length > 0 && (
+                                    <div className="flex flex-wrap items-center gap-2">
+                                        <span className="text-sm font-semibold text-[var(--color-muted)]">Locations:</span>
+                                        <div className="flex flex-wrap gap-2">
+                                            {(organizer.locations_covered as string[]).slice(0, 4).map((location, idx) => (
+                                                <span 
+                                                    key={idx} 
+                                                    className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20"
+                                                >
+                                                    <MapPin className="w-3 h-3 mr-1" />
+                                                    {location}
+                                                </span>
+                                            ))}
+                                            {(organizer.locations_covered as string[]).length > 4 && (
+                                                <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+                                                    +{(organizer.locations_covered as string[]).length - 4} more
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
                                 {/* Stats Row */}
                                 <div className="flex flex-wrap items-center gap-6 text-sm text-[var(--color-muted)]">
                                     {service.reviews > 0 && (

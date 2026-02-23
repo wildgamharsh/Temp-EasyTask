@@ -238,7 +238,7 @@ export function BookingOverviewModal({
                                 <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
                                     <MapPin className="h-4 w-4 text-slate-400" /> Location
                                 </div>
-                                <div className="font-medium text-slate-900">Online / To be determined</div>
+                                <div className="font-medium text-slate-900">{booking.location || "Not specified"}</div>
                             </div>
 
                             {/* Service Type */}

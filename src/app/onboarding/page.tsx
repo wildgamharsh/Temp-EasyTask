@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import {
@@ -11,6 +11,7 @@ import {
     Loader2,
     Phone,
 } from "lucide-react";
+import { PhoneInput } from "@/components/ui/phone-input";
 
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ export default function OnboardingPage() {
         handleSubmit,
         watch,
         setValue,
+        control,
         formState: { errors },
     } = useForm<OnboardingFormData>({
         resolver: zodResolver(onboardingSchema),
@@ -70,6 +72,9 @@ export default function OnboardingPage() {
 
             const fullName = user.user_metadata?.full_name || user.user_metadata?.name || "";
             if (fullName) setValue("name", fullName);
+
+            const phoneStr = user.user_metadata?.phone || "";
+            if (phoneStr) setValue("phone", phoneStr);
 
             setUser(user);
             setIsLoading(false);
@@ -221,13 +226,23 @@ export default function OnboardingPage() {
                         <div className="space-y-2">
                             <Label htmlFor="phone">Phone Number</Label>
                             <div className="relative">
-                                <Phone className="absolute left-3 top-2.5 h-5 w-5 text-muted-foreground" />
-                                <Input
-                                    id="phone"
-                                    type="tel"
-                                    placeholder="+1234567890"
-                                    className="pl-10"
-                                    {...register("phone")}
+                                <Controller
+                                    name="phone"
+                                    control={control}
+                                    render={({ field }) => (
+                                        <PhoneInput
+                                            {...field}
+                                            id="phone"
+                                            defaultCountry="CA"
+                                            value={field.value || ""}
+                                            onChange={(val) => field.onChange(val || "")}
+                                            placeholder="(+1) 234-567-89"
+                                            className={cn(
+                                                "focus-within:ring-2 focus-within:bg-white rounded-3xl overflow-hidden transition-all shadow-sm",
+                                                errors.phone ? "focus-within:ring-red-400 ring-2 ring-red-400/50" : "focus-within:ring-green-400"
+                                            )}
+                                        />
+                                    )}
                                 />
                             </div>
                             {errors.phone && (

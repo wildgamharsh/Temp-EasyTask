@@ -17,7 +17,7 @@ import {
     isToday,
     isBefore
 } from "date-fns";
-import { ChevronLeft, ChevronRight, ArrowRight, ArrowLeft, ChevronDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, ArrowRight, ArrowLeft, ChevronDown, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface BookingStepProps {
@@ -35,6 +35,9 @@ export function BookingStep2({ service, bookingData, onNext, onBack }: BookingSt
     const [selectedDate, setSelectedDate] = useState<Date | null>(
         bookingData.event_date ? new Date(bookingData.event_date) : null
     );
+
+    // Location State
+    const [location, setLocation] = useState(bookingData.location || "");
 
     // Validations State
     const [blockedDates, setBlockedDates] = useState<string[]>([]);
@@ -176,7 +179,8 @@ export function BookingStep2({ service, bookingData, onNext, onBack }: BookingSt
             onNext({
                 event_date: dateStr, // Use local date string
                 start_time: startTime24,
-                end_time: endTime24
+                end_time: endTime24,
+                location: location
             });
         }
     };
@@ -384,6 +388,22 @@ export function BookingStep2({ service, bookingData, onNext, onBack }: BookingSt
                         hourOpen={endHourOpen} setHourOpen={setEndHourOpen} hourRef={endHourRef}
                         minuteOpen={endMinuteOpen} setMinuteOpen={setEndMinuteOpen} minuteRef={endMinuteRef}
                     />
+
+                    {/* Location Input */}
+                    <div className="bg-white border border-slate-200 rounded-xl p-5">
+                        <h4 className="text-sm font-semibold text-slate-900 mb-4 flex items-center">
+                            <MapPin className="w-4 h-4 mr-2 text-slate-500" />
+                            Location
+                        </h4>
+                        <input
+                            type="text"
+                            value={location}
+                            onChange={(e) => setLocation(e.target.value)}
+                            placeholder="Enter event location (address)"
+                            className="w-full px-4 py-3 bg-white border-2 border-slate-200 rounded-lg text-sm font-medium text-slate-900 hover:border-primary/30 transition focus:outline-none focus:border-primary"
+                        />
+                        <p className="text-xs text-slate-500 mt-2">Provide the address where the service will be delivered.</p>
+                    </div>
 
                     {/* Selected Summary */}
                     <div className="mt-auto p-4 bg-primary/5 border border-primary/20 rounded-lg">
