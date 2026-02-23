@@ -516,7 +516,7 @@ export async function chatWithAi(
 
         // 2. Call OpenAI
 
-        const SYSTEM_PROMPT = `You are Bolt, a helpful AI assistant for the EasyTask platform.
+        const SYSTEM_PROMPT = `You are Bolt, a helpful AI assistant for the Zaaro platform.
 Your goal is to help organizers manage their business, bookings, and storefronts.
 
 CAPABILITIES:

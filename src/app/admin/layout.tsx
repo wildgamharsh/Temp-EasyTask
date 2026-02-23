@@ -262,7 +262,7 @@ export default function AdminLayout({
                 <div className="hidden flex-none md:block">
                     <AdminHeader
                         adminName={currentAdmin?.name || "Admin"}
-                        adminEmail={currentAdmin?.email || "admin@easytask.com"}
+                        adminEmail={currentAdmin?.email || "admin@zaaro.com"}
                         notificationCount={0}
                         onLogout={handleLogout}
                     />

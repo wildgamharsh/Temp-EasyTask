@@ -211,7 +211,7 @@ export default function BusinessInfoStep({ data, onChange, onAiGenerate }: Busin
                     </div>
                     <div className="flex justify-between items-center text-xs">
                         <span className="text-muted-foreground">
-                            {data.subdomain ? `${data.subdomain}.easytask.com` : 'your-business.easytask.com'}
+                            {data.subdomain ? `${data.subdomain}.zaaro.com` : 'your-business.zaaro.com'}
                         </span>
                         <span className={
                             subdomainStatus === 'available' ? 'text-green-600 font-medium' :

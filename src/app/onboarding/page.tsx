@@ -190,8 +190,8 @@ export default function OnboardingPage() {
                     <div className="mb-10">
                         <div className="flex h-12 w-auto items-center justify-center mb-6 lg:hidden">
                             <Image
-                                src="/images/logo-bgr.png"
-                                alt="EasyTask"
+                                src="/images/logo_zaaro_croped.png"
+                                alt="Zaaro"
                                 width={160}
                                 height={45}
                                 className="h-10 w-auto"
@@ -295,7 +295,7 @@ export default function OnboardingPage() {
                                     </Button>
                                 </div>
                                 <p className="text-xs text-muted-foreground">
-                                    Final URL: <span className="font-mono bg-slate-100 px-1 rounded">{subdomain || "your-business"}.easytask.ca</span>
+                                    Final URL: <span className="font-mono bg-slate-100 px-1 rounded">{subdomain || "your-business"}.zaaro.ca</span>
                                 </p>
                                 {subdomainAvailable !== null && (
                                     <div className={cn("text-xs flex items-center gap-1.5 font-medium", subdomainAvailable ? "text-green-600" : "text-red-600")}>

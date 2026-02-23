@@ -105,8 +105,8 @@ export default function ServiceDetailClient({ service: dbService, pricingConfig 
                         <div className="flex items-center space-x-8">
                             <Link href="/" className="flex items-center space-x-2">
                                 <Image
-                                    src="/images/logo-bgr.png"
-                                    alt="EasyTask"
+                                    src="/images/logo_zaaro_croped.png"
+                                    alt="Zaaro"
                                     width={140}
                                     height={40}
                                     className="h-10 w-auto"

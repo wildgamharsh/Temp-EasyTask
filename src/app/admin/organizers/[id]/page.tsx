@@ -141,7 +141,7 @@ export default function OrganizerDetailPage() {
                                         target="_blank"
                                         className="text-primary hover:underline"
                                     >
-                                        {organizer.subdomain}.easytask.ai
+                                        {organizer.subdomain}.zaaro.ai
                                     </a>
                                 </div>
                             )}

@@ -9,7 +9,7 @@ export default function Features() {
 
                 {/* Header */}
                 <div className="mb-16 fade-up">
-                    <span className="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2 block">Why EasyTask</span>
+                    <span className="text-brand-600 font-semibold tracking-wide uppercase text-sm mb-2 block">Why Zaaro</span>
                     <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight whitespace-nowrap">
                         Master Your Operations, <span className="text-brand-600">Scale Your Success</span>
                     </h2>

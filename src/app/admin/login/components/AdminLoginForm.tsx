@@ -53,8 +53,8 @@ export default function AdminLoginForm() {
                 <CardHeader className="space-y-1">
                     <div className="flex justify-center mb-6">
                         <Image
-                            src="/images/logo-bgr.png"
-                            alt="EasyTask"
+                            src="/images/logo_zaaro_croped.png"
+                            alt="Zaaro"
                             width={160}
                             height={45}
                             className="h-14 w-auto drop-shadow-md"

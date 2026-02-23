@@ -1,4 +1,4 @@
-# EasyTask AI - Complete Application Documentation
+# Zaaro AI - Complete Application Documentation
 
 ## 📋 Table of Contents
 1. [Application Overview](#application-overview)
@@ -15,7 +15,7 @@
 
 ## 🎯 Application Overview
 
-**EasyTask AI** is a marketplace platform connecting event organizers (caterers, decorators, photographers, etc.) with customers planning events. It facilitates service discovery, booking, calendar management, and payments.
+**Zaaro AI** is a marketplace platform connecting event organizers (caterers, decorators, photographers, etc.) with customers planning events. It facilitates service discovery, booking, calendar management, and payments.
 
 ### Core Value Proposition
 - **For Customers:** Browse verified service providers, compare prices, book instantly
@@ -696,7 +696,7 @@ Use Vercel Edge Network or Cloudflare CDN.
 
 ## 📝 Conclusion
 
-**EasyTask AI** is a well-architected event planning marketplace with solid foundations in Next.js, Clerk, and Supabase. The recent calendar management enhancements demonstrate the platform's evolution toward a more feature-rich solution.
+**Zaaro AI** is a well-architected event planning marketplace with solid foundations in Next.js, Clerk, and Supabase. The recent calendar management enhancements demonstrate the platform's evolution toward a more feature-rich solution.
 
 ### Strengths
 ✅ Modern tech stack
@@ -722,4 +722,4 @@ Use Vercel Edge Network or Cloudflare CDN.
 6. **Build review system** (Medium)
 7. **Add analytics** (Medium)
 
-With these improvements, EasyTask AI can become a production-ready, scalable marketplace platform.
+With these improvements, Zaaro AI can become a production-ready, scalable marketplace platform.

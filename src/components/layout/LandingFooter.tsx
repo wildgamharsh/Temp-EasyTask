@@ -8,8 +8,8 @@ export function LandingFooter() {
                 <div className="col-span-1 md:col-span-1">
                     <div className="flex items-center mb-4">
                         <Image
-                            src="/images/logo-bgr.png"
-                            alt="EasyTask"
+                            src="/images/logo_zaaro_croped.png"
+                            alt="Zaaro"
                             width={140}
                             height={40}
                             className="h-10 w-auto"
@@ -84,7 +84,7 @@ export function LandingFooter() {
                 </div>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-brand-200 text-center text-xs text-slate-500">
-                &copy; {new Date().getFullYear()} EasyTask Inc. All rights reserved.
+                &copy; {new Date().getFullYear()} Zaaro Inc. All rights reserved.
             </div>
         </footer>
     );

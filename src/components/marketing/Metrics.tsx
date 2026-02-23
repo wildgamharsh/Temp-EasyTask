@@ -11,7 +11,7 @@ const metrics = [
         suffix: "+",
         icon: "fa-solid fa-users",
         color: "brand", // maps to brand/blue/indigo based on implementation
-        description: "Event pros trusting EasyTask"
+        description: "Event pros trusting Zaaro"
     },
     {
         id: 2,

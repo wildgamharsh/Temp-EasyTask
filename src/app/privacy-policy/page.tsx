@@ -9,7 +9,7 @@ export default function PrivacyPolicyPage() {
       <main className="pt-32 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-extrabold text-brand-900 mb-4">Privacy Policy</h1>
         <p className="text-lg text-slate-600 mb-8">
-          EasyTask AI Corp.
+          Zaaro AI Corp.
         </p>
         
         <div className="prose prose-slate max-w-none space-y-8">
@@ -157,8 +157,8 @@ export default function PrivacyPolicyPage() {
               <div>
                 <h3 className="text-xl font-semibold text-slate-800 mb-3">2.12 Contact</h3>
                 <ul className="list-disc pl-6 space-y-2 text-slate-700">
-                  <li><strong>Email:</strong> info@easytask.ai, contact@easytask.ai</li>
-                  <li><strong>Mail:</strong> EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada</li>
+                  <li><strong>Email:</strong> info@zaaro.ai, contact@zaaro.ai</li>
+                  <li><strong>Mail:</strong> Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada</li>
                 </ul>
               </div>
             </div>

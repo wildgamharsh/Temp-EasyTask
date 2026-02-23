@@ -25,7 +25,7 @@ export default function HowItWorksPage() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                     <div className="max-w-2xl text-left">
                         <h1 className="text-4xl md:text-6xl font-extrabold text-brand-900 mb-6 tracking-tight">
-                            How <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-600 to-indigo-600">EasyTask</span> Works
+                            How <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-600 to-indigo-600">Zaaro</span> Works
                         </h1>
                         <p className="text-xl text-slate-700 mb-10 leading-relaxed font-medium">
                             From setup to scale, see how our platform empowers your event business with automation, stunning design, and smart tools.
@@ -65,7 +65,7 @@ export default function HowItWorksPage() {
                             </div>
                             <h3 className="text-3xl font-bold text-brand-900 mb-4">Customizable Storefront Website</h3>
                             <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                                Create your professional online presence without any coding skills. EasyTask provides drag-and-drop templates that let you customize every aspect of your storefront. Add your business logo, services, photos, and contact details to build a site that perfectly represents your brand.
+                                Create your professional online presence without any coding skills. Zaaro provides drag-and-drop templates that let you customize every aspect of your storefront. Add your business logo, services, photos, and contact details to build a site that perfectly represents your brand.
                             </p>
                             <ul className="space-y-4 mb-8">
                                 <li className="flex items-center gap-4 text-slate-700">
@@ -266,7 +266,7 @@ export default function HowItWorksPage() {
                             Experience the <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-600 to-indigo-600">Power</span>
                         </h2>
                         <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                            Watch how EasyTask simplifies every part of your business, from setup to scaling.
+                            Watch how Zaaro simplifies every part of your business, from setup to scaling.
                         </p>
                     </div>
 
@@ -292,7 +292,7 @@ export default function HowItWorksPage() {
                         <VideoModal
                             thumbnail="/images/Thumb.jpg"
                             title="Grow Your Business"
-                            description="See how EasyTask helps you reach more customers, automate responses, and scale without burnout."
+                            description="See how Zaaro helps you reach more customers, automate responses, and scale without burnout."
                             videoId="R-5Ij5pJpxA"
                         />
                     </div>

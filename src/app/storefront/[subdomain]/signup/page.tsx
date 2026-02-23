@@ -124,7 +124,7 @@ export default function StorefrontSignupPage() {
                 <h1 className="text-2xl font-bold mb-2">Storefront Not Found</h1>
                 <p className="text-slate-600 mb-6">The storefront you are looking for doesn't exist.</p>
                 <Link href="/" className="text-brand-600 font-medium hover:underline flex items-center gap-2">
-                    <ArrowLeft className="w-4 h-4" /> Back to EasyTask
+                    <ArrowLeft className="w-4 h-4" /> Back to Zaaro
                 </Link>
             </div>
         );

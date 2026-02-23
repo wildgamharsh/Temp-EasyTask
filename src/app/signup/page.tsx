@@ -84,8 +84,8 @@ export default function SignupPage() {
                 <div className="relative z-10 flex flex-col justify-between w-full h-full p-12 text-white">
                     <Link href="/" className="flex items-center gap-2 w-fit">
                         <Image
-                            src="/images/logo-bgr.png"
-                            alt="EasyTask"
+                            src="/images/logo_zaaro_croped.png"
+                            alt="Zaaro"
                             width={160}
                             height={45}
                             className="h-12 w-auto brightness-0 invert"
@@ -95,7 +95,7 @@ export default function SignupPage() {
                     <div className="mb-12">
                         <h1 className="text-4xl font-bold leading-tight mb-4">
                             Start your journey<br />
-                            with EasyTask today.
+                            with Zaaro today.
                         </h1>
                         <p className="text-brand-100 text-lg max-w-md">
                             Join thousands of organizers and customers managing their events and services with ease.

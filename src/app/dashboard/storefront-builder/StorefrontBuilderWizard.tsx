@@ -288,7 +288,7 @@ export default function StorefrontBuilderWizard({ profile, initialSettings }: St
                     <div className="flex items-center gap-2 mb-4 px-2">
                         <Globe className="w-4 h-4 text-slate-400" />
                         <span className="text-xs text-slate-500 truncate flex-1">
-                            {businessData.subdomain ? `${businessData.subdomain}.easytask.com` : 'your-site.easytask.com'}
+                            {businessData.subdomain ? `${businessData.subdomain}.zaaro.com` : 'your-site.zaaro.com'}
                         </span>
                         <a href="#" className="hidden hover:text-blue-600"><ExternalLink className="w-3 h-3" /></a>
                     </div>

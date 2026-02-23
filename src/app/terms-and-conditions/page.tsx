@@ -9,7 +9,7 @@ export default function TermsAndConditionsPage() {
       <main className="pt-32 pb-20 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-extrabold text-brand-900 mb-4">Terms and Conditions</h1>
         <p className="text-lg text-slate-600 mb-8">
-          EasyTask AI Corp.
+          Zaaro AI Corp.
         </p>
         <p className="text-sm text-slate-500 mb-8">
           Including: Terms of Service, Privacy Policy, Data Retention Policy, Billing Compliance Policy, and Email Compliance (CASL) Policy
@@ -24,8 +24,8 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h3 className="text-xl font-semibold text-slate-800 mb-3">1.1 Definitions</h3>
                 <ul className="list-disc pl-6 space-y-2 text-slate-700">
-                  <li><strong>Company</strong>, <strong>EasyTask</strong>, <strong>we</strong>, <strong>us</strong>, <strong>our</strong> means EasyTask AI Corp.</li>
-                  <li><strong>Service</strong> means the EasyTask software-as-a-service platform, websites, applications, APIs, and related services, features, and documentation.</li>
+                  <li><strong>Company</strong>, <strong>Zaaro</strong>, <strong>we</strong>, <strong>us</strong>, <strong>our</strong> means Zaaro AI Corp.</li>
+                  <li><strong>Service</strong> means the Zaaro software-as-a-service platform, websites, applications, APIs, and related services, features, and documentation.</li>
                   <li><strong>Organizer</strong> means an individual, sole proprietor, or business entity that subscribes to and uses the Service to market, sell, schedule, book, deliver, or manage products or services to its customers.</li>
                   <li><strong>Customer</strong> means an end user (consumer or business) who interacts with an Organizer via the Service (including via an Organizer storefront) to request, purchase, book, pay for, or receive products or services from the Organizer.</li>
                   <li><strong>Content</strong> means any text, images, video, audio, files, data, prompts, messages, templates, customer records, listings, pricing, branding, and other materials submitted to, stored in, processed by, or transmitted through the Service by or on behalf of a user.</li>
@@ -189,7 +189,7 @@ export default function TermsAndConditionsPage() {
               <div>
                 <h3 className="text-xl font-semibold text-slate-800 mb-3">1.20 Notices and Contact</h3>
                 <ul className="list-disc pl-6 space-y-2 text-slate-700">
-                  <li>Notices to the Company should be sent to: info@easytask.ai and/or by mail to: EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada.</li>
+                  <li>Notices to the Company should be sent to: info@zaaro.ai and/or by mail to: Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada.</li>
                   <li>Notices to you may be provided by email, in-product notification, or by posting within the Service.</li>
                 </ul>
               </div>
@@ -324,8 +324,8 @@ export default function TermsAndConditionsPage() {
           <section>
             <h2 className="text-2xl font-bold text-slate-900 mb-6">Appendix B: Company Contact Information</h2>
             <ul className="list-disc pl-6 space-y-2 text-slate-700">
-              <li><strong>Contact:</strong> info@easytask.ai</li>
-              <li><strong>Mailing Address:</strong> EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada</li>
+              <li><strong>Contact:</strong> info@zaaro.ai</li>
+              <li><strong>Mailing Address:</strong> Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada</li>
             </ul>
           </section>
 

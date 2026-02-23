@@ -99,8 +99,8 @@ export function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
                     <Image
-                        src="/images/logo-bgr.png"
-                        alt="EasyTask"
+                        src="/images/logo_zaaro_croped.png"
+                        alt="Zaaro"
                         width={140}
                         height={40}
                         className="h-9 w-auto"

@@ -293,12 +293,12 @@ export default function StorefrontSettingsPage() {
                                     <AlertDescription>
                                         Your storefront is live at:{" "}
                                         <a
-                                            href={`https://${currentSubdomain}.easytask.com`}
+                                            href={`https://${currentSubdomain}.zaaro.com`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="font-medium text-primary hover:underline inline-flex items-center gap-1"
                                         >
-                                            {currentSubdomain}.easytask.com
+                                            {currentSubdomain}.zaaro.com
                                             <ExternalLink className="w-3 h-3" />
                                         </a>
                                     </AlertDescription>
@@ -321,7 +321,7 @@ export default function StorefrontSettingsPage() {
                                                 className="flex-1"
                                             />
                                             <span className="text-muted-foreground whitespace-nowrap">
-                                                .easytask.com
+                                                .zaaro.com
                                             </span>
                                         </div>
                                         <Button

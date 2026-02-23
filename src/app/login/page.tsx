@@ -79,8 +79,8 @@ export default function LoginPage() {
                 <div className="relative z-10 flex flex-col justify-between w-full h-full p-12 text-white">
                     <Link href="/" className="flex items-center gap-2 w-fit">
                         <Image
-                            src="/images/logo-bgr.png"
-                            alt="EasyTask"
+                            src="/images/logo_zaaro_croped.png"
+                            alt="Zaaro"
                             width={160}
                             height={45}
                             className="h-12 w-auto brightness-0 invert"

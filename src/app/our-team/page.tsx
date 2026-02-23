@@ -42,7 +42,7 @@ export default function OurTeamPage() {
                     Meet the <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-600 to-indigo-600">Team</span>
                 </h1>
                 <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                    The passionate individuals behind EasyTask, dedicated to modernizing the event industry.
+                    The passionate individuals behind Zaaro, dedicated to modernizing the event industry.
                 </p>
             </div>
        </section>

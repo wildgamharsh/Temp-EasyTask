@@ -197,7 +197,7 @@ export default function OrganizersPage() {
                 }
                 return (
                     <div className="flex items-center gap-2">
-                        <span className="text-slate-600">{subdomain}.easytask.ai</span>
+                        <span className="text-slate-600">{subdomain}.zaaro.ai</span>
                         <Button variant="ghost" size="icon" className="h-6 w-6" asChild>
                             <a
                                 href={`http://${subdomain}.localhost:3000`}

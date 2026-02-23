@@ -173,7 +173,7 @@ export default function LandingPage() {
                     </div>
                     <div className="flex-1 text-center">
                       <div className="bg-white border border-slate-200 rounded-md py-1 px-3 text-xs text-slate-400 inline-block w-48">
-                        easytask.ca/dashboard
+                        zaaro.ca/dashboard
                       </div>
                     </div>
                   </div>
@@ -304,7 +304,7 @@ export default function LandingPage() {
             </h2>
 
             <p className="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
-              Join hundreds of professionals using EasyTask to streamline their operations and scale faster.
+              Join hundreds of professionals using Zaaro to streamline their operations and scale faster.
             </p>
 
             {/* Stylized Wave Graphic */}
@@ -348,10 +348,10 @@ export default function LandingPage() {
                   Ready to optimize your <span className="text-brand-600">Business?</span>
                 </h2>
                 <p className="text-lg text-slate-600 mb-10 leading-relaxed">
-                  Join the revolution. Reduce administrative overhead, improve response times, and gain total control over your bookings with EasyTask.
+                  Join the revolution. Reduce administrative overhead, improve response times, and gain total control over your bookings with Zaaro.
                 </p>
 
-                <h3 className="text-lg font-bold text-slate-900 mb-6">What you get with EasyTask:</h3>
+                <h3 className="text-lg font-bold text-slate-900 mb-6">What you get with Zaaro:</h3>
                 <ul className="space-y-5">
                   {[
                     "Custom storefront for your services",

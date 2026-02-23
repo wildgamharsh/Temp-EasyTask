@@ -169,7 +169,7 @@ export default function BeforeAfterSlider() {
                         </div>
 
                         {/* After Section (Right/System/Blue) */}
-                        {/* We overlay this and clip it. The content matches 'The EasyTask Way' card */}
+                        {/* We overlay this and clip it. The content matches 'The Zaaro Way' card */}
                         <div
                             className="absolute inset-0 bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700"
                             style={{
@@ -186,7 +186,7 @@ export default function BeforeAfterSlider() {
                                     <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white mb-6">
                                         <i className="fa-solid fa-check text-xl"></i>
                                     </div>
-                                    <h3 className="text-2xl font-bold mb-6">The EasyTask System</h3>
+                                    <h3 className="text-2xl font-bold mb-6">The Zaaro System</h3>
                                     <ul className="space-y-4">
                                         <li className="flex items-start gap-4">
                                             <i className="fa-solid fa-circle-check text-blue-400 mt-1 text-lg"></i>

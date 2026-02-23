@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "EasyTask - Event Planning Made Simple",
+  title: "Zaaro - Event Planning Made Simple",
   description: "Connect with professional caterers and decorators for your perfect event",
   keywords: ["event planning", "catering", "decoration", "wedding", "party"],
 };

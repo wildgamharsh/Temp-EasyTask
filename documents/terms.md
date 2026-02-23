@@ -1,13 +1,13 @@
 	
-EasyTask AI Corp.
+Zaaro AI Corp.
  Terms and Conditions
 Including: Terms of Service, Privacy Policy, Data Retention Policy, Billing Compliance Policy, and Email Compliance (CASL) Policy
 
 
 1. Terms of Service
 1.1 Definitions
-“Company”, “EasyTask”, 	“we”, “us”, “our” means EasyTask AI Corp.
-“Service” means the 	EasyTask software-as-a-service platform, websites, applications, 	APIs, and related services, features, and documentation.
+“Company”, “Zaaro”, 	“we”, “us”, “our” means Zaaro AI Corp.
+“Service” means the 	Zaaro software-as-a-service platform, websites, applications, 	APIs, and related services, features, and documentation.
 “Organizer” means an 	individual, sole proprietor, or business entity that subscribes to 	and uses the Service to market, sell, schedule, book, deliver, or 	manage products or services to its customers.
 “Customer” means an end 	user (consumer or business) who interacts with an Organizer via the 	Service (including via an Organizer storefront) to request, 	purchase, book, pay for, or receive products or services from the 	Organizer.
 “Content” means any text, 	images, video, audio, files, data, prompts, messages, templates, 	customer records, listings, pricing, branding, and other materials 	submitted to, stored in, processed by, or transmitted through the 	Service by or on behalf of a user.
@@ -90,7 +90,7 @@ Except where prohibited by Applicable Law (including non-waivable consumer prote
 1.19 Changes to the Service and Terms
 We may modify the Service or these Terms from time to time. We will post updated Terms and update the “Last Updated” date. If changes are material, we may provide additional notice (e.g., via the Service or email). Your continued use of the Service after changes become effective constitutes acceptance of the revised Terms.
 1.20 Notices and Contact
-Notices to the Company should be sent to: info@easytask.ai (replace with your official address) and/or by mail to: EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada.
+Notices to the Company should be sent to: info@zaaro.ai (replace with your official address) and/or by mail to: Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada.
 Notices to you may be provided by email, in-product notification, or by posting within the Service.
 2. Privacy Policy
 2.1 Overview
@@ -152,9 +152,9 @@ We retain personal information only as long as necessary for the purposes descri
 2.11 Access, Correction, and Requests
 You may request access to and correction of your personal information, subject to legal limits. If you are a Customer of an Organizer, your requests regarding Organizer-controlled data should be directed to the Organizer in the first instance.
 2.12 Contact
-Email: info@easytask.ai , contact@easytask.ai 
+Email: info@zaaro.ai , contact@zaaro.ai 
 
-Mail: EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada
+Mail: Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada
 3. Data Retention Policy
 3.1 Purpose and Principles
 This policy describes how long we retain data and how deletion or anonymization works. We retain data only as long as necessary to: (a) provide the Service; (b) maintain security and reliability; (c) comply with legal, tax, and accounting obligations; and (d) resolve disputes and enforce agreements.
@@ -209,6 +209,6 @@ complying with privacy laws and 	CASL, including providing required notices and 
 ensuring that information 	submitted to AI Features is lawful to disclose and is not 	confidential or sensitive unless appropriate;
 maintaining appropriate 	security controls for their accounts and staff access.
 Appendix B: Company Contact Information
-Contact: info@easytask.ai
-Mailing Address: EasyTask AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada
+Contact: info@zaaro.ai
+Mailing Address: Zaaro AI Corp., 5 Essex Drive, Steinbach, Manitoba, R5G 2V7, Canada
 

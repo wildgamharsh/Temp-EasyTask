@@ -120,8 +120,8 @@ export function LandingNavbar() {
                     {/* Logo */}
                     <Link href="/" className="shrink-0 flex items-center cursor-pointer">
                         <Image
-                            src="/images/logo-bgr.png"
-                            alt="EasyTask"
+                            src="/images/logo_zaaro_croped.png"
+                            alt="Zaaro"
                             width={140}
                             height={40}
                             className="h-10 w-auto"

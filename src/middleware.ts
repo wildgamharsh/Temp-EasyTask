@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
         if (isAdminPublicRoute(pathname)) {
             return NextResponse.next();
         }
-        const adminToken = request.cookies.get("easytask_admin_token")?.value;
+        const adminToken = request.cookies.get("zaaro_admin_token")?.value;
         if (!adminToken) {
             if (pathname.startsWith("/api/")) {
                 return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

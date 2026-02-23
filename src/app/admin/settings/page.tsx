@@ -222,7 +222,7 @@ export default function SettingsPage() {
                             <Label htmlFor="platform-name">Platform Name</Label>
                             <Input
                                 id="platform-name"
-                                defaultValue="EasyTask"
+                                defaultValue="Zaaro"
                             />
                         </div>
                         <div className="space-y-2">
@@ -230,7 +230,7 @@ export default function SettingsPage() {
                             <Input
                                 id="support-email"
                                 type="email"
-                                defaultValue="support@easytask.ai"
+                                defaultValue="support@zaaro.ai"
                             />
                         </div>
                     </div>

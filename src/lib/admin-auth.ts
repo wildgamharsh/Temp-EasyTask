@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-const ADMIN_COOKIE_NAME = "easytask_admin_token";
+const ADMIN_COOKIE_NAME = "zaaro_admin_token";
 const JWT_SECRET = process.env.ADMIN_JWT_SECRET || "fallback-secret-for-dev-only-change-in-prod";
 
 /**

@@ -292,7 +292,7 @@ export function BookingStep4({ service, pricingConfig, bookingData, onClose, isQ
             </Button>
 
             <p className="text-center text-[10px] text-slate-400 font-bold uppercase tracking-widest">
-                By clicking "Send Request", you agree to the EasyTask Terms of Service
+                By clicking "Send Request", you agree to the Zaaro Terms of Service
             </p>
         </div>
     );

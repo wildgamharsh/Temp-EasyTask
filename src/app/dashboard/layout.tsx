@@ -73,8 +73,8 @@ function SidebarContent({
             <div className="flex h-16 items-center px-6">
                 <Link href="/dashboard" className="flex items-center gap-2">
                     <Image
-                        src="/images/logo-bgr.png"
-                        alt="EasyTask"
+                        src="/images/logo_zaaro_croped.png"
+                        alt="Zaaro"
                         width={140}
                         height={40}
                         className="h-9 w-auto"
@@ -337,7 +337,7 @@ export default function DashboardLayout({
                                 <DropdownMenuItem>
                                     <div className="flex flex-col gap-1">
                                         <p className="text-sm font-medium">System Update</p>
-                                        <p className="text-xs text-muted-foreground">EasyTask has been updated to v2.0</p>
+                                        <p className="text-xs text-muted-foreground">Zaaro has been updated to v2.0</p>
                                         <p className="text-[10px] text-muted-foreground mt-1">1 hour ago</p>
                                     </div>
                                 </DropdownMenuItem>

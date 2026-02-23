@@ -6,19 +6,19 @@ import Link from 'next/link';
 
 const faqs = [
     {
-        question: "What features are included in EasyTask?",
-        answer: "EasyTask is an all-in-one operating system including a professional storefront, live availability calendar, centralized dashboard, automated follow-ups, integrated payments, and revenue insights. Everything you need to manage your business."
+        question: "What features are included in Zaaro?",
+        answer: "Zaaro is an all-in-one operating system including a professional storefront, live availability calendar, centralized dashboard, automated follow-ups, integrated payments, and revenue insights. Everything you need to manage your business."
     },
     {
         question: "Do I need any coding skills to use it?",
-        answer: "Absolutely not. EasyTask is designed for simplicity. You can get your professional storefront up and running in minutes with zero coding or technical hassle. It's built for business owners, not developers."
+        answer: "Absolutely not. Zaaro is designed for simplicity. You can get your professional storefront up and running in minutes with zero coding or technical hassle. It's built for business owners, not developers."
     },
     {
         question: "How does the AI Agent help my business?",
         answer: "Our AI Agent works 24/7 to handle incoming inquiries, manage bookings, and answer client questions instantly. It acts as a tireless virtual assistant that ensures you never miss an opportunity, even when you're sleeping."
     },
     {
-        question: "Who is EasyTask designed for?",
+        question: "Who is Zaaro designed for?",
         answer: "It's perfect for any service-based business including consultants, agencies, creative professionals, and freelancers. Basically, anyone who wants to scale their business without the administrative overload."
     },
     {
@@ -46,7 +46,7 @@ export default function FAQ() {
                     <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight">
                         Have Questions?
                     </h2>
-                    <p className="mt-4 text-slate-500">Everything you need to know about EasyTask.</p>
+                    <p className="mt-4 text-slate-500">Everything you need to know about Zaaro.</p>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-12 items-start">

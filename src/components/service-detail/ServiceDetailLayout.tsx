@@ -203,7 +203,7 @@ export default function ServiceDetailLayout({
                                             : organizer.subdomain
                                                 ? (process.env.NODE_ENV === 'development'
                                                     ? `http://${organizer.subdomain}.localhost:3000`
-                                                    : `https://${organizer.subdomain}.easytask.com`)
+                                                    : `https://${organizer.subdomain}.zaaro.com`)
                                                 : "#"
                                         }
                                         className="inline-flex items-center text-primary hover:text-primary/80 font-medium text-sm transition-colors group"

@@ -44,7 +44,7 @@ export default function AboutPage() {
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400">Forget the Tech.</span>
                         </h1>
                         <p className="text-xl md:text-2xl text-slate-300 leading-relaxed fade-up mb-10 max-w-2xl mx-auto">
-                            EasyTask exists to bridge the gap between your real-world talent and the professional systems you need to scale.
+                            Zaaro exists to bridge the gap between your real-world talent and the professional systems you need to scale.
                         </p>
                     </div>
                 </div>

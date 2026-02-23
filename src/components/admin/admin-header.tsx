@@ -34,7 +34,7 @@ interface AdminHeaderProps {
 
 export function AdminHeader({
     adminName = "Admin",
-    adminEmail = "admin@easytask.com",
+    adminEmail = "admin@zaaro.com",
     notificationCount = 0,
     onLogout,
 }: AdminHeaderProps) {

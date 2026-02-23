@@ -41,7 +41,7 @@ export async function GET(request: Request) {
             // Redirect Logic
             const forwardedHost = request.headers.get('x-forwarded-host')
             const isLocalEnv = process.env.NODE_ENV === 'development'
-            const redirectUrl = isLocalEnv ? `${origin}${next}` : `https://${forwardedHost || 'app.easytask.ca'}${next}`;
+            const redirectUrl = isLocalEnv ? `${origin}${next}` : `https://${forwardedHost || 'app.zaaro.ca'}${next}`;
 
             console.log(`[AUTH-DEBUG] Redirecting to: ${redirectUrl}`);
             return NextResponse.redirect(redirectUrl);
