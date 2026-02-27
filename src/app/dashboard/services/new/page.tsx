@@ -191,7 +191,13 @@ export default function NewServicePage() {
                     </div>
 
                     <div className="mt-8 flex items-center justify-between">
-                        <div />
+                        <button
+                            onClick={fillSampleData}
+                            className="text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5"
+                        >
+                            <span className="text-lg">✨</span>
+                            <span>Fill Sample Data</span>
+                        </button>
                         <button
                             onClick={handleNext}
                             className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
