@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Consumer Preview: All Display Styles</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+    <div class="flex flex-col h-screen w-full">
+        <header
+            class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-8 py-3 z-10 shadow-sm">
+            <div class="flex items-center gap-4">
+                <div class="size-8 flex items-center justify-center text-primary bg-primary/10 rounded-lg">
+                    <span class="material-symbols-outlined text-2xl">calculate</span>
+                </div>
+                <div>
+                    <h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Live
+                        Quote Engine</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Style Preview Mode</p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button
+                    class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-sm font-bold transition-colors">
+                    <span class="material-symbols-outlined text-lg mr-2">edit</span>
+                    <span>Edit Config</span>
+                </button>
+                <button
+                    class="flex items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-blue-600 text-white text-sm font-bold transition-colors shadow-sm shadow-blue-500/30">
+                    <span class="material-symbols-outlined text-lg mr-2">save</span>
+                    <span>Save Preview</span>
+                </button>
+            </div>
+        </header>
+        <main class="flex flex-1 overflow-hidden">
+            <div
+                class="flex-1 overflow-y-auto bg-slate-50/50 dark:bg-background-dark p-6 md:p-10 lg:p-12 scroll-smooth">
+                <div class="max-w-4xl mx-auto space-y-12 pb-20">
+                    <div class="space-y-2">
+                        <div
+                            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-primary text-xs font-bold uppercase tracking-wider">
+                            Component Library
+                        </div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white leading-tight">Display
+                            Style Showcase</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-lg max-w-2xl">Demonstrating the versatility of
+                            the quote engine with various UI card styles for different types of service options.</p>
+                    </div>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white text-sm font-bold">1</span>
+                                Theme Selection
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: card-image)</span>
+                            </h2>
+                            <span
+                                class="text-sm font-medium text-primary bg-primary/10 px-2 py-1 rounded">Required</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <label class="group cursor-pointer relative block">
+                                <input checked="" class="peer sr-only" name="theme" type="radio" />
+                                <div
+                                    class="relative overflow-hidden rounded-2xl aspect-video transition-all ring-2 ring-transparent peer-checked:ring-primary peer-checked:ring-offset-2 dark:ring-offset-background-dark group-hover:shadow-lg">
+                                    <img alt="Elegant"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8IEwxaLBUID7slzf7TNpWSUakKqTI0b4rESq39nGRkO0bCrYvfiGC98n9eiExJn1QaY1qg98iwG5FTtU_mhaR5ekOJwpyx-qC7dktn9MVqGU4sEV8HRrOu2pCAiStFe648qLqHEpwrbnOsOr-gfGf_adYugj62prRFLEItmwcEaCP83HESo3ovV0MqrxzNuVQcMNW499deo6noFzOWiIAGG4rwmRpMQGxM4_I9EOmhkH7xgzCZs6YhuQSCYzXorW4WsoUtIBAWUQA" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                                    </div>
+                                    <div class="absolute bottom-0 left-0 p-6 w-full text-white">
+                                        <div class="flex justify-between items-end">
+                                            <div>
+                                                <h3 class="text-xl font-bold mb-1">Elegant</h3>
+                                                <p class="text-sm text-slate-200">Classic sophistication</p>
+                                            </div>
+                                            <div
+                                                class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-sm font-bold">
+                                                $500
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+                                        <span
+                                            class="material-symbols-outlined text-white bg-primary rounded-full p-1 shadow-lg">check</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="group cursor-pointer relative block">
+                                <input class="peer sr-only" name="theme" type="radio" />
+                                <div
+                                    class="relative overflow-hidden rounded-2xl aspect-video transition-all ring-2 ring-transparent peer-checked:ring-primary peer-checked:ring-offset-2 dark:ring-offset-background-dark group-hover:shadow-lg">
+                                    <img alt="Modern"
+                                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhcEAveGLEtDlpbYnRC9J5yxuaFP0NXpGy1do2ZNZr_Gsfky_bcCvqoume5mUaOa2wgjWzfaovse-OS9YW9WHkGf4jFvyE_HLoW6SMjYayLrknZaNqFyc_NAl2pfa-QpDvv-uqPZvRm1JGJVoxdWDT6wSmPK8J8sI1xVnSymCXZRIB6UsoxBc4kk1Lso17vEWjYjBr_u9Ztwfu0ohYTo-26zQpfvP6ICUsYb_E8OJj_7ndRnzq9uwK96_08ZOOHsP0vgpjSqQVNWP8" />
+                                    <div
+                                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+                                    </div>
+                                    <div class="absolute bottom-0 left-0 p-6 w-full text-white">
+                                        <div class="flex justify-between items-end">
+                                            <div>
+                                                <h3 class="text-xl font-bold mb-1">Modern</h3>
+                                                <p class="text-sm text-slate-200">Clean lines &amp; minimalism</p>
+                                            </div>
+                                            <div
+                                                class="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-sm font-bold">
+                                                $350
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+                                        <span
+                                            class="material-symbols-outlined text-white bg-primary rounded-full p-1 shadow-lg">check</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold">2</span>
+                                Package Tier
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: card-standard)</span>
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <label class="relative group cursor-pointer h-full">
+                                <input class="peer sr-only" name="package" type="radio" />
+                                <div
+                                    class="h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-900 peer-checked:border-primary peer-checked:bg-blue-50/30 dark:peer-checked:bg-blue-900/10 transition-all shadow-sm hover:shadow-md flex flex-col">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div
+                                            class="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300">
+                                            <span class="material-symbols-outlined">rocket_launch</span>
+                                        </div>
+                                        <div
+                                            class="size-5 rounded-full border-2 border-slate-300 dark:border-slate-600 peer-checked:border-primary peer-checked:bg-primary transition-colors">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Starter</h3>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-1">Essential features
+                                        for small teams getting started.</p>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-white">$0 <span
+                                            class="text-sm font-normal text-slate-500">/mo</span></div>
+                                </div>
+                            </label>
+                            <label class="relative group cursor-pointer h-full">
+                                <input checked="" class="peer sr-only" name="package" type="radio" />
+                                <div
+                                    class="h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-900 peer-checked:border-primary peer-checked:bg-blue-50/30 dark:peer-checked:bg-blue-900/10 transition-all shadow-sm hover:shadow-md flex flex-col relative overflow-hidden">
+                                    <div
+                                        class="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-bl-lg uppercase tracking-wider">
+                                        Recommended</div>
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div class="p-2 bg-blue-100 dark:bg-blue-900/50 rounded-lg text-primary">
+                                            <span class="material-symbols-outlined">diamond</span>
+                                        </div>
+                                        <div
+                                            class="size-5 rounded-full border-2 border-slate-300 dark:border-slate-600 peer-checked:border-primary peer-checked:bg-primary transition-colors">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Professional</h3>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-1">Advanced tools for
+                                        scaling your business operations.</p>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-white">$49 <span
+                                            class="text-sm font-normal text-slate-500">/mo</span></div>
+                                </div>
+                            </label>
+                            <label class="relative group cursor-pointer h-full">
+                                <input class="peer sr-only" name="package" type="radio" />
+                                <div
+                                    class="h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-100 dark:border-slate-700 hover:border-blue-200 dark:hover:border-blue-900 peer-checked:border-primary peer-checked:bg-blue-50/30 dark:peer-checked:bg-blue-900/10 transition-all shadow-sm hover:shadow-md flex flex-col">
+                                    <div class="flex justify-between items-start mb-4">
+                                        <div
+                                            class="p-2 bg-slate-100 dark:bg-slate-700 rounded-lg text-slate-600 dark:text-slate-300">
+                                            <span class="material-symbols-outlined">apartment</span>
+                                        </div>
+                                        <div
+                                            class="size-5 rounded-full border-2 border-slate-300 dark:border-slate-600 peer-checked:border-primary peer-checked:bg-primary transition-colors">
+                                        </div>
+                                    </div>
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">Enterprise</h3>
+                                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-1">Custom solutions
+                                        for large organizations.</p>
+                                    <div class="text-2xl font-bold text-slate-900 dark:text-white">$199 <span
+                                            class="text-sm font-normal text-slate-500">/mo</span></div>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold">3</span>
+                                Equipment Add-ons
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: card-compact)</span>
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <label class="cursor-pointer">
+                                <input checked="" class="peer sr-only" type="checkbox" />
+                                <div
+                                    class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                    <div
+                                        class="h-10 w-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-slate-600 dark:text-slate-300">mic</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-sm text-slate-900 dark:text-white">Pro Mic</div>
+                                        <div class="text-xs text-slate-500">+$25/day</div>
+                                    </div>
+                                    <div class="text-primary opacity-0 peer-checked:opacity-100">
+                                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input class="peer sr-only" type="checkbox" />
+                                <div
+                                    class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                    <div
+                                        class="h-10 w-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-slate-600 dark:text-slate-300">videocam</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-sm text-slate-900 dark:text-white">4K Cam</div>
+                                        <div class="text-xs text-slate-500">+$150/day</div>
+                                    </div>
+                                    <div class="text-primary opacity-0 peer-checked:opacity-100">
+                                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer">
+                                <input class="peer sr-only" type="checkbox" />
+                                <div
+                                    class="flex items-center p-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors peer-checked:border-primary peer-checked:ring-1 peer-checked:ring-primary">
+                                    <div
+                                        class="h-10 w-10 rounded bg-slate-100 dark:bg-slate-700 flex items-center justify-center mr-3 flex-shrink-0">
+                                        <span
+                                            class="material-symbols-outlined text-slate-600 dark:text-slate-300">lightbulb</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-bold text-sm text-slate-900 dark:text-white">Light Kit</div>
+                                        <div class="text-xs text-slate-500">+$45/day</div>
+                                    </div>
+                                    <div class="text-primary opacity-0 peer-checked:opacity-100">
+                                        <span class="material-symbols-outlined text-sm">check_circle</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold">4</span>
+                                Support Level
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: card-icon)</span>
+                            </h2>
+                        </div>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <label class="cursor-pointer group">
+                                <input class="peer sr-only" name="support" type="radio" />
+                                <div
+                                    class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 peer-checked:border-primary peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 transition-all text-center h-full">
+                                    <span
+                                        class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary peer-checked:text-primary mb-2">mail</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">Email Only</span>
+                                    <span class="text-xs text-slate-400 mt-1">Free</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input checked="" class="peer sr-only" name="support" type="radio" />
+                                <div
+                                    class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 peer-checked:border-primary peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 transition-all text-center h-full">
+                                    <span
+                                        class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary peer-checked:text-primary mb-2">chat</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">Live Chat</span>
+                                    <span class="text-xs text-slate-400 mt-1">+$10/mo</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input class="peer sr-only" name="support" type="radio" />
+                                <div
+                                    class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 peer-checked:border-primary peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 transition-all text-center h-full">
+                                    <span
+                                        class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary peer-checked:text-primary mb-2">call</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">Phone</span>
+                                    <span class="text-xs text-slate-400 mt-1">+$25/mo</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer group">
+                                <input class="peer sr-only" name="support" type="radio" />
+                                <div
+                                    class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-800 hover:border-slate-200 dark:hover:border-slate-700 peer-checked:border-primary peer-checked:bg-blue-50 dark:peer-checked:bg-blue-900/20 transition-all text-center h-full">
+                                    <span
+                                        class="material-symbols-outlined text-3xl text-slate-400 group-hover:text-primary peer-checked:text-primary mb-2">verified_user</span>
+                                    <span class="text-sm font-bold text-slate-700 dark:text-slate-200">Dedicated</span>
+                                    <span class="text-xs text-slate-400 mt-1">+$99/mo</span>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold">5</span>
+                                Accent Selection
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: card-color &amp;
+                                    pill)</span>
+                            </h2>
+                        </div>
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <div>
+                                <span class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Primary
+                                    Color</span>
+                                <div class="flex flex-wrap gap-3">
+                                    <label class="cursor-pointer">
+                                        <input checked="" class="peer sr-only" name="color" type="radio" />
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-blue-500 shadow-sm ring-2 ring-transparent peer-checked:ring-offset-2 peer-checked:ring-blue-500 hover:scale-110 transition-all dark:ring-offset-slate-800">
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only" name="color" type="radio" />
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-emerald-500 shadow-sm ring-2 ring-transparent peer-checked:ring-offset-2 peer-checked:ring-emerald-500 hover:scale-110 transition-all dark:ring-offset-slate-800">
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only" name="color" type="radio" />
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-purple-500 shadow-sm ring-2 ring-transparent peer-checked:ring-offset-2 peer-checked:ring-purple-500 hover:scale-110 transition-all dark:ring-offset-slate-800">
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only" name="color" type="radio" />
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-rose-500 shadow-sm ring-2 ring-transparent peer-checked:ring-offset-2 peer-checked:ring-rose-500 hover:scale-110 transition-all dark:ring-offset-slate-800">
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <span class="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3">Pattern
+                                    Style</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <label class="cursor-pointer">
+                                        <input checked="" class="peer sr-only" name="pattern" type="radio" />
+                                        <span
+                                            class="px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-colors">Solid</span>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only" name="pattern" type="radio" />
+                                        <span
+                                            class="px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-colors">Gradient</span>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input class="peer sr-only" name="pattern" type="radio" />
+                                        <span
+                                            class="px-3 py-1.5 rounded-full text-xs font-bold border border-slate-200 dark:border-slate-600 bg-slate-50 dark:bg-slate-700 text-slate-600 dark:text-slate-300 peer-checked:bg-primary peer-checked:text-white peer-checked:border-primary transition-colors">Mesh</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
+                                <span
+                                    class="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-sm font-bold">6</span>
+                                Utility Fees
+                                <span class="text-xs font-normal text-slate-400 ml-2">(Style: list-toggle)</span>
+                            </h2>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
+                            <label
+                                class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400 p-2 rounded-lg">
+                                        <span class="material-symbols-outlined text-lg">bolt</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900 dark:text-white">Setup Fee</div>
+                                        <div class="text-xs text-slate-500">One-time installation</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-sm font-bold text-slate-900 dark:text-white">$150.00</span>
+                                    <div
+                                        class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+                                        <input checked=""
+                                            class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer peer checked:right-0 checked:border-primary transition-all duration-300 right-4 top-1"
+                                            name="toggle" type="checkbox" />
+                                        <div
+                                            class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 dark:bg-slate-600 cursor-pointer peer-checked:bg-primary transition-colors">
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                            <label
+                                class="flex items-center justify-between p-4 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400 p-2 rounded-lg">
+                                        <span class="material-symbols-outlined text-lg">security</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-slate-900 dark:text-white">Insurance</div>
+                                        <div class="text-xs text-slate-500">Damage protection</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4">
+                                    <span class="text-sm font-bold text-slate-900 dark:text-white">$45.00</span>
+                                    <div
+                                        class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+                                        <input
+                                            class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer peer checked:right-0 checked:border-primary transition-all duration-300 right-4 top-1"
+                                            name="toggle" type="checkbox" />
+                                        <div
+                                            class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-300 dark:bg-slate-600 cursor-pointer peer-checked:bg-primary transition-colors">
+                                        </div>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <aside
+                class="w-[380px] hidden lg:flex flex-col border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-xl">
+                <div class="p-6 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900">
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">receipt_long</span>
+                        Quote Summary
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Real-time estimation based on your
+                        selections.</p>
+                </div>
+                <div class="flex-1 overflow-y-auto p-6 space-y-6">
+                    <div>
+                        <span
+                            class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Service</span>
+                        <div class="font-bold text-slate-900 dark:text-white text-lg">Custom Service Build</div>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span
+                                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                Drafting
+                            </span>
+                            <span class="text-xs text-slate-400">ID: #DEMO-STYLE-01</span>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-100 dark:bg-slate-800 w-full"></div>
+                    <div class="space-y-3">
+                        <span
+                            class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">Breakdown</span>
+                        <div class="flex justify-between items-start group">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-slate-400 text-sm mt-0.5">style</span>
+                                <div>
+                                    <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">Theme: Elegant
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-slate-900 dark:text-white font-bold text-sm">$500.00</div>
+                        </div>
+                        <div class="flex justify-between items-start group">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-slate-400 text-sm mt-0.5">inventory_2</span>
+                                <div>
+                                    <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">Package:
+                                        Professional</div>
+                                    <div class="text-slate-400 text-xs">Monthly Subscription</div>
+                                </div>
+                            </div>
+                            <div class="text-slate-900 dark:text-white font-bold text-sm">$49.00</div>
+                        </div>
+                        <div class="flex justify-between items-start group">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">mic</span>
+                                <div>
+                                    <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">Pro Mic</div>
+                                    <div class="text-slate-400 text-xs">Add-on</div>
+                                </div>
+                            </div>
+                            <div class="text-slate-900 dark:text-white font-bold text-sm">$25.00</div>
+                        </div>
+                        <div class="flex justify-between items-start group">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-primary text-sm mt-0.5">chat</span>
+                                <div>
+                                    <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">Live Chat</div>
+                                    <div class="text-slate-400 text-xs">Support Level</div>
+                                </div>
+                            </div>
+                            <div class="text-slate-900 dark:text-white font-bold text-sm">$10.00</div>
+                        </div>
+                        <div class="flex justify-between items-start group">
+                            <div class="flex gap-2">
+                                <span class="material-symbols-outlined text-slate-400 text-sm mt-0.5">bolt</span>
+                                <div>
+                                    <div class="text-slate-700 dark:text-slate-300 font-medium text-sm">Setup Fee</div>
+                                    <div class="text-slate-400 text-xs">One-time</div>
+                                </div>
+                            </div>
+                            <div class="text-slate-900 dark:text-white font-bold text-sm">$150.00</div>
+                        </div>
+                    </div>
+                    <div class="h-px bg-slate-100 dark:bg-slate-800 w-full"></div>
+                    <div
+                        class="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-3 flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-xl">info</span>
+                        <div>
+                            <p class="text-blue-800 dark:text-blue-300 text-sm font-bold">Review Selections</p>
+                            <p class="text-blue-600 dark:text-blue-400 text-xs mt-0.5">You can update these options at
+                                any time.</p>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="mt-auto p-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Subtotal</span>
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-300">$734.00</span>
+                    </div>
+                    <div class="flex items-end justify-between pt-4 border-t border-slate-200 dark:border-slate-700">
+                        <div>
+                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Est.</span>
+                        </div>
+                        <div class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">$734.00</div>
+                    </div>
+                    <button
+                        class="w-full mt-6 bg-primary hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                        <span>Generate Proposal</span>
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </button>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+</body>
+
+</html>

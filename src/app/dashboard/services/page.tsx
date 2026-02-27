@@ -143,7 +143,7 @@ export default function ServicesPage() {
                         </Button>
                     </div>
                     <Button asChild>
-                        <Link href="/dashboard/services/new">
+                        <Link href="/services/new">
                             <Plus className="mr-2 h-4 w-4" />
                             Add Service
                         </Link>
@@ -181,7 +181,7 @@ export default function ServicesPage() {
                             Create your first service to start receiving bookings.
                         </p>
                         <Button asChild>
-                            <Link href="/dashboard/services/new">
+                            <Link href="/services/new">
                                 <Plus className="mr-2 h-4 w-4" />
                                 Create Service
                             </Link>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
                             </Link>
                         </div>
                     ))}
-                    <Link href="/dashboard/services/new">
+                    <Link href="/services/new">
                         <Card className="h-full border-dashed hover:border-primary hover:bg-muted/50 transition-colors cursor-pointer">
                             <CardContent className="flex flex-col items-center justify-center h-full min-h-[280px]">
                                 <div className="rounded-full bg-muted p-4 mb-4">

@@ -534,16 +534,16 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                     <table className="w-full text-sm text-left">
                                                         <thead className="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-200">
                                                             <tr>
-                                                                <th className="px-5 py-3 font-semibold">Label</th>
-                                                                <th className="px-5 py-3 font-semibold">Description</th>
-                                                                <th className="px-5 py-3 font-semibold">Price Delta</th>
+                                                                <th className="px-4 py-3 font-semibold w-40">Label</th>
+                                                                <th className="px-4 py-3 font-semibold">Description</th>
+                                                                <th className="px-4 py-3 font-semibold w-24">Price</th>
                                                                 {isImageStyle(configuringStep.displayStyle) && (
-                                                                    <th className="px-5 py-3 font-semibold">Image URL</th>
+                                                                    <th className="px-4 py-3 font-semibold w-24">Image</th>
                                                                 )}
                                                                 {isColorStyle(configuringStep.displayStyle) && (
-                                                                    <th className="px-5 py-3 font-semibold">Color</th>
+                                                                    <th className="px-4 py-3 font-semibold w-20">Color</th>
                                                                 )}
-                                                                <th className="px-5 py-3 font-semibold text-right">Actions</th>
+                                                                <th className="px-4 py-3 font-semibold text-right w-16">Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody className="divide-y divide-slate-100">
@@ -552,7 +552,7 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                                     key={option.id} 
                                                                     className={`hover:bg-slate-50 transition-colors ${configuringOptionId === option.id ? 'bg-blue-50/50' : ''}`}
                                                                 >
-                                                                    <td className="px-5 py-3">
+                                                                    <td className="px-4 py-3">
                                                                         <input
                                                                             type="text"
                                                                             value={option.label}
@@ -560,7 +560,7 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                                             className="w-full bg-transparent border-none text-sm font-medium text-slate-900 focus:outline-none focus:ring-0"
                                                                         />
                                                                     </td>
-                                                                    <td className="px-5 py-3">
+                                                                    <td className="px-4 py-3">
                                                                         <input
                                                                             type="text"
                                                                             value={option.description || ''}
@@ -569,45 +569,46 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                                             placeholder="Optional"
                                                                         />
                                                                     </td>
-                                                                    <td className="px-5 py-3">
-                                                                        <div className="flex items-center gap-1">
-                                                                            <span className="text-slate-400">$</span>
+                                                                    <td className="px-4 py-3">
+                                                                        <div className="flex items-center gap-1 bg-slate-50 rounded px-2 py-1 border border-slate-200">
+                                                                            <span className="text-slate-400 text-xs">$</span>
                                                                             <input
                                                                                 type="number"
                                                                                 value={option.baseDelta}
                                                                                 onChange={(e) => updateOption(configuringStep.id, option.id, { baseDelta: parseFloat(e.target.value) || 0 })}
-                                                                                className="w-20 bg-transparent border-none text-sm font-mono text-slate-900 focus:outline-none focus:ring-0"
+                                                                                className="w-16 bg-transparent border-none text-sm font-mono text-slate-900 focus:outline-none focus:ring-0 [-moz-appearance:textfield]"
+                                                                                style={{ WebkitAppearance: 'none' }}
                                                                             />
                                                                         </div>
                                                                     </td>
                                                                     {isImageStyle(configuringStep.displayStyle) && (
-                                                                        <td className="px-5 py-3">
+                                                                        <td className="px-4 py-3">
                                                                             <button
                                                                                 onClick={() => openImagePicker(option.id)}
-                                                                                className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all text-xs font-medium text-slate-600"
+                                                                                className="flex items-center gap-1.5 px-2 py-1 rounded border border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all text-xs font-medium text-slate-600"
                                                                             >
-                                                                                <div className="w-6 h-6 rounded bg-slate-100 overflow-hidden shrink-0">
+                                                                                <div className="w-5 h-5 rounded bg-slate-100 overflow-hidden shrink-0">
                                                                                     {option.image ? (
                                                                                         <img src={option.image} alt="" className="w-full h-full object-cover" />
                                                                                     ) : (
                                                                                         <div className="w-full h-full flex items-center justify-center text-slate-400">
-                                                                                            <ImageIcon size={12} />
+                                                                                            <ImageIcon size={10} />
                                                                                         </div>
                                                                                     )}
                                                                                 </div>
-                                                                                {option.image ? 'Change' : 'Set Image'}
+                                                                                {option.image ? 'Change' : 'Set'}
                                                                             </button>
                                                                         </td>
                                                                     )}
                                                                     {isColorStyle(configuringStep.displayStyle) && (
-                                                                        <td className="px-5 py-3">
+                                                                        <td className="px-4 py-3">
                                                                             <ColorPicker
                                                                                 value={option.colorHex || ''}
                                                                                 onChange={(color) => updateOption(configuringStep.id, option.id, { colorHex: color })}
                                                                             />
                                                                         </td>
                                                                     )}
-                                                                    <td className="px-5 py-3 text-right">
+                                                                    <td className="px-4 py-3 text-right">
                                                                         <button 
                                                                             onClick={() => removeOption(configuringStep.id, option.id)}
                                                                             className="text-slate-400 hover:text-red-500 transition-colors p-1"
