@@ -168,26 +168,6 @@ export const ConsumerPreview: React.FC<Props> = ({ service }) => {
                                     );
                                 })
                             )}
-
-                            <div className="border-t-2 border-blue-100 pt-8 mt-8">
-                                <label className="block text-xs font-bold uppercase text-slate-600 mb-3 ml-1">Total Package Quantity</label>
-                                <div className="flex items-center gap-4">
-                                    <button
-                                        className="h-12 w-12 border-2 border-blue-300 rounded-xl hover:bg-blue-50 text-blue-600 font-bold transition-all hover:scale-105 shadow-sm"
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                    >
-                                        −
-                                    </button>
-                                    <span className="font-mono font-bold text-2xl text-slate-900 min-w-[60px] text-center">{quantity}</span>
-                                    <button
-                                        className="h-12 w-12 border-2 border-blue-300 rounded-xl hover:bg-blue-50 text-blue-600 font-bold transition-all hover:scale-105 shadow-sm"
-                                        onClick={() => setQuantity(quantity + 1)}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                                <p className="text-xs text-slate-500 mt-3 ml-1">Applies to the entire configuration</p>
-                            </div>
                         </div>
                     </div>
 
