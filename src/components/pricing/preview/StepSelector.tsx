@@ -6,6 +6,7 @@ import { Check, Lock, Image as ImageIcon, Users } from 'lucide-react';
 interface Props {
     service: Service;
     step: ConfigStep;
+    stepNumber?: number;
     selections: SelectionState;
     stepQuantities: QuantityState;
     onSelect: (stepId: string, optionId: string) => void;
@@ -15,6 +16,7 @@ interface Props {
 export const StepSelector: React.FC<Props> = ({
     service,
     step,
+    stepNumber,
     selections,
     stepQuantities,
     onSelect,
@@ -113,50 +115,47 @@ export const StepSelector: React.FC<Props> = ({
     );
 
     const renderStandardCards = () => (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {step.options.map(option => {
                 const isSelected = selectedIds.includes(option.id);
                 const isDisabled = isOptionDisabled(service, option.id, selections);
                 const { price, isOverridden } = getEffectiveOptionPrice(service, option, selections);
 
                 return (
-                    <button
+                    <label
                         key={option.id}
-                        onClick={() => !isDisabled && onSelect(step.id, option.id)}
-                        disabled={isDisabled}
-                        className={`
-                  relative flex flex-col p-4 text-left border rounded-xl transition-all duration-200
-                  ${isDisabled
-                                ? 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
-                                : isSelected
-                                    ? 'bg-blue-50 border-blue-500 ring-1 ring-blue-500 shadow-sm'
-                                    : 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-md'
-                            }
-                `}
+                        className={`relative group cursor-pointer h-full ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                     >
-                        <div className="flex justify-between w-full items-start mb-1">
-                            <span className={`font-medium ${isDisabled ? 'text-slate-400' : 'text-slate-900'}`}>
-                                {option.label}
-                            </span>
-                            {isSelected && <Check size={18} className="text-blue-600" />}
-                            {isDisabled && <Lock size={16} className="text-slate-400" />}
-                        </div>
-
-                        <div className="text-sm text-slate-500 mb-4 min-h-[1.5em]">
-                            {isDisabled ? 'Not available' : (option.description || '')}
-                        </div>
-
-                        <div className="mt-auto pt-3 border-t border-slate-100 w-full flex justify-between items-center">
-                            <div className={`${isOverridden ? 'text-amber-600' : ''}`}>
-                                {renderPrice(price)}
+                        <input
+                            type="radio"
+                            className="peer sr-only"
+                            checked={isSelected}
+                            onChange={() => !isDisabled && onSelect(step.id, option.id)}
+                            disabled={isDisabled}
+                        />
+                        <div
+                            className={`h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-100 hover:border-blue-200 peer-checked:border-blue-600 peer-checked:bg-blue-50/30 transition-all shadow-sm hover:shadow-md flex flex-col ${
+                                isDisabled ? 'border-slate-200 opacity-60' : ''
+                            }`}
+                        >
+                            <div className="flex justify-between items-start mb-4">
+                                <div className="p-2 bg-slate-100 rounded-lg text-slate-600">
+                                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                                    </svg>
+                                </div>
+                                <div className={`w-5 rounded-full border-2 border-slate-300 peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-colors ${isSelected ? 'bg-blue-600 border-blue-600' : ''}`}>
+                                    {isSelected && <Check size={12} className="text-white" />}
+                                </div>
                             </div>
-                            {isOverridden && !isDisabled && (
-                                <span className="text-[10px] uppercase tracking-wider font-bold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">
-                                    Updated
-                                </span>
-                            )}
+                            <h3 className="text-lg font-bold text-slate-900 mb-2">{option.label}</h3>
+                            <p className="text-sm text-slate-500 mb-6 flex-1">{option.description || 'No description'}</p>
+                            <div className="text-2xl font-bold text-slate-900">
+                                ${price.toLocaleString()}
+                                {price > 0 && <span className="text-sm font-normal text-slate-500"></span>}
+                            </div>
                         </div>
-                    </button>
+                    </label>
                 );
             })}
         </div>
@@ -340,70 +339,53 @@ export const StepSelector: React.FC<Props> = ({
     );
 
     const renderImageCards = () => (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {step.options.map(option => {
                 const isSelected = selectedIds.includes(option.id);
                 const isDisabled = isOptionDisabled(service, option.id, selections);
                 const { price, isOverridden } = getEffectiveOptionPrice(service, option, selections);
 
                 return (
-                    <button
+                    <label
                         key={option.id}
-                        onClick={() => !isDisabled && onSelect(step.id, option.id)}
-                        disabled={isDisabled}
-                        className={`
-                        group relative border rounded-xl overflow-hidden transition-all text-left flex flex-col
-                        ${isDisabled
-                                ? 'opacity-60 cursor-not-allowed border-slate-200'
-                                : isSelected
-                                    ? 'border-blue-500 ring-2 ring-blue-500 ring-offset-2'
-                                    : 'border-slate-200 hover:border-blue-300 hover:shadow-lg'
-                            }
-                    `}
+                        className={`group cursor-pointer relative block ${isDisabled ? 'opacity-60 cursor-not-allowed' : ''}`}
                     >
-                        {/* Image Area */}
-                        <div className="h-32 w-full bg-slate-100 relative overflow-hidden">
+                        <input
+                            type="radio"
+                            className="peer sr-only"
+                            checked={isSelected}
+                            onChange={() => !isDisabled && onSelect(step.id, option.id)}
+                            disabled={isDisabled}
+                        />
+                        <div
+                            className={`relative overflow-hidden rounded-2xl aspect-video transition-all ring-2 ring-transparent peer-checked:ring-blue-600 peer-checked:ring-offset-2 group-hover:shadow-lg ${
+                                isDisabled ? 'opacity-60' : ''
+                            }`}
+                        >
                             {option.image ? (
-                                <img src={option.image} alt={option.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <img src={option.image} alt={option.label} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                             ) : (
-                                <div className="w-full h-full flex items-center justify-center text-slate-300">
-                                    <ImageIcon size={32} />
+                                <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+                                    <ImageIcon size={32} className="text-slate-400" />
                                 </div>
                             )}
-
-                            {/* Selection Overlay */}
-                            {isSelected && (
-                                <div className="absolute inset-0 bg-blue-900/10 flex items-center justify-center">
-                                    <div className="bg-blue-600 text-white p-1.5 rounded-full shadow-sm">
-                                        <Check size={20} />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                            <div className="absolute bottom-0 left-0 p-6 w-full text-white">
+                                <div className="flex justify-between items-end">
+                                    <div>
+                                        <h3 className="text-xl font-bold mb-1">{option.label}</h3>
+                                        <p className="text-sm text-slate-200">{option.description}</p>
+                                    </div>
+                                    <div className="bg-white/20 backdrop-blur-md px-3 py-1 rounded-lg text-sm font-bold">
+                                        ${price.toLocaleString()}
                                     </div>
                                 </div>
-                            )}
-
-                            {isDisabled && (
-                                <div className="absolute inset-0 bg-slate-100/50 backdrop-blur-[1px] flex items-center justify-center">
-                                    <Lock size={20} className="text-slate-500" />
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Content Area */}
-                        <div className="p-3 bg-white flex-1 flex flex-col">
-                            <div className="flex justify-between items-start mb-1">
-                                <span className="font-semibold text-slate-800 text-sm leading-tight">{option.label}</span>
                             </div>
-                            <p className="text-xs text-slate-500 mb-2 line-clamp-2">{option.description}</p>
-
-                            <div className="mt-auto pt-2 border-t border-slate-100 flex justify-between items-center">
-                                <span className={`text-sm font-medium ${isOverridden ? 'text-amber-600' : 'text-slate-600'}`}>
-                                    {price === 0 ? 'Included' : `+$${price.toLocaleString()}`}
-                                </span>
-                                {isOverridden && !isDisabled && (
-                                    <span className="text-[10px] uppercase font-bold text-amber-600">Updated</span>
-                                )}
+                            <div className="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
+                                <span className="text-white bg-blue-600 rounded-full p-1 shadow-lg">✓</span>
                             </div>
                         </div>
-                    </button>
+                    </label>
                 );
             })}
         </div>
@@ -456,13 +438,15 @@ export const StepSelector: React.FC<Props> = ({
             <div className="flex items-center justify-between mb-5">
                 <h3 className="text-xl font-bold text-slate-900 flex items-center gap-3">
                     <div className="relative">
-                        <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-cyan-600 rounded-xl blur opacity-30" />
-                        <span className={`relative flex items-center justify-center w-9 h-9 rounded-xl text-white text-sm font-bold shadow-lg ${step.selectionType === 'fixed' ? 'bg-linear-to-br from-slate-500 to-slate-600' : 'bg-linear-to-br from-blue-600 to-cyan-600'}`}>
-                            {step.selectionType === 'fixed' ? <Lock size={14} /> : step.order}
+                        <span className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold shadow-lg ${step.selectionType === 'fixed' ? 'bg-slate-200 text-slate-600' : 'bg-blue-600 text-white'}`}>
+                            {stepNumber || step.order}
                         </span>
                     </div>
                     {step.name}
                 </h3>
+                {step.required && (
+                    <span className="text-sm font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded">Required</span>
+                )}
             </div>
 
             {step.selectionType === 'fixed' ? (
