@@ -8,10 +8,11 @@ import {
     LayoutDashboard,
     Calendar,
     Menu,
-    ChevronRight,
     LogOut,
     MessageSquare,
-    User,
+    ChevronRight,
+    Bell,
+    Store,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,18 +21,8 @@ import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { getTotalUnreadCount } from "@/lib/supabase-chat";
-import { Badge as UIBadge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
-interface CustomerSidebarContentProps {
+interface SidebarProps {
     subdomain: string;
     pathname: string;
     setIsMobileOpen: (open: boolean) => void;
@@ -41,76 +32,121 @@ interface CustomerSidebarContentProps {
     unreadCount?: number;
 }
 
+const navItems = (subdomain: string) => [
+    { href: `/storefront/${subdomain}/customer`, icon: LayoutDashboard, label: "Home", exact: true },
+    { href: `/storefront/${subdomain}/customer/bookings`, icon: Calendar, label: "My Bookings", exact: false },
+    { href: `/storefront/${subdomain}/customer/messages`, icon: MessageSquare, label: "Messages", exact: false },
+];
+
 function CustomerSidebarContent({
     subdomain,
     pathname,
     setIsMobileOpen,
-    unreadCount = 0
-}: CustomerSidebarContentProps) {
-    const sidebarItems = [
-        { href: `/storefront/${subdomain}/customer`, icon: LayoutDashboard, label: "Home" },
-        { href: `/storefront/${subdomain}/customer/bookings`, icon: Calendar, label: "My Bookings" },
-        { href: `/storefront/${subdomain}/customer/messages`, icon: MessageSquare, label: "Messages" },
-    ];
+    user,
+    customer,
+    onLogout,
+    unreadCount = 0,
+}: SidebarProps) {
+    const items = navItems(subdomain);
+    const displayName = customer?.name || user?.user_metadata?.name || user?.email?.split("@")[0] || "Customer";
+    const initials = displayName.slice(0, 2).toUpperCase();
 
     return (
-        <div className="flex h-full flex-col">
-            {/* Logo Area */}
-            <div className="flex h-16 items-center px-6 border-b border-sidebar-border bg-sidebar">
-                <Link href={`/storefront/${subdomain}/customer`} className="flex items-center gap-2">
+        <div className="flex h-full flex-col" style={{ background: "linear-gradient(180deg, #0f1e3c 0%, #0d1b37 100%)" }}>
+            {/* Brand */}
+            <div className="flex h-16 items-center px-5 border-b border-white/5">
+                <Link
+                    href={`/storefront/${subdomain}/customer`}
+                    className="flex items-center gap-2"
+                    onClick={() => setIsMobileOpen(false)}
+                >
                     <Image
                         src="/images/logo_zaaro_croped.png"
                         alt="Zaaro"
                         width={100}
                         height={32}
-                        className="h-8 w-auto"
+                        className="h-8 w-auto brightness-0 invert"
                         priority
                     />
                 </Link>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 space-y-1 px-3 py-4">
-                {sidebarItems.map((item) => {
-                    const isActive = item.href === `/storefront/${subdomain}/customer` 
-                        ? pathname === `/storefront/${subdomain}/customer`
-                        : pathname === item.href;
+            <nav className="flex-1 px-3 py-5 space-y-1">
+                {items.map((item) => {
+                    const isActive = item.exact
+                        ? pathname === item.href
+                        : pathname.startsWith(item.href);
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
                             onClick={() => setIsMobileOpen(false)}
                             className={cn(
-                                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                                "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 relative group",
                                 isActive
-                                    ? "bg-blue-50 text-blue-600 shadow-sm"
-                                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                    ? "bg-white/10 text-white border-l-[3px] border-blue-400 pl-[9px]"
+                                    : "text-white/50 hover:text-white/80 hover:bg-white/5"
                             )}
                         >
-                            <item.icon className="h-5 w-5" />
-                            {item.label}
+                            <item.icon className={cn("h-[18px] w-[18px] flex-shrink-0", isActive ? "text-blue-300" : "")} />
+                            <span>{item.label}</span>
                             {item.label === "Messages" && unreadCount > 0 && (
-                                <UIBadge className="ml-auto bg-primary text-white text-[10px] h-5 min-w-[20px] rounded-full flex items-center justify-center border-none shadow-lg shadow-primary/20">
+                                <span className="ml-auto flex h-5 min-w-[20px] items-center justify-center rounded-full bg-blue-500 px-1.5 text-[10px] font-bold text-white shadow-lg shadow-blue-500/30">
                                     {unreadCount}
-                                </UIBadge>
+                                </span>
                             )}
-                            {isActive && item.label !== "Messages" && <ChevronRight className="ml-auto h-4 w-4" />}
                         </Link>
                     );
                 })}
             </nav>
 
-            <div className="p-4 mt-auto">
-                <Button variant="outline" className="w-full justify-start text-muted-foreground" asChild>
-                    <Link href={`/storefront/${subdomain}`}>
-                        <ChevronRight className="mr-2 h-4 w-4 rotate-180" />
-                        Back to Shop
-                    </Link>
-                </Button>
+            {/* Back to Shop */}
+            <div className="px-3 pb-3">
+                <Link
+                    href={`/storefront/${subdomain}`}
+                    className="flex items-center gap-2 px-3 py-2 rounded-xl text-white/30 hover:text-white/60 text-xs transition-colors group"
+                >
+                    <Store className="h-3.5 w-3.5" />
+                    <span>Back to Shop</span>
+                    <ChevronRight className="ml-auto h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+            </div>
+
+            {/* Divider */}
+            <div className="mx-4 border-t border-white/5" />
+
+            {/* User Profile Footer */}
+            <div className="p-4">
+                <div className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-white/5 transition-colors">
+                    <Avatar className="h-8 w-8 flex-shrink-0 ring-2 ring-blue-400/30">
+                        <AvatarImage src={customer?.avatar_url || user?.user_metadata?.avatar_url} />
+                        <AvatarFallback className="bg-blue-600 text-white text-xs font-bold">
+                            {initials}
+                        </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-white truncate">{displayName}</p>
+                        <p className="text-[11px] text-white/40 truncate">{user?.email}</p>
+                    </div>
+                    <button
+                        onClick={onLogout}
+                        title="Log out"
+                        className="h-7 w-7 flex items-center justify-center rounded-lg text-white/30 hover:text-red-400 hover:bg-white/5 transition-colors flex-shrink-0"
+                    >
+                        <LogOut className="h-3.5 w-3.5" />
+                    </button>
+                </div>
             </div>
         </div>
     );
 }
+
+const pageTitles: Record<string, string> = {
+    "customer": "Home",
+    "bookings": "My Bookings",
+    "messages": "Messages",
+};
 
 export default function CustomerDashboardLayout({
     children,
@@ -129,6 +165,10 @@ export default function CustomerDashboardLayout({
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const supabase = createClient();
 
+    // Derive page title from pathname
+    const pathSegment = pathname.split("/").filter(Boolean).pop() || "customer";
+    const pageTitle = pageTitles[pathSegment] ?? "Dashboard";
+
     useEffect(() => {
         const checkUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
@@ -137,24 +177,19 @@ export default function CustomerDashboardLayout({
                 return;
             }
 
-            // Verify customer
             const { data: customerData } = await supabase
-                .from('customers')
-                .select('*')
-                .eq('id', user.id)
+                .from("customers")
+                .select("*")
+                .eq("id", user.id)
                 .single();
 
             if (!customerData) {
-                // Fallback for organizers testing
                 const { data: organizer } = await supabase
-                    .from('organizers')
-                    .select('id')
-                    .eq('id', user.id)
+                    .from("organizers")
+                    .select("id")
+                    .eq("id", user.id)
                     .single();
-
-                if (organizer) {
-                    // Allow organizer to view but maybe warn? or just proceed.
-                } else {
+                if (!organizer) {
                     router.push(`/storefront/${subdomain}/login`);
                     return;
                 }
@@ -164,16 +199,14 @@ export default function CustomerDashboardLayout({
             setCustomer(customerData);
             setIsLoading(false);
 
-            // Fetch unread count
             const count = await getTotalUnreadCount(user.id);
             setUnreadCount(count);
 
-            // Subscribe to message updates
             const channel = supabase
-                .channel('customer-unread-count')
+                .channel("customer-unread-count")
                 .on(
-                    'postgres_changes',
-                    { event: '*', schema: 'public', table: 'messages' },
+                    "postgres_changes",
+                    { event: "*", schema: "public", table: "messages" },
                     async () => {
                         const newCount = await getTotalUnreadCount(user.id);
                         setUnreadCount(newCount);
@@ -197,16 +230,19 @@ export default function CustomerDashboardLayout({
 
     if (isLoading) {
         return (
-            <div className="flex h-screen items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            <div className="flex h-screen items-center justify-center bg-[#f0f4ff]">
+                <div className="flex flex-col items-center gap-3">
+                    <div className="h-10 w-10 rounded-full border-[3px] border-blue-600/20 border-t-blue-600 animate-spin" />
+                    <p className="text-sm text-slate-400 font-medium">Loading your dashboard…</p>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="flex h-screen bg-[#f5f7fa]">
+        <div className="flex h-screen bg-[#f0f4ff]">
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:flex w-[240px] flex-col border-r bg-card">
+            <aside className="hidden lg:flex w-[240px] flex-col flex-shrink-0 shadow-xl shadow-slate-900/10">
                 <CustomerSidebarContent
                     subdomain={subdomain}
                     pathname={pathname}
@@ -220,7 +256,7 @@ export default function CustomerDashboardLayout({
 
             {/* Mobile Sidebar */}
             <Sheet open={isMobileOpen} onOpenChange={setIsMobileOpen}>
-                <SheetContent side="left" className="w-64 p-0">
+                <SheetContent side="left" className="w-64 p-0 border-0">
                     <SheetTitle className="sr-only">Menu</SheetTitle>
                     <CustomerSidebarContent
                         subdomain={subdomain}
@@ -234,52 +270,50 @@ export default function CustomerDashboardLayout({
                 </SheetContent>
             </Sheet>
 
-            {/* Main Content */}
-            <div className="flex flex-1 flex-col overflow-hidden">
+            {/* Main Content Area */}
+            <div className="flex flex-1 flex-col overflow-hidden min-w-0">
                 {/* Top Bar */}
-                <header className="flex h-16 items-center justify-between border-b bg-card px-4 lg:px-6">
-                    <div className="flex items-center gap-4">
+                <header className="flex h-14 items-center justify-between border-b border-blue-100/60 bg-white/80 backdrop-blur-sm px-4 lg:px-6 flex-shrink-0">
+                    <div className="flex items-center gap-3">
                         <Button
                             variant="ghost"
                             size="icon"
-                            className="lg:hidden"
+                            className="lg:hidden h-8 w-8 text-slate-500"
                             onClick={() => setIsMobileOpen(true)}
                         >
                             <Menu className="h-5 w-5" />
                         </Button>
-                        <h1 className="text-lg font-semibold md:hidden">My Dashboard</h1>
+                        <div className="hidden lg:flex items-center gap-2 text-sm text-slate-400">
+                            <span className="font-medium text-slate-700">{pageTitle}</span>
+                        </div>
+                        <h1 className="text-base font-semibold text-slate-800 lg:hidden">{pageTitle}</h1>
                     </div>
 
-                    <div className="flex items-center gap-4 ml-auto">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                                    <Avatar className="h-10 w-10">
-                                        <AvatarImage src={customer?.avatar_url || user?.user_metadata?.avatar_url} />
-                                        <AvatarFallback className="bg-primary text-primary-foreground">
-                                            {customer?.name
-                                                ? customer.name.charAt(0).toUpperCase()
-                                                : user?.email?.charAt(0).toUpperCase() || "U"}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent className="w-56" align="end" forceMount>
-                                <DropdownMenuLabel className="font-normal">
-                                    <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-medium leading-none">{customer?.name || "Customer"}</p>
-                                        <p className="text-xs leading-none text-muted-foreground">
-                                            {user?.email}
-                                        </p>
-                                    </div>
-                                </DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive cursor-pointer">
-                                    <LogOut className="mr-2 h-4 w-4" />
-                                    <span>Log out</span>
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
+                    <div className="flex items-center gap-2">
+                        {/* Messages notification for mobile/top bar */}
+                        <Link
+                            href={`/storefront/${subdomain}/customer/messages`}
+                            className="relative h-8 w-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                        >
+                            <Bell className="h-4.5 w-4.5 h-[18px] w-[18px]" />
+                            {unreadCount > 0 && (
+                                <span className="absolute -top-0.5 -right-0.5 h-4 min-w-[16px] flex items-center justify-center rounded-full bg-blue-600 text-[9px] font-bold text-white px-1">
+                                    {unreadCount}
+                                </span>
+                            )}
+                        </Link>
+                        {/* Avatar shortcut on top bar (desktop) */}
+                        <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-100">
+                            <Avatar className="h-7 w-7">
+                                <AvatarImage src={customer?.avatar_url || user?.user_metadata?.avatar_url} />
+                                <AvatarFallback className="bg-blue-600 text-white text-[10px] font-bold">
+                                    {(customer?.name || user?.email || "U").slice(0, 2).toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                            <span className="text-sm font-medium text-slate-700 max-w-[120px] truncate">
+                                {customer?.name || user?.email?.split("@")[0]}
+                            </span>
+                        </div>
                     </div>
                 </header>
 
