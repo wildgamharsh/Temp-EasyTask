@@ -203,7 +203,7 @@ export function ChatWindow({ conversationId, currentUser, partner, bookingId, ty
     const isCancelled = quoteStatus === 'cancelled' || quoteStatus === 'rejected';
 
     return (
-        <div className="flex-1 flex flex-col min-w-0 min-h-0 h-full bg-white shadow-xl rounded-r-3xl border-l border-slate-100 overflow-hidden relative">
+        <div className="flex-1 flex flex-col min-w-0 min-h-0 h-full bg-white shadow-xl border-l border-slate-100 overflow-hidden relative">
 
             {type === 'quote' && (
                 <>

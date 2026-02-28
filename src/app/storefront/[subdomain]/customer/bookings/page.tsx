@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { format } from "date-fns";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
     Loader2,
     Calendar as CalendarIcon,
@@ -12,15 +14,13 @@ import {
     MessageSquare,
     Eye,
     Search,
-    Copy,
-    Check,
-    MapPin,
+    CheckCircle2,
     Clock,
-    User,
-    Tag
+    XCircle,
+    AlertCircle,
+    ArrowUpRight
 } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -47,32 +47,32 @@ import {
     Rule
 } from "@/types/pricing";
 import { evaluatePrice } from "@/lib/pricing/pricing-engine";
-
 import { BookingOverviewModal } from "@/components/booking/BookingOverviewModal";
+import { Booking as GlobalBooking, ServicePricingModel } from "@/lib/database.types";
 
-// Status Badge Config
-const statusConfig: Record<string, { label: string; className: string }> = {
+const statusConfig: Record<string, { label: string; className: string; icon: any }> = {
     pending: {
         label: "Pending",
         className: "bg-orange-50 text-orange-600 border border-orange-100",
+        icon: Clock,
     },
     confirmed: {
         label: "Confirmed",
         className: "bg-blue-50 text-blue-600 border border-blue-100",
+        icon: CheckCircle2,
     },
     completed: {
         label: "Completed",
         className: "bg-emerald-50 text-emerald-600 border border-emerald-100",
+        icon: CheckCircle2,
     },
     cancelled: {
         label: "Cancelled",
         className: "bg-slate-50 text-slate-500 border border-slate-100",
+        icon: XCircle,
     },
 };
 
-import { Booking as GlobalBooking, ServicePricingModel } from "@/lib/database.types";
-
-// Extend GlobalBooking to include specific joins and virtual fields used in this page
 interface Booking extends GlobalBooking {
     organizer: {
         business_name: string;
@@ -81,8 +81,7 @@ interface Booking extends GlobalBooking {
     configuration_snapshot?: any;
     selection_state?: SelectionState;
     step_quantities?: QuantityState;
-    guest_count?: number; // Usually global quantity
-    // Pricing Breakdown from DB JSONB (Fallback)
+    guest_count?: number;
     pricing_breakdown?: {
         pricing_model: ServicePricingModel;
         base_amount: number;
@@ -142,9 +141,11 @@ export default function CustomerBookingsPage() {
         return matchesSearch;
     });
 
-    const copyBookingId = (id: string) => {
-        navigator.clipboard.writeText(id);
-        toast.success("Booking ID copied to clipboard");
+    const stats = {
+        total: bookings.length,
+        pending: bookings.filter(b => b.status === 'pending').length,
+        confirmed: bookings.filter(b => b.status === 'confirmed').length,
+        completed: bookings.filter(b => b.status === 'completed').length,
     };
 
     const handleMessageOrganizer = async (booking: Booking) => {
@@ -169,15 +170,11 @@ export default function CustomerBookingsPage() {
 
         try {
             const config = booking.configuration_snapshot;
-
-            // Construct Pricing Service Object
-            // The snapshot usually contains steps and rules. 
-            // We need to map it carefully to the PricingService type expected by evaluatePrice.
             const engineService: PricingService = {
-                id: booking.id, // Mock ID
+                id: booking.id,
                 name: booking.service_name,
                 description: "",
-                basePrice: 0, // Configured services usually start at 0
+                basePrice: 0,
                 pricingMode: PricingMode.CONFIGURED,
                 steps: (config.steps || []) as ConfigStep[],
                 rules: (config.rules || []) as Rule[]
@@ -186,7 +183,7 @@ export default function CustomerBookingsPage() {
             const result = evaluatePrice(
                 engineService,
                 booking.selection_state || {},
-                1, // Global quantity usually 1 for configured services, or use booking.guest_count
+                1,
                 booking.step_quantities || {}
             );
 
@@ -196,8 +193,6 @@ export default function CustomerBookingsPage() {
             return null;
         }
     };
-
-    const calculatedResult = selectedBooking ? getCalculatedBreakdown(selectedBooking) : null;
 
     if (isLoading) {
         return (
@@ -209,53 +204,119 @@ export default function CustomerBookingsPage() {
 
     if (bookings.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="bg-muted/50 rounded-full p-6 mb-4">
-                    <CalendarIcon className="h-10 w-10 text-muted-foreground" />
+            <div className="space-y-8">
+                {/* Header */}
+                <div className="text-center space-y-2">
+                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+                        My Bookings
+                    </h1>
+                    <p className="text-muted-foreground">
+                        Manage your appointments and orders
+                    </p>
                 </div>
-                <h3 className="text-lg font-semibold">No bookings yet</h3>
-                <p className="text-muted-foreground max-w-sm mt-2">
-                    You haven't made any bookings yet.
-                </p>
-                <div className="mt-6">
-                    <Button asChild>
-                        <a href={`/storefront/${subdomain}`}>Browse Services</a>
-                    </Button>
-                </div>
+
+                {/* Empty State */}
+                <Card className="overflow-hidden border-0 shadow-md">
+                    <CardContent className="flex flex-col items-center justify-center py-16 text-center">
+                        <div className="bg-primary/5 rounded-full p-6 mb-4">
+                            <CalendarIcon className="h-12 w-12 text-primary" />
+                        </div>
+                        <h3 className="text-xl font-bold mb-2">No bookings yet</h3>
+                        <p className="text-muted-foreground max-w-sm mb-6">
+                            You haven't made any bookings yet. Browse services to get started!
+                        </p>
+                        <Button asChild className="bg-primary hover:bg-primary/90">
+                            <a href={`/storefront/${subdomain}`}>
+                                Browse Services <ArrowUpRight className="ml-2 h-4 w-4" />
+                            </a>
+                        </Button>
+                    </CardContent>
+                </Card>
             </div>
         );
     }
 
     return (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between">
-                <div>
-                    <h2 className="text-2xl font-bold tracking-tight">My Bookings</h2>
-                    <p className="text-muted-foreground">Manage your appointments and orders</p>
-                </div>
+        <div className="space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-2">
+                <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+                    My Bookings
+                </h1>
+                <p className="text-muted-foreground">
+                    Manage your appointments and orders
+                </p>
             </div>
 
-            {/* Toolbar */}
-            <div className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
-                <div className="flex items-center gap-3 w-full sm:w-[300px]">
-                    <div className="relative w-full">
-                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-slate-400" />
+            {/* Stats Cards */}
+            <div className="grid gap-4 md:grid-cols-4">
+                <Card className="overflow-hidden border-0 shadow-sm bg-linear-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
+                    <CardContent className="p-4 flex items-center gap-4">
+                        <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+                            <CalendarIcon className="h-5 w-5 text-slate-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-muted-foreground">Total Bookings</p>
+                            <p className="text-2xl font-bold">{stats.total}</p>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card className="overflow-hidden border-0 shadow-sm bg-linear-to-r from-orange-50 to-amber-50 dark:from-orange-950/40 dark:to-amber-950/40">
+                    <CardContent className="p-4 flex items-center gap-4">
+                        <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+                            <Clock className="h-5 w-5 text-orange-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-muted-foreground">Pending</p>
+                            <p className="text-2xl font-bold">{stats.pending}</p>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card className="overflow-hidden border-0 shadow-sm bg-linear-to-r from-blue-50 to-indigo-50 dark:from-blue-950/40 dark:to-indigo-950/40">
+                    <CardContent className="p-4 flex items-center gap-4">
+                        <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+                            <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-muted-foreground">Confirmed</p>
+                            <p className="text-2xl font-bold">{stats.confirmed}</p>
+                        </div>
+                    </CardContent>
+                </Card>
+                <Card className="overflow-hidden border-0 shadow-sm bg-linear-to-r from-emerald-50 to-teal-50 dark:from-emerald-950/40 dark:to-teal-950/40">
+                    <CardContent className="p-4 flex items-center gap-4">
+                        <div className="p-3 bg-white dark:bg-gray-800 rounded-xl shadow-sm">
+                            <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                        </div>
+                        <div>
+                            <p className="text-sm text-muted-foreground">Completed</p>
+                            <p className="text-2xl font-bold">{stats.completed}</p>
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
+
+            {/* Search */}
+            <Card className="overflow-hidden border-0 shadow-sm">
+                <CardContent className="p-4">
+                    <div className="relative w-full sm:w-[300px]">
+                        <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
-                            placeholder="Search service or organizer..."
+                            placeholder="Search bookings..."
                             className="pl-9 border-slate-200 bg-slate-50 focus:bg-white transition-all"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
-                </div>
-            </div>
+                </CardContent>
+            </Card>
 
             {/* Table */}
-            <div className="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+            <Card className="overflow-hidden border-0 shadow-md">
                 <Table>
                     <TableHeader className="bg-slate-50/50">
                         <TableRow className="hover:bg-transparent">
-                            <TableHead className="w-[40px] pl-6">#</TableHead>
+                            <TableHead className="w-[40px] pl-6 font-medium text-slate-500">#</TableHead>
                             <TableHead className="font-medium text-slate-500">Service</TableHead>
                             <TableHead className="font-medium text-slate-500">Organizer</TableHead>
                             <TableHead className="font-medium text-slate-500">Date & Time</TableHead>
@@ -299,19 +360,13 @@ export default function CustomerBookingsPage() {
                                     <TableCell className="text-right font-medium text-slate-700">
                                         {(() => {
                                             const b = booking as any;
-
-                                            // 1. Prioritize Proposed Price if it exists and is > 0
                                             if (b.proposed_price && b.proposed_price > 0) {
                                                 return `$${b.proposed_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                                             }
-
-                                            // 2. If pricing_display is true, show calculated price
                                             if (booking.pricing_display !== false) {
                                                 const price = (getCalculatedBreakdown(booking)?.totalPrice) ?? 0;
                                                 return `$${price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
                                             }
-
-                                            // 3. Fallback for Quote requests with no price yet
                                             return <span className="text-slate-500 italic">Not Specified</span>;
                                         })()}
                                     </TableCell>
@@ -347,7 +402,7 @@ export default function CustomerBookingsPage() {
                         )}
                     </TableBody>
                 </Table>
-            </div>
+            </Card>
 
             {/* Booking Details Modal */}
             <BookingOverviewModal
@@ -357,6 +412,6 @@ export default function CustomerBookingsPage() {
                 onMessage={() => selectedBooking && handleMessageOrganizer(selectedBooking)}
                 userRole="customer"
             />
-        </div >
+        </div>
     );
 }

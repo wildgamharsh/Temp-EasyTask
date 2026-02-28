@@ -11,10 +11,7 @@ import {
     ChevronRight,
     LogOut,
     MessageSquare,
-    Store,
     User,
-    Search,
-    Bell
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -51,26 +48,33 @@ function CustomerSidebarContent({
     unreadCount = 0
 }: CustomerSidebarContentProps) {
     const sidebarItems = [
-
+        { href: `/storefront/${subdomain}/customer`, icon: LayoutDashboard, label: "Home" },
         { href: `/storefront/${subdomain}/customer/bookings`, icon: Calendar, label: "My Bookings" },
         { href: `/storefront/${subdomain}/customer/messages`, icon: MessageSquare, label: "Messages" },
-        // Add more items if needed, e.g., Profile Settings
     ];
 
     return (
         <div className="flex h-full flex-col">
             {/* Logo Area */}
             <div className="flex h-16 items-center px-6 border-b border-sidebar-border bg-sidebar">
-                <Link href={`/storefront/${subdomain}`} className="flex items-center gap-2 font-semibold">
-                    <Store className="h-6 w-6 text-primary" />
-                    <span className="truncate">Storefront</span>
+                <Link href={`/storefront/${subdomain}/customer`} className="flex items-center gap-2">
+                    <Image
+                        src="/images/logo_zaaro_croped.png"
+                        alt="Zaaro"
+                        width={100}
+                        height={32}
+                        className="h-8 w-auto"
+                        priority
+                    />
                 </Link>
             </div>
 
             {/* Navigation */}
             <nav className="flex-1 space-y-1 px-3 py-4">
                 {sidebarItems.map((item) => {
-                    const isActive = pathname === item.href;
+                    const isActive = item.href === `/storefront/${subdomain}/customer` 
+                        ? pathname === `/storefront/${subdomain}/customer`
+                        : pathname === item.href;
                     return (
                         <Link
                             key={item.href}
@@ -150,9 +154,6 @@ export default function CustomerDashboardLayout({
 
                 if (organizer) {
                     // Allow organizer to view but maybe warn? or just proceed.
-                    // Ideally we redirect, but for dev flow let's allow.
-                    // Actually, user requested "customer dashboard".
-                    // Let's set a mock customer object if it's an organizer, or just handle null.
                 } else {
                     router.push(`/storefront/${subdomain}/login`);
                     return;
