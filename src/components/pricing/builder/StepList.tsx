@@ -482,7 +482,7 @@ export const StepList: React.FC<Props> = ({ service, onChange }) => {
                                                             defaultOptionIds: []
                                                         })}
                                                         className={`w-full py-2 px-3 rounded-lg text-xs font-bold transition-all ${(configuringStep.selectionType === type.value) ||
-                                                            (type.value === 'single' && configuringStep.selectionType === 'multi') // Group single/multi under 'Config'
+                                                            (type.value === 'single' && configuringStep.selectionType === 'multi')
                                                             ? 'bg-blue-500 text-white shadow-md'
                                                             : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                                             }`}
@@ -490,7 +490,6 @@ export const StepList: React.FC<Props> = ({ service, onChange }) => {
                                                         {type.label}
                                                     </button>
 
-                                                    {/* Tooltip Popover */}
                                                     <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-slate-800 text-white text-[10px] p-2 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 pointer-events-none text-center leading-relaxed">
                                                         {type.desc}
                                                         <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-slate-800" />

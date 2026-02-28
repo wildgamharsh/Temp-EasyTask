@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pricing Builder: Logic Rules Engine</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0d59f2",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen flex flex-col overflow-hidden">
+    <!-- Top Navigation -->
+    <header
+        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-10 py-3 shrink-0">
+        <div class="flex items-center gap-8">
+            <div class="flex items-center gap-4 text-slate-900 dark:text-white">
+                <div class="size-6 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-[28px]">data_object</span>
+                </div>
+                <h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Pricing
+                    Builder</h2>
+            </div>
+            <label class="flex flex-col min-w-40 !h-10 max-w-64">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                    <div
+                        class="text-slate-500 dark:text-slate-400 flex border-none bg-background-light dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+                        <span class="material-symbols-outlined text-[20px]">search</span>
+                    </div>
+                    <input
+                        class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-background-light dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-500 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal"
+                        placeholder="Search rules..." value="" />
+                </div>
+            </label>
+        </div>
+        <div class="flex flex-1 justify-end gap-8">
+            <div class="flex items-center gap-9 hidden lg:flex">
+                <a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                    href="#">Dashboard</a>
+                <a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                    href="#">Products</a>
+                <a class="text-primary text-sm font-bold leading-normal border-b-2 border-primary" href="#">Logic
+                    Rules</a>
+                <a class="text-slate-900 dark:text-white text-sm font-medium leading-normal hover:text-primary transition-colors"
+                    href="#">Settings</a>
+            </div>
+            <div class="flex gap-2">
+                <button
+                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-blue-700 transition-colors">
+                    <span class="truncate">Deploy Changes</span>
+                </button>
+                <button
+                    class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-background-light dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <span class="truncate">Save Draft</span>
+                </button>
+            </div>
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-slate-100 dark:ring-slate-700"
+                data-alt="User profile avatar"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD1NW8hrfAS2ZCp6cvbUxI7Y4N5Zf8pcSn_ULgaCSpJQse8ip4NGmnVkqmbnUoE20zj55xEVJGYltH0Cj5WqglAxeW_wIMsywN8qRcmmglrqfGURi7QlwF_SQy1HgAhIPlbK68ALM_Qr1KXXPYP4HPNyB8Tt0eHz2wBKLiuNLpq105tgtSutxOjfZZCPNjnXsJJycYKs8tl24xKAtGWsMWl_vi_JwFhtJbEYVD-ul1QPwxA5tdVZ9HjpXp2rRlcA8eCimQh6FOzJ9Xs");'>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content Layout -->
+    <main class="flex flex-1 overflow-hidden">
+        <!-- Left Panel: Rule Builder (60%) -->
+        <section
+            class="flex flex-col w-full lg:w-[60%] border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-y-auto">
+            <!-- Breadcrumbs & Header -->
+            <div class="px-8 pt-8 pb-4">
+                <div class="flex flex-wrap gap-2 mb-4 items-center">
+                    <a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:text-primary"
+                        href="#">Products</a>
+                    <span class="material-symbols-outlined text-slate-400 text-[16px]">chevron_right</span>
+                    <a class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-normal hover:text-primary"
+                        href="#">Enterprise Plan</a>
+                    <span class="material-symbols-outlined text-slate-400 text-[16px]">chevron_right</span>
+                    <span class="text-slate-900 dark:text-white text-sm font-bold leading-normal">Logic Rules</span>
+                </div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <h1 class="text-slate-900 dark:text-white text-3xl font-bold leading-tight mb-2">Logic Rules
+                            Engine</h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">Define conditional logic for pricing,
+                            visibility, and product configuration.</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex items-center gap-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">filter_list</span>
+                            <span class="text-sm font-medium">Filter</span>
+                        </button>
+                        <button
+                            class="flex items-center gap-2 text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">sort</span>
+                            <span class="text-sm font-medium">Sort</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Rules List -->
+            <div class="px-8 pb-12 flex flex-col gap-4">
+                <!-- Rule Card 1 -->
+                <div
+                    class="group relative flex flex-col gap-3 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-emerald-500">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-0.5 rounded">Pricing
+                                Rule #102</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">Last edited 2h ago</span>
+                        </div>
+                        <div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                            <button class="p-1 text-slate-400 hover:text-primary transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">edit</span></button>
+                            <button class="p-1 text-slate-400 hover:text-red-500 transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                    <div class="text-base leading-relaxed text-slate-800 dark:text-slate-200">
+                        <div class="inline-flex items-center gap-2 flex-wrap">
+                            <span
+                                class="px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 uppercase tracking-wide">When</span>
+                            <span>the</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">Location</button>
+                            <span>is set to</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">Overseas</button>
+                        </div>
+                        <div class="mt-3 pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                            <div class="inline-flex items-center gap-2 flex-wrap">
+                                <span
+                                    class="px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300 border border-primary/20 uppercase tracking-wide">Then</span>
+                                <span>apply</span>
+                                <button
+                                    class="font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-1.5 rounded">International
+                                    Surcharge</button>
+                                <span>of</span>
+                                <span class="font-mono text-emerald-600 font-bold">+15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Rule Card 2 -->
+                <div
+                    class="group relative flex flex-col gap-3 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-amber-500 ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-slate-900">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-2 py-0.5 rounded">Visibility
+                                Rule #103</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">Just now</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <button class="p-1 text-primary hover:text-blue-700 transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">edit</span></button>
+                            <button class="p-1 text-slate-400 hover:text-red-500 transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                    <div class="text-base leading-relaxed text-slate-800 dark:text-slate-200">
+                        <div class="inline-flex items-center gap-2 flex-wrap">
+                            <span
+                                class="px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 uppercase tracking-wide">When</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">Seat
+                                Count</button>
+                            <span>is greater than</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">50</button>
+                        </div>
+                        <div class="mt-3 pl-4 border-l-2 border-slate-100 dark:border-slate-700 flex flex-col gap-2">
+                            <div class="inline-flex items-center gap-2 flex-wrap">
+                                <span
+                                    class="px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300 border border-primary/20 uppercase tracking-wide">Then</span>
+                                <span>show</span>
+                                <button
+                                    class="font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-1.5 rounded">Volume
+                                    Discount Tier 1</button>
+                            </div>
+                            <div class="inline-flex items-center gap-2 flex-wrap">
+                                <span
+                                    class="px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300 border border-primary/20 uppercase tracking-wide">And</span>
+                                <span>enable</span>
+                                <button
+                                    class="font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-1.5 rounded">Enterprise
+                                    Support Option</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Rule Card 3 -->
+                <div
+                    class="group relative flex flex-col gap-3 p-5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm hover:shadow-md transition-shadow border-l-4 border-l-slate-400">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span
+                                class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">Validation
+                                Rule #104</span>
+                        </div>
+                        <div class="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
+                            <button class="p-1 text-slate-400 hover:text-primary transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">edit</span></button>
+                            <button class="p-1 text-slate-400 hover:text-red-500 transition-colors"><span
+                                    class="material-symbols-outlined text-[20px]">delete</span></button>
+                        </div>
+                    </div>
+                    <div class="text-base leading-relaxed text-slate-800 dark:text-slate-200">
+                        <div class="inline-flex items-center gap-2 flex-wrap">
+                            <span
+                                class="px-2 py-0.5 rounded text-xs font-bold bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-600 uppercase tracking-wide">When</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">Product
+                                Category</button>
+                            <span>equals</span>
+                            <button
+                                class="font-bold text-primary border-b border-primary border-dashed hover:border-solid">Legacy
+                                Hardware</button>
+                        </div>
+                        <div class="mt-3 pl-4 border-l-2 border-slate-100 dark:border-slate-700">
+                            <div class="inline-flex items-center gap-2 flex-wrap">
+                                <span
+                                    class="px-2 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20 dark:text-blue-300 border border-primary/20 uppercase tracking-wide">Then</span>
+                                <span>force set</span>
+                                <button
+                                    class="font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-1.5 rounded">Contract
+                                    Term</button>
+                                <span>to</span>
+                                <button
+                                    class="font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-700 px-1.5 rounded">12
+                                    Months Max</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add New Rule Button -->
+                <button
+                    class="w-full py-4 rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 font-bold flex items-center justify-center gap-2 hover:border-primary hover:text-primary hover:bg-primary/5 transition-all group">
+                    <span class="material-symbols-outlined group-hover:scale-110 transition-transform">add_circle</span>
+                    Create New Rule
+                </button>
+            </div>
+        </section>
+        <!-- Right Panel: Contextual Smart Assistant (40%) -->
+        <aside
+            class="hidden lg:flex w-[40%] flex-col bg-background-light dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 overflow-hidden relative">
+            <div class="p-8 flex flex-col h-full">
+                <!-- Assistant Header -->
+                <div class="flex items-center gap-3 mb-6">
+                    <div
+                        class="size-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-lg">
+                        <span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    </div>
+                    <div>
+                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Smart Assistant</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Contextual help &amp; validation</p>
+                    </div>
+                </div>
+                <!-- Scrollable Content Area -->
+                <div class="flex-1 overflow-y-auto pr-2 space-y-6">
+                    <!-- Rule Preview Card -->
+                    <div
+                        class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-800">
+                        <div
+                            class="flex items-center gap-2 mb-3 text-slate-400 text-xs font-bold uppercase tracking-wider">
+                            <span class="material-symbols-outlined text-[16px]">visibility</span>
+                            Selected Rule Preview
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 text-lg font-medium leading-relaxed">
+                            "If a customer purchases more than <span class="text-primary font-bold">50 seats</span>,
+                            they automatically qualify for <span class="text-primary font-bold">Volume Discount Tier
+                                1</span> and gain access to the <span class="text-primary font-bold">Enterprise
+                                Support</span> option."
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex gap-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs text-slate-400">Impact</span>
+                                <span class="text-sm font-bold text-slate-900 dark:text-white">High</span>
+                            </div>
+                            <div class="w-px bg-slate-100 dark:bg-slate-800 h-8"></div>
+                            <div class="flex flex-col">
+                                <span class="text-xs text-slate-400">Frequency</span>
+                                <span class="text-sm font-bold text-slate-900 dark:text-white">12% of Quotes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Conflict Warning -->
+                    <div
+                        class="bg-red-50 dark:bg-red-900/10 rounded-xl p-5 border border-red-100 dark:border-red-900/30">
+                        <div class="flex items-center gap-2 mb-3 text-red-600 dark:text-red-400 text-sm font-bold">
+                            <span class="material-symbols-outlined text-[20px]">warning</span>
+                            Conflict Detected
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm mb-3">
+                            This rule contradicts <strong>Rule #88 (SMB Plan Limits)</strong>.
+                        </p>
+                        <div
+                            class="bg-white dark:bg-slate-900 rounded p-3 border border-red-100 dark:border-red-900/20 text-xs text-slate-600 dark:text-slate-400 font-mono mb-3">
+                            Rule #88: WHEN [Seat Count] &gt; [20] THEN [Hide Step] &gt; [Enterprise Support]
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm mb-4">
+                            You are trying to enable "Enterprise Support" for &gt;50 seats, but Rule #88 hides it for
+                            &gt;20 seats.
+                        </p>
+                        <button
+                            class="text-red-600 dark:text-red-400 text-sm font-bold hover:underline flex items-center gap-1">
+                            Fix Conflict Automatically <span
+                                class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        </button>
+                    </div>
+                    <!-- Suggestions -->
+                    <div
+                        class="bg-indigo-50 dark:bg-indigo-900/10 rounded-xl p-5 border border-indigo-100 dark:border-indigo-900/30">
+                        <div
+                            class="flex items-center gap-2 mb-3 text-indigo-600 dark:text-indigo-400 text-sm font-bold">
+                            <span class="material-symbols-outlined text-[20px]">lightbulb</span>
+                            Optimization Tip
+                        </div>
+                        <p class="text-slate-700 dark:text-slate-300 text-sm">
+                            Consider combining this rule with <strong>Rule #105</strong> as they share the same trigger
+                            condition: <span class="italic">Seat Count &gt; 50</span>.
+                        </p>
+                        <div class="mt-3 flex gap-2">
+                            <button
+                                class="bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm border border-indigo-100 dark:border-indigo-900/20 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 transition-colors">
+                                Merge Rules
+                            </button>
+                            <button
+                                class="text-slate-500 dark:text-slate-400 px-3 py-1.5 text-xs font-medium hover:text-slate-800 dark:hover:text-white transition-colors">
+                                Dismiss
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Assistant Graphic Background element -->
+                <div
+                    class="absolute bottom-0 right-0 w-64 h-64 bg-gradient-to-tl from-indigo-100/50 via-purple-100/30 to-transparent dark:from-indigo-900/20 dark:via-purple-900/10 pointer-events-none rounded-tl-full -z-10">
+                </div>
+            </div>
+        </aside>
+    </main>
+</body>
+
+</html>

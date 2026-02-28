@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Service, ConfigStep, Option, StepSelectionType, StepDisplayStyle } from '@/types/pricing';
 import { ColorPicker } from './ColorPicker';
 import { ImagePickerModal } from './ImagePickerModal';
-import { 
-    Layers, Zap, Code, Network, Settings, Palette, Image as ImageIcon, 
-    Plus, Trash2, Check, Eye, Grid, List, Square, Circle
+import { CustomSelect } from '../ui/CustomSelect';
+import {
+    Layers, Zap, Settings, Palette, Image as ImageIcon,
+    Plus, Trash2, Check, Grid, List, Square, Circle
 } from 'lucide-react';
+import { RuleList } from './RuleList';
 
 interface Props {
     service: Service;
@@ -32,7 +34,7 @@ const SELECTION_TYPES = [
 
 const DisplayStyleMockup: React.FC<{ style: StepDisplayStyle; selected: boolean }> = ({ style, selected }) => {
     const baseClasses = `w-full rounded-lg border-2 transition-all overflow-hidden ${selected ? 'border-blue-500 bg-blue-50' : 'border-slate-200 bg-white'}`;
-    
+
     switch (style) {
         case 'card-standard':
             return (
@@ -145,7 +147,7 @@ const DisplayStyleMockup: React.FC<{ style: StepDisplayStyle; selected: boolean 
 };
 
 export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = false }) => {
-    const [activeTab, setActiveTab] = useState<'builder' | 'logic' | 'graph' | 'json'>('builder');
+    const [activeTab, setActiveTab] = useState<'builder' | 'logic'>('builder');
     const [configuringStepId, setConfiguringStepId] = useState<string | null>(null);
     const [configuringOptionId, setConfiguringOptionId] = useState<string | null>(null);
     const [deleteConfirmStepId, setDeleteConfirmStepId] = useState<string | null>(null);
@@ -252,6 +254,35 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
 
     return (
         <div className="h-full flex flex-col bg-slate-50">
+            {/* Top Bar */}
+            <div className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 shrink-0">
+                <div className="flex items-center gap-2">
+                    <Layers size={18} className="text-blue-600" />
+                    <span className="font-semibold text-slate-900">{service.name}</span>
+                </div>
+                <div className="flex gap-1 p-1 bg-slate-100 rounded-lg">
+                    <button
+                        onClick={() => setActiveTab('builder')}
+                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${activeTab === 'builder'
+                                ? 'bg-white text-blue-600 shadow-sm'
+                                : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                    >
+                        Builder
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('logic')}
+                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${activeTab === 'logic'
+                                ? 'bg-white text-blue-600 shadow-sm'
+                                : 'text-slate-500 hover:text-slate-700'
+                            }`}
+                    >
+                        Logic Rules
+                    </button>
+                </div>
+                <div className="w-20" />
+            </div>
+
             {/* Custom Delete Confirmation Modal */}
             {deleteConfirmStepId && (
                 <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
@@ -286,29 +317,6 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                 </div>
             )}
 
-            {/* Header */}
-            <div className="flex items-center border-b border-slate-200 bg-white px-4 shrink-0">
-                {[
-                    { id: 'builder', label: 'Builder', icon: <Layers size={16} /> },
-                    { id: 'logic', label: 'Logic Rules', icon: <Zap size={16} /> },
-                    { id: 'graph', label: 'Visual Graph', icon: <Network size={16} /> },
-                    { id: 'json', label: 'JSON', icon: <Code size={16} /> },
-                ].map(tab => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                        className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-all ${
-                            activeTab === tab.id
-                                ? 'border-blue-600 text-blue-600'
-                                : 'border-transparent text-slate-500 hover:text-slate-800'
-                        }`}
-                    >
-                        {tab.icon}
-                        {tab.label}
-                    </button>
-                ))}
-            </div>
-
             {activeTab === 'builder' ? (
                 <div className="flex-1 flex overflow-hidden">
                     {/* Left Sidebar: Steps List with Accordion */}
@@ -319,25 +327,34 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                 <Plus size={18} />
                             </button>
                         </div>
-                        
+
                         <div className="flex-1 overflow-y-auto p-2 space-y-1">
                             {sortedSteps.length === 0 ? (
-                                <div className="text-center py-8 text-slate-400 text-sm">
-                                    No steps yet. Click + to add one.
+                                <div className="h-full flex flex-col items-center justify-center text-center px-4 py-12">
+                                    <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center mb-3">
+                                        <Layers size={20} className="text-blue-400" />
+                                    </div>
+                                    <p className="text-sm font-medium text-slate-600 mb-1">No steps yet</p>
+                                    <p className="text-xs text-slate-400 mb-4">Add a step to start building your pricing configuration.</p>
+                                    <button
+                                        onClick={addStep}
+                                        className="px-3 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                                    >
+                                        + Add First Step
+                                    </button>
                                 </div>
                             ) : (
                                 sortedSteps.map((step, index) => {
                                     const isActive = step.id === configuringStepId;
-                                    
+
                                     return (
                                         <div
                                             key={step.id}
                                             onClick={() => selectStep(step.id)}
-                                            className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all ${
-                                                isActive
+                                            className={`group flex items-center gap-2 p-2 rounded-lg cursor-pointer transition-all ${isActive
                                                     ? 'bg-blue-50 border border-blue-200 shadow-sm'
                                                     : 'bg-white border border-transparent hover:border-slate-200 hover:bg-slate-50'
-                                            }`}
+                                                }`}
                                         >
                                             <div className={`flex items-center justify-center rounded-md bg-slate-100 text-slate-500 shrink-0 size-7 ${isActive ? 'bg-white text-blue-600 shadow-sm' : ''}`}>
                                                 <span className="text-xs font-bold">{index + 1}</span>
@@ -354,13 +371,6 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                     );
                                 })
                             )}
-                        </div>
-
-                        <div className="p-3 border-t border-slate-200 bg-slate-50">
-                            <button className="text-xs font-medium text-slate-500 hover:text-blue-600 flex items-center justify-center gap-1 w-full py-2">
-                                <Settings size={14} />
-                                Manage Global Rules
-                            </button>
                         </div>
                     </aside>
 
@@ -382,10 +392,6 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                             >
                                                 <Trash2 size={14} />
                                                 Delete Step
-                                            </button>
-                                            <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 bg-white hover:border-blue-300 hover:text-blue-600 transition-all text-sm font-medium">
-                                                <Eye size={14} />
-                                                Preview
                                             </button>
                                         </div>
                                     </div>
@@ -415,21 +421,16 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                         </div>
                                                         <div>
                                                             <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Selection Type</label>
-                                                            <div className="flex gap-1 p-1 bg-slate-100 rounded-lg">
-                                                                {SELECTION_TYPES.map(type => (
-                                                                    <button
-                                                                        key={type.id}
-                                                                        onClick={() => updateStep(configuringStep.id, { selectionType: type.id as StepSelectionType })}
-                                                                        className={`flex-1 px-2 py-1.5 text-xs font-medium rounded-md transition-all ${
-                                                                            configuringStep.selectionType === type.id
-                                                                                ? 'bg-white text-blue-600 shadow-sm'
-                                                                                : 'text-slate-500 hover:text-slate-700'
-                                                                        }`}
-                                                                    >
-                                                                        {type.label}
-                                                                    </button>
-                                                                ))}
-                                                            </div>
+                                                            <CustomSelect
+                                                                value={configuringStep.selectionType === 'multi' ? 'multi' : configuringStep.selectionType}
+                                                                options={[
+                                                                    { value: 'single', label: 'Single' },
+                                                                    { value: 'multi', label: 'Multi Quantity-based' },
+                                                                    { value: 'quantity', label: 'Quantity Based' },
+                                                                    { value: 'fixed', label: 'Fixed Price' }
+                                                                ]}
+                                                                onChange={(val) => updateStep(configuringStep.id, { selectionType: val as StepSelectionType })}
+                                                            />
                                                         </div>
                                                         <div className="md:col-span-2">
                                                             <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Description</label>
@@ -443,12 +444,11 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                         </div>
                                                         <div className="md:col-span-2">
                                                             <label className="flex items-center gap-2 cursor-pointer group">
-                                                                <div 
-                                                                    className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${
-                                                                        configuringStep.required 
-                                                                            ? 'bg-blue-600 border-blue-600 text-white' 
+                                                                <div
+                                                                    className={`w-4 h-4 rounded border flex items-center justify-center transition-all ${configuringStep.required
+                                                                            ? 'bg-blue-600 border-blue-600 text-white'
                                                                             : 'border-slate-300 bg-white'
-                                                                    }`}
+                                                                        }`}
                                                                     onClick={() => updateStep(configuringStep.id, { required: !configuringStep.required })}
                                                                 >
                                                                     {configuringStep.required && <Check size={12} />}
@@ -467,14 +467,14 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                         <Palette size={16} className="text-blue-600" />
                                                         Display Style
                                                     </h4>
-                                                    
+
                                                     {/* Preview + Dropdown */}
                                                     <div className="flex gap-3">
                                                         {/* Preview */}
                                                         <div className="w-24 shrink-0">
                                                             <DisplayStyleMockup style={configuringStep.displayStyle} selected={true} />
                                                         </div>
-                                                        
+
                                                         {/* Dropdown */}
                                                         <div className="flex-1">
                                                             <label className="block text-xs font-medium text-slate-500 mb-1">Select Style</label>
@@ -516,7 +516,7 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                     {isColorStyle(configuringStep.displayStyle) && (
                                                         <span className="text-xs text-slate-500">Color field available</span>
                                                     )}
-                                                    <button 
+                                                    <button
                                                         onClick={() => addOption(configuringStep.id)}
                                                         className="text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
                                                     >
@@ -524,7 +524,7 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                     </button>
                                                 </div>
                                             </div>
-                                            
+
                                             {configuringStep.options.length === 0 ? (
                                                 <div className="text-center py-12 text-slate-400 text-sm">
                                                     No options yet. Click &quot;Add Option&quot; to create one.
@@ -548,8 +548,8 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                         </thead>
                                                         <tbody className="divide-y divide-slate-100">
                                                             {configuringStep.options.map(option => (
-                                                                <tr 
-                                                                    key={option.id} 
+                                                                <tr
+                                                                    key={option.id}
                                                                     className={`hover:bg-slate-50 transition-colors ${configuringOptionId === option.id ? 'bg-blue-50/50' : ''}`}
                                                                 >
                                                                     <td className="px-4 py-3">
@@ -609,7 +609,7 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                                                         </td>
                                                                     )}
                                                                     <td className="px-4 py-3 text-right">
-                                                                        <button 
+                                                                        <button
                                                                             onClick={() => removeOption(configuringStep.id, option.id)}
                                                                             className="text-slate-400 hover:text-red-500 transition-colors p-1"
                                                                         >
@@ -627,63 +627,33 @@ export const ServiceBuilder: React.FC<Props> = ({ service, onChange, fullPage = 
                                 </div>
                             </>
                         ) : (
-                            <div className="flex-1 flex items-center justify-center text-slate-400">
-                                <div className="text-center">
-                                    <Layers size={48} className="mx-auto mb-4 text-slate-300" />
-                                    <p className="text-sm">Select a step to configure or create a new one</p>
-                                    <button 
+                            <div className="flex-1 flex items-center justify-center bg-gradient-to-b from-slate-50 to-white">
+                                <div className="text-center max-w-sm px-6">
+                                    <div className="w-20 h-20 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mx-auto mb-5 shadow-sm">
+                                        <Layers size={36} className="text-blue-300" />
+                                    </div>
+                                    <h3 className="text-lg font-bold text-slate-800 mb-2">No steps configured</h3>
+                                    <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+                                        Steps are the questions your customers answer to build their quote. Add your first step to get started.
+                                    </p>
+                                    <button
                                         onClick={addStep}
-                                        className="mt-4 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20"
                                     >
-                                        + Add First Step
+                                        <Plus size={16} />
+                                        Add First Step
                                     </button>
+                                    <p className="text-xs text-slate-400 mt-4">You can also use the + button in the sidebar</p>
                                 </div>
                             </div>
                         )}
                     </section>
                 </div>
-            ) : activeTab === 'json' ? (
-                <div className="flex-1 p-6 overflow-auto">
-                    <div className="max-w-4xl mx-auto">
-                        <h3 className="text-lg font-bold mb-4 text-slate-800">Service Definition (JSON)</h3>
-                        <pre className="bg-slate-900 text-slate-50 p-6 rounded-xl overflow-auto text-xs font-mono border-2 border-slate-700 shadow-inner max-h-[600px]">
-                            {JSON.stringify(service, null, 2)}
-                        </pre>
-                    </div>
-                </div>
             ) : activeTab === 'logic' ? (
-                <div className="flex-1 p-6 overflow-auto">
-                    <div className="max-w-3xl mx-auto">
-                        <div className="bg-indigo-50 text-indigo-800 p-4 rounded-lg mb-6 flex items-start gap-3 border border-indigo-100">
-                            <Zap className="shrink-0 mt-0.5 text-indigo-600" size={20} />
-                            <div className="text-sm">
-                                <p className="font-bold mb-1">Conditional Logic</p>
-                                <p className="opacity-90">Create rules to show/hide steps, enable/disable options, or change prices.</p>
-                            </div>
-                        </div>
-                        <div className="bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-400">
-                            <Zap size={40} className="mx-auto mb-4 text-slate-300" />
-                            <p>Logic rules editor coming soon</p>
-                        </div>
-                    </div>
+                <div className="flex-1 overflow-auto">
+                    <RuleList service={service} onChange={onChange} />
                 </div>
-            ) : (
-                <div className="flex-1 p-6 overflow-auto">
-                    <div className="max-w-3xl mx-auto">
-                        <div className="bg-blue-50 text-blue-800 p-4 rounded-lg mb-6 flex items-start gap-3 border border-blue-100">
-                            <Network className="shrink-0 mt-0.5 text-blue-600" size={20} />
-                            <div className="text-sm">
-                                <p className="font-bold mb-1">Visual Graph</p>
-                                <p className="opacity-90">See how your steps and rules connect.</p>
-                            </div>
-                        </div>
-                        <div className="bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-400">
-                            <Network size={40} className="mx-auto mb-4 text-slate-300" />
-                            <p>Visual graph coming soon</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+            ) : null}
 
             <ImagePickerModal
                 isOpen={imagePickerState.isOpen}

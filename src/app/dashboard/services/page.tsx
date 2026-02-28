@@ -190,7 +190,7 @@ export default function ServicesPage() {
                 </Card>
             ) : viewMode === 'grid' ? (
                 // GRID VIEW
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     {filteredServices.map((service) => (
                         <div key={service.id} className="group overflow-hidden pt-0 border rounded-xl bg-card shadow-sm hover:shadow-md transition-shadow relative flex flex-col">
                             <div className="absolute top-2 right-2 z-10">

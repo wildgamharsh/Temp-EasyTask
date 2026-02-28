@@ -120,21 +120,21 @@ export const StepSelector: React.FC<Props> = ({
                 const isSelected = selectedIds.includes(option.id);
                 const isDisabled = isOptionDisabled(service, option.id, selections);
                 const { price, isOverridden } = getEffectiveOptionPrice(service, option, selections);
+                const isMulti = step.selectionType === 'multi';
 
                 return (
-                    <label
+                    <button
                         key={option.id}
-                        className={`relative group cursor-pointer h-full ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
+                        onClick={() => !isDisabled && onSelect(step.id, option.id)}
+                        disabled={isDisabled}
+                        className={`relative group cursor-pointer h-full text-left w-full ${isDisabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                     >
-                        <input
-                            type="radio"
-                            className="peer sr-only"
-                            checked={isSelected}
-                            onChange={() => !isDisabled && onSelect(step.id, option.id)}
-                            disabled={isDisabled}
-                        />
                         <div
-                            className={`h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 border-slate-100 hover:border-blue-200 peer-checked:border-blue-600 peer-checked:bg-blue-50/30 transition-all shadow-sm hover:shadow-md flex flex-col ${
+                            className={`h-full bg-white dark:bg-slate-800 p-6 rounded-xl border-2 transition-all shadow-sm hover:shadow-md flex flex-col ${
+                                isSelected 
+                                    ? 'border-blue-600 bg-blue-50/30' 
+                                    : 'border-slate-100 hover:border-blue-200'
+                            } ${
                                 isDisabled ? 'border-slate-200 opacity-60' : ''
                             }`}
                         >
@@ -144,7 +144,7 @@ export const StepSelector: React.FC<Props> = ({
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                                     </svg>
                                 </div>
-                                <div className={`w-5 rounded-full border-2 border-slate-300 peer-checked:border-blue-600 peer-checked:bg-blue-600 transition-colors ${isSelected ? 'bg-blue-600 border-blue-600' : ''}`}>
+                                <div className={`w-5 rounded-full border-2 transition-colors ${isSelected ? 'bg-blue-600 border-blue-600' : 'border-slate-300'}`}>
                                     {isSelected && <Check size={12} className="text-white" />}
                                 </div>
                             </div>
@@ -155,7 +155,7 @@ export const StepSelector: React.FC<Props> = ({
                                 {price > 0 && <span className="text-sm font-normal text-slate-500"></span>}
                             </div>
                         </div>
-                    </label>
+                    </button>
                 );
             })}
         </div>
@@ -339,26 +339,26 @@ export const StepSelector: React.FC<Props> = ({
     );
 
     const renderImageCards = () => (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {step.options.map(option => {
                 const isSelected = selectedIds.includes(option.id);
                 const isDisabled = isOptionDisabled(service, option.id, selections);
                 const { price, isOverridden } = getEffectiveOptionPrice(service, option, selections);
+                const isMulti = step.selectionType === 'multi';
 
                 return (
-                    <label
+                    <button
                         key={option.id}
-                        className={`group cursor-pointer relative block ${isDisabled ? 'opacity-60 cursor-not-allowed' : ''}`}
+                        onClick={() => !isDisabled && onSelect(step.id, option.id)}
+                        disabled={isDisabled}
+                        className={`group cursor-pointer relative block text-left w-full ${isDisabled ? 'opacity-60 cursor-not-allowed' : ''}`}
                     >
-                        <input
-                            type="radio"
-                            className="peer sr-only"
-                            checked={isSelected}
-                            onChange={() => !isDisabled && onSelect(step.id, option.id)}
-                            disabled={isDisabled}
-                        />
                         <div
-                            className={`relative overflow-hidden rounded-2xl aspect-video transition-all ring-2 ring-transparent peer-checked:ring-blue-600 peer-checked:ring-offset-2 group-hover:shadow-lg ${
+                            className={`relative overflow-hidden rounded-2xl aspect-video transition-all ring-2 ${
+                                isSelected 
+                                    ? 'ring-blue-600 ring-offset-2' 
+                                    : 'ring-transparent hover:ring-blue-300'
+                            } ${
                                 isDisabled ? 'opacity-60' : ''
                             }`}
                         >
@@ -381,11 +381,13 @@ export const StepSelector: React.FC<Props> = ({
                                     </div>
                                 </div>
                             </div>
-                            <div className="absolute top-4 right-4 opacity-0 peer-checked:opacity-100 transition-opacity">
-                                <span className="text-white bg-blue-600 rounded-full p-1 shadow-lg">✓</span>
+                            <div className={`absolute top-4 right-4 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                                <span className={`rounded-full p-1 shadow-lg ${isMulti ? 'bg-blue-600' : 'bg-blue-600'}`}>
+                                    {isSelected ? '✓' : ''}
+                                </span>
                             </div>
                         </div>
-                    </label>
+                    </button>
                 );
             })}
         </div>

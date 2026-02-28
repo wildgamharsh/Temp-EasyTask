@@ -11,7 +11,7 @@ import { createService } from "@/lib/supabase-data";
 import { createClient } from "@/lib/supabase/client";
 import { savePricingConfiguration } from "@/lib/pricing/data";
 import { WEDDING_SAMPLE_CONFIG } from "@/lib/pricing/sample-data";
-import { Edit3, Eye, ArrowLeft, X, Save, Sparkles } from "lucide-react";
+import { Eye, Save, Sparkles } from "lucide-react";
 import Image from "next/image";
 
 const INITIAL_SERVICE_CONFIG: Service = {
@@ -91,13 +91,6 @@ export default function NewServicePage() {
             window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             handleSubmit();
-        }
-    };
-
-    const handleBack = () => {
-        if (step === "pricing") {
-            setStep("general");
-            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     };
 
@@ -185,18 +178,11 @@ export default function NewServicePage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col">
+        <div className="h-screen bg-slate-50 flex flex-col overflow-hidden">
             {/* Standalone Top Bar */}
             <header className="h-16 bg-white border-b border-slate-200 shrink-0 z-50">
                 <div className="h-full flex items-center justify-between px-6">
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={handleCancel}
-                            className="flex items-center gap-2 text-slate-500 hover:text-slate-700 transition-colors"
-                        >
-                            <X size={20} />
-                        </button>
-                        <div className="h-6 w-px bg-slate-300" />
                         <div className="flex items-center gap-3">
                             <Image
                                 src="/images/logo_zaaro_croped.png"
@@ -212,28 +198,41 @@ export default function NewServicePage() {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        {/* Step Indicator */}
-                        <div className="flex items-center gap-2 mr-4">
-                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
-                                step === "general" ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-600"
-                            }`}>
-                                <span className="w-5 h-5 rounded-full flex items-center justify-center text-xs bg-current text-white">
-                                    {step === "general" ? "1" : "✓"}
+                        {/* Step Indicator - Center */}
+                        <div className="flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+                            <button
+                                onClick={() => setStep("general")}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border cursor-pointer transition-colors ${step === "general" ? "border-blue-500 text-blue-600 bg-blue-50" : "border-slate-300 text-slate-600 hover:bg-slate-50"
+                                    }`}
+                            >
+                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${step === "general" ? "bg-blue-600 text-white" : "bg-slate-300 text-white"
+                                    }`}>
+                                    1
                                 </span>
                                 <span>General</span>
-                            </div>
+                            </button>
                             <svg className="w-4 h-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
-                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
-                                step === "pricing" ? "bg-blue-50 text-blue-600" : "bg-slate-100 text-slate-400"
-                            }`}>
-                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${step === "pricing" ? "bg-current text-white" : "bg-slate-300 text-white"}`}>
+                            <button
+                                onClick={() => setStep("pricing")}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium border cursor-pointer transition-colors ${step === "pricing" ? "border-blue-500 text-blue-600 bg-blue-50" : "border-slate-300 text-slate-600 hover:bg-slate-50"
+                                    }`}
+                            >
+                                <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs ${step === "pricing" ? "bg-blue-600 text-white" : "bg-slate-300 text-white"}`}>
                                     2
                                 </span>
                                 <span>Pricing</span>
-                            </div>
+                            </button>
                         </div>
+
+                        <button
+                            onClick={() => setPricingTab('preview')}
+                            className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors flex items-center gap-2"
+                        >
+                            <Eye size={16} />
+                            Preview
+                        </button>
 
                         <button
                             onClick={fillSampleData}
@@ -263,15 +262,23 @@ export default function NewServicePage() {
             </header>
 
             {/* Main Content */}
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 min-h-0 overflow-hidden">
                 {step === "general" ? (
-                    <div className="max-w-4xl mx-auto px-6 py-8 overflow-y-auto">
-                        <div className="mb-8">
-                            <h1 className="text-2xl font-bold text-slate-900">General Information</h1>
-                            <p className="text-slate-500 mt-1">Let&apos;s start with the basics of your service.</p>
+                    <div className="w-full px-8 py-8 overflow-y-auto">
+                        <div className="mb-8 flex items-end justify-between">
+                            <div>
+                                <h1 className="text-2xl font-bold text-slate-900">General Information</h1>
+                                <p className="text-slate-500 mt-1">Let&apos;s start with the basics of your service.</p>
+                            </div>
+                            <button
+                                onClick={handleNext}
+                                className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors text-sm"
+                            >
+                                Continue to Pricing →
+                            </button>
                         </div>
-                        
-                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
+
+                        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
                             <GeneralInfoStep
                                 data={{
                                     title: formData.title,
@@ -285,69 +292,21 @@ export default function NewServicePage() {
                             />
                         </div>
 
-                        <div className="mt-8 flex items-center justify-end">
-                            <button
-                                onClick={handleNext}
-                                className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-                            >
-                                Continue to Pricing
-                            </button>
-                        </div>
                     </div>
                 ) : (
                     <div className="h-full flex flex-col">
-                        <div className="flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200 shrink-0">
-                            <div className="flex items-center gap-4">
-                                <button
-                                    onClick={handleBack}
-                                    className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
-                                >
-                                    <ArrowLeft size={20} />
-                                    <span className="font-medium">Back</span>
-                                </button>
-                                <div className="h-6 w-px bg-slate-300" />
-                                <h1 className="text-lg font-bold text-slate-900">{formData.title || "New Service"}</h1>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <div className="flex p-1 bg-slate-100 rounded-lg border border-slate-200">
-                                    <button
-                                        onClick={() => setPricingTab('builder')}
-                                        className={`px-4 py-2 text-sm font-medium rounded-md flex items-center gap-2 transition-all ${pricingTab === 'builder'
-                                            ? 'bg-white text-slate-900 shadow-sm'
-                                            : 'text-slate-500 hover:text-slate-900'
-                                            }`}
-                                    >
-                                        <Edit3 size={16} />
-                                        Builder
-                                    </button>
-                                    <button
-                                        onClick={() => setPricingTab('preview')}
-                                        className={`px-4 py-2 text-sm font-medium rounded-md flex items-center gap-2 transition-all ${pricingTab === 'preview'
-                                            ? 'bg-white text-blue-600 shadow-sm'
-                                            : 'text-slate-500 hover:text-slate-900'
-                                            }`}
-                                    >
-                                        <Eye size={16} />
-                                        Preview
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="flex-1 overflow-hidden">
-                            {pricingTab === 'builder' ? (
-                                <ServiceBuilder
-                                    service={serviceConfig}
-                                    onChange={handlePricingUpdate}
-                                    fullPage={true}
-                                />
-                            ) : (
-                                <div className="h-full">
-                                    <ConsumerPreview service={serviceConfig} />
-                                </div>
-                            )}
-                        </div>
+                        {pricingTab === 'builder' ? (
+                            <ServiceBuilder
+                                service={serviceConfig}
+                                onChange={handlePricingUpdate}
+                                fullPage={true}
+                            />
+                        ) : (
+                            <ConsumerPreview
+                                service={serviceConfig}
+                                onBack={() => setPricingTab('builder')}
+                            />
+                        )}
                     </div>
                 )}
             </div>

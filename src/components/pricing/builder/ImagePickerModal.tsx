@@ -9,14 +9,15 @@ interface ImagePickerModalProps {
 }
 
 const MOCK_LIBRARY_IMAGES = [
-    { id: '1', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', name: 'consulting_team.jpg' },
-    { id: '2', url: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400', name: 'cleaning_service_hero.png' },
-    { id: '3', url: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400', name: 'photography_studio.jpg' },
-    { id: '4', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400', name: 'dashboard_analytics.png' },
-    { id: '5', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400', name: 'maintenance_icon.jpg' },
-    { id: '6', url: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400', name: 'office_hq.jpg' },
-    { id: '7', url: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=400', name: 'customer_success.jpg' },
-    { id: '8', url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=400', name: 'safety_badge.jpg' },
+    { id: 'w1', url: 'https://images.unsplash.com/photo-1587271407850-8d438ca9fdf2?fm=jpg&q=60&w=800&auto=format&fit=crop&ixlib=rb-4.1.0', name: 'wedding_flowers.jpg' },
+    { id: 'w2', url: 'https://media.gettyimages.com/id/1445272650/video/luxury-dinner-table-in-a-wedding-invitation-wedding-decoration-wedding-dinner-table-wedding.jpg?s=640x640&k=20&c=n85Uphj0dw3xDDoKkthbSqoejb3Gbc-R3pqsw6_P3yc=', name: 'luxury_dinner_table.jpg' },
+    { id: 'w3', url: 'https://media.gettyimages.com/id/1223909090/video/indian-or-hindu-traditional-ceremony-venue-decoration.jpg?s=640x640&k=20&c=Y32M4JB-gbnsZ936iv_xaTvT9viDFjYKOAZoxd1aIKw=', name: 'indian_ceremony_venue.jpg' },
+    { id: 'w4', url: 'https://img.pikbest.com/photo/20241215/luxury-wedding-stage-decor-with-pink-flowers-and-red-carpet_11258184.jpg!sw800', name: 'pink_wedding_stage.jpg' },
+    { id: 'w5', url: 'https://static.vecteezy.com/system/resources/thumbnails/053/808/762/small_2x/wedding-party-decoration-scene-background-free-photo.jpeg', name: 'wedding_party_decor.jpeg' },
+    { id: 'w6', url: 'https://static.vecteezy.com/system/resources/previews/018/740/503/non_2x/beautiful-wedding-stage-for-groom-and-bride-photo.jpg', name: 'wedding_stage_bride.jpg' },
+    { id: 'w7', url: 'https://assets.architecturaldigest.in/photos/6698dff393565db77b9beb8d/4:3/w_1424,h_1068,c_limit/DSC00522.jpg.jpg', name: 'architectural_venue.jpg' },
+    { id: 'w8', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS61yPWFSqa2dt4N9VHNjWXilVmtLFSvTwrA&s', name: 'wedding_decor_1.jpg' },
+    { id: 'w9', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ466bR2u3tqQijUuBoAMIgAozxpbp_8XVroA&s', name: 'wedding_decor_2.jpg' },
 ];
 
 export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onClose, onSelect, currentValue }) => {
@@ -103,7 +104,7 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
         }
     };
 
-    const filteredLibrary = MOCK_LIBRARY_IMAGES.filter(img => 
+    const filteredLibrary = MOCK_LIBRARY_IMAGES.filter(img =>
         img.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -111,13 +112,13 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-            <div 
+            <div
                 ref={modalRef}
                 className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200"
             >
                 <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-white">
                     <h3 className="text-lg font-bold text-slate-900">Select Image</h3>
-                    <button 
+                    <button
                         onClick={onClose}
                         className="text-slate-400 hover:text-slate-600 transition-colors p-1"
                     >
@@ -127,23 +128,21 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
 
                 <div className="flex flex-col flex-1 overflow-hidden">
                     <div className="flex border-b border-slate-200 px-6 pt-2">
-                        <button 
+                        <button
                             onClick={() => setActiveTab('upload')}
-                            className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-[1px] transition-all ${
-                                activeTab === 'upload' 
-                                    ? 'text-blue-600 border-blue-600' 
+                            className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-[1px] transition-all ${activeTab === 'upload'
+                                    ? 'text-blue-600 border-blue-600'
                                     : 'text-slate-500 hover:text-slate-700 hover:border-slate-300 border-transparent'
-                            }`}
+                                }`}
                         >
                             Upload / URL
                         </button>
-                        <button 
+                        <button
                             onClick={() => setActiveTab('library')}
-                            className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-[1px] transition-all ${
-                                activeTab === 'library' 
-                                    ? 'text-blue-600 border-blue-600' 
+                            className={`px-4 py-3 text-sm font-semibold border-b-2 -mb-[1px] transition-all ${activeTab === 'library'
+                                    ? 'text-blue-600 border-blue-600'
                                     : 'text-slate-500 hover:text-slate-700 hover:border-slate-300 border-transparent'
-                            }`}
+                                }`}
                         >
                             Library
                         </button>
@@ -159,11 +158,10 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                         onDrop={handleDrop}
                                         onDragOver={handleDragOver}
                                         onDragLeave={handleDragLeave}
-                                        className={`flex-1 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-8 text-center cursor-pointer transition-all ${
-                                            isDragging 
-                                                ? 'border-blue-500 bg-blue-50' 
+                                        className={`flex-1 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-8 text-center cursor-pointer transition-all ${isDragging
+                                                ? 'border-blue-500 bg-blue-50'
                                                 : 'border-blue-300 bg-white hover:bg-blue-50/30'
-                                        }`}
+                                            }`}
                                     >
                                         <input
                                             ref={fileInputRef}
@@ -172,9 +170,8 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                             onChange={handleFileInputChange}
                                             className="hidden"
                                         />
-                                        <div className={`h-16 w-16 rounded-full flex items-center justify-center mb-4 transition-transform ${
-                                            isDragging ? 'scale-110' : ''
-                                        } ${isDragging ? 'bg-blue-100 text-blue-600' : 'bg-blue-50 text-blue-600'}`}>
+                                        <div className={`h-16 w-16 rounded-full flex items-center justify-center mb-4 transition-transform ${isDragging ? 'scale-110' : ''
+                                            } ${isDragging ? 'bg-blue-100 text-blue-600' : 'bg-blue-50 text-blue-600'}`}>
                                             <Upload size={32} />
                                         </div>
                                         <p className="text-slate-900 font-bold text-base mb-1">Drag &amp; Drop your file here</p>
@@ -201,7 +198,7 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                                     onChange={(e) => setUrlInput(e.target.value)}
                                                     onKeyDown={(e) => e.key === 'Enter' && handleUrlLoad()}
                                                     className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 text-sm"
-                                                    placeholder="https://example.com/image.png" 
+                                                    placeholder="https://example.com/image.png"
                                                     type="text"
                                                 />
                                             </div>
@@ -216,15 +213,15 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                     <div className="flex-1 flex flex-col">
                                         <label className="text-sm font-bold text-slate-700 mb-3">Preview</label>
                                         <div className="flex-1 bg-white border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center relative shadow-sm min-h-[200px]">
-                                            <div className="absolute inset-0 z-0 opacity-40" 
+                                            <div className="absolute inset-0 z-0 opacity-40"
                                                 style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '10px 10px' }}
                                             />
                                             {previewUrl ? (
                                                 <>
-                                                    <img 
+                                                    <img
                                                         alt="Preview"
                                                         className="relative z-10 max-w-full max-h-[240px] object-contain shadow-lg rounded-lg"
-                                                        src={previewUrl} 
+                                                        src={previewUrl}
                                                     />
                                                 </>
                                             ) : (
@@ -246,8 +243,8 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 bg-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm shadow-sm"
-                                            placeholder="Search images..." 
-                                            type="text" 
+                                            placeholder="Search images..."
+                                            type="text"
                                         />
                                     </div>
                                     <select className="rounded-lg border border-slate-200 bg-white text-slate-600 text-sm py-2.5 shadow-sm min-w-[120px] focus:ring-2 focus:ring-blue-500/20">
@@ -261,24 +258,22 @@ export const ImagePickerModal: React.FC<ImagePickerModalProps> = ({ isOpen, onCl
                                         <div
                                             key={image.id}
                                             onClick={() => handleLibrarySelect(image)}
-                                            className={`group relative bg-white rounded-xl border p-2 cursor-pointer transition-all ${
-                                                selectedLibraryId === image.id || previewUrl === image.url
-                                                    ? 'border-blue-600 shadow-md' 
+                                            className={`group relative bg-white rounded-xl border p-2 cursor-pointer transition-all ${selectedLibraryId === image.id || previewUrl === image.url
+                                                    ? 'border-blue-600 shadow-md'
                                                     : 'border-slate-200 hover:border-blue-300 hover:shadow-md'
-                                            }`}
+                                                }`}
                                         >
                                             <div className="aspect-video rounded-lg overflow-hidden bg-slate-100 mb-2">
-                                                <img 
-                                                    alt={image.name} 
-                                                    className="w-full h-full object-cover" 
-                                                    src={image.url} 
+                                                <img
+                                                    alt={image.name}
+                                                    className="w-full h-full object-cover"
+                                                    src={image.url}
                                                 />
                                             </div>
-                                            <p className={`text-[11px] truncate px-1 ${
-                                                selectedLibraryId === image.id || previewUrl === image.url
-                                                    ? 'font-bold text-blue-600' 
+                                            <p className={`text-[11px] truncate px-1 ${selectedLibraryId === image.id || previewUrl === image.url
+                                                    ? 'font-bold text-blue-600'
                                                     : 'font-semibold text-slate-600'
-                                            }`}>
+                                                }`}>
                                                 {image.name}
                                             </p>
                                             {(selectedLibraryId === image.id || previewUrl === image.url) && (

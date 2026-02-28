@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { ModernInput } from "../shared/ModernInput";
 import { ModernTextarea } from "../shared/ModernTextarea";
 import { FeatureTagInput } from "../shared/FeatureTagInput";
-import { ImageIcon, Wand2, Link as LinkIcon, UploadCloud, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ServiceImagePickerModal } from "../shared/ServiceImagePickerModal";
+import { Plus, GripVertical, X as XIcon, ImagePlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface GeneralInfoStepProps {
@@ -20,24 +20,22 @@ interface GeneralInfoStepProps {
     serviceId?: string;
 }
 
-export function GeneralInfoStep({ data, onUpdate, organizerId, serviceId }: GeneralInfoStepProps) {
-    const [activeImageInput, setActiveImageInput] = useState("");
+export function GeneralInfoStep({ data, onUpdate }: GeneralInfoStepProps) {
     const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-    const [isDraggingFile, setIsDraggingFile] = useState(false);
-    const [isUploading, setIsUploading] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isPickerOpen, setIsPickerOpen] = useState(false);
 
-    const handleAddImage = () => {
-        if (!activeImageInput) return;
-        onUpdate({ images: [...data.images, activeImageInput] });
-        setActiveImageInput("");
+    /* ──────────────── Image Picker ──────────────── */
+
+    const handleImageSelect = (url: string) => {
+        onUpdate({ images: [...data.images, url] });
     };
 
     const handleRemoveImage = (index: number) => {
         onUpdate({ images: data.images.filter((_, i) => i !== index) });
     };
 
-    // Reordering Logic
+    /* ──────────────── Drag to Reorder ──────────────── */
+
     const handleDragStart = (e: React.DragEvent, index: number) => {
         e.dataTransfer.setData("text/plain", index.toString());
         e.dataTransfer.effectAllowed = "move";
@@ -45,301 +43,257 @@ export function GeneralInfoStep({ data, onUpdate, organizerId, serviceId }: Gene
 
     const handleDragOver = (e: React.DragEvent, index: number) => {
         e.preventDefault();
-        if (dragOverIndex !== index) {
-            setDragOverIndex(index);
-        }
+        if (dragOverIndex !== index) setDragOverIndex(index);
     };
 
     const handleDrop = (e: React.DragEvent, dropIndex: number) => {
         e.preventDefault();
         setDragOverIndex(null);
         const dragIndexStr = e.dataTransfer.getData("text/plain");
-        if (!dragIndexStr) return; // Might be file drop
-
+        if (!dragIndexStr) return;
         const dragIndex = parseInt(dragIndexStr);
         if (isNaN(dragIndex) || dragIndex === dropIndex) return;
 
         const newImages = [...data.images];
-        const [movedImage] = newImages.splice(dragIndex, 1);
-        newImages.splice(dropIndex, 0, movedImage);
-
+        const [moved] = newImages.splice(dragIndex, 1);
+        newImages.splice(dropIndex, 0, moved);
         onUpdate({ images: newImages });
     };
 
-    const handleDragEnd = () => {
-        setDragOverIndex(null);
-    };
-
-    // File Upload Logic
-    const handleFileDragOver = (e: React.DragEvent) => {
-        e.preventDefault();
-        setIsDraggingFile(true);
-    };
-
-    const handleFileDragLeave = (e: React.DragEvent) => {
-        e.preventDefault();
-        setIsDraggingFile(false);
-    };
-
-    const handleFileDrop = async (e: React.DragEvent) => {
-        e.preventDefault();
-        setIsDraggingFile(false);
-
-        if (!organizerId || !serviceId) {
-            console.error("Missing organizerId or serviceId for upload");
-            // Fallback? Or just warn?
-            // toast.error("Please ensure you are logged in to upload images.");
-            return;
-        }
-
-        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-            const files = Array.from(e.dataTransfer.files);
-            const validFiles = files.filter(file => file.type.startsWith("image/"));
-
-            if (validFiles.length > 0) {
-                setIsUploading(true);
-                try {
-                    // Import dynamically to avoid server-side issues if any (though this component is 'use client')
-                    const { uploadServiceImages } = await import("@/lib/supabase-data");
-                    const uploadedUrls = await uploadServiceImages(validFiles, organizerId, serviceId);
-
-                    if (uploadedUrls && uploadedUrls.length > 0) {
-                        onUpdate({ images: [...data.images, ...uploadedUrls] });
-                    }
-                } catch (error) {
-                    console.error("Upload failed", error);
-                } finally {
-                    setIsUploading(false);
-                }
-            }
-        }
-    };
-
-    const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files || e.target.files.length === 0) return;
-
-        if (!organizerId || !serviceId) {
-            console.error("Missing organizerId or serviceId for upload");
-            return;
-        }
-
-        const files = Array.from(e.target.files);
-        const validFiles = files.filter(file => file.type.startsWith("image/"));
-
-        if (validFiles.length > 0) {
-            setIsUploading(true);
-            try {
-                const { uploadServiceImages } = await import("@/lib/supabase-data");
-                const uploadedUrls = await uploadServiceImages(validFiles, organizerId, serviceId);
-
-                if (uploadedUrls && uploadedUrls.length > 0) {
-                    onUpdate({ images: [...data.images, ...uploadedUrls] });
-                }
-            } catch (error) {
-                console.error("Upload failed", error);
-            } finally {
-                setIsUploading(false);
-                // Reset input
-                if (fileInputRef.current) {
-                    fileInputRef.current.value = "";
-                }
-            }
-        }
-    };
+    const handleDragEnd = () => setDragOverIndex(null);
 
     return (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-            {/* 1. Identity Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 border-b border-gray-100 pb-8">
-                <div className="lg:col-span-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Service Identity</h3>
-                    <p className="text-sm text-gray-500">
-                        Give your service a clear, professional title and detailed description.
-                    </p>
-                </div>
-                <div className="lg:col-span-2 space-y-6">
-                    <ModernInput
-                        label="Service Title"
-                        placeholder="e.g. Full Day Wedding Photography"
-                        value={data.title}
-                        onChange={(e) => onUpdate({ title: e.target.value })}
-                        width="full"
-                        hint="Make it catchy but descriptive. 50 characters max recommended."
-                    />
+        <>
+            <ServiceImagePickerModal
+                isOpen={isPickerOpen}
+                onClose={() => setIsPickerOpen(false)}
+                onSelect={handleImageSelect}
+            />
 
-                    <ModernTextarea
-                        label="Description"
-                        placeholder="Describe your service in detail..."
-                        value={data.description}
-                        onChange={(e) => onUpdate({ description: e.target.value })}
-                        className="min-h-[120px]"
-                        hint="Include what's included, your style, and what makes you unique."
-                    />
-                </div>
-            </div>
+            {/*
+             * Two-pane layout:
+             *   Left  (55%) — Text fields + highlights
+             *   Right (45%) — Image gallery
+             */}
+            <div className="flex gap-8 min-h-0">
 
-            {/* 2. Visuals Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 border-b border-gray-100 pb-8">
-                <div className="lg:col-span-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Visual Gallery</h3>
-                    <p className="text-sm text-gray-500">
-                        Showcase your best work. High-quality images increase bookings significantly.
-                    </p>
-                    <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100 text-xs text-blue-700">
-                        <p className="font-semibold mb-1">Pro Tip:</p>
-                        Drag images to reorder them using the handle. Drop new files anywhere to upload.
-                    </div>
-                </div>
-                <div className="lg:col-span-2 space-y-4">
-                    {/* Image Grid with DnD */}
-                    <div
-                        onDragOver={handleFileDragOver}
-                        onDragLeave={handleFileDragLeave}
-                        onDrop={handleFileDrop}
-                        onClick={() => fileInputRef.current?.click()}
-                        className={cn(
-                            "rounded-xl transition-all duration-200 min-h-[100px] cursor-pointer",
-                            isDraggingFile && "ring-4 ring-blue-500/20 bg-blue-50"
-                        )}
-                    >
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            className="hidden"
-                            onChange={handleFileInputChange}
-                            multiple
-                            accept="image/*"
+                {/* ═══════════════════════════════════════
+                    LEFT PANE — Service Identity + Highlights
+                    ═══════════════════════════════════════ */}
+                <div className="flex-[55] flex flex-col gap-8 min-w-0">
+
+                    {/* Identity */}
+                    <section>
+                        <SectionLabel
+                            number={1}
+                            title="Service Identity"
+                            subtitle="Give your service a clear, professional title and description."
                         />
-                        {data.images.length > 0 ? (
-                            <div className="grid grid-cols-3 gap-4 mb-4">
-                                {data.images.map((url, idx) => (
-                                    <div
-                                        key={idx}
-                                        draggable
-                                        onDragStart={(e) => handleDragStart(e, idx)}
-                                        onDragOver={(e) => handleDragOver(e, idx)}
-                                        onDrop={(e) => handleDrop(e, idx)}
-                                        onDragEnd={handleDragEnd}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className={cn(
-                                            "group relative aspect-video rounded-lg overflow-hidden bg-gray-100 border border-gray-200 transition-transform duration-200 cursor-move",
-                                            dragOverIndex === idx && "opacity-50 scale-95 ring-2 ring-blue-500"
-                                        )}
-                                    >
-                                        <img src={url} alt={`Service ${idx}`} className="w-full h-full object-cover pointer-events-none" />
+                        <div className="flex flex-col gap-5 mt-5">
+                            <ModernInput
+                                label="Service Title"
+                                placeholder="e.g. Full Day Wedding Photography"
+                                value={data.title}
+                                onChange={(e) => onUpdate({ title: e.target.value })}
+                                width="full"
+                                hint="Make it catchy but descriptive. 50 characters recommended."
+                            />
+                            <ModernTextarea
+                                label="Description"
+                                placeholder="Describe your service — what's included, your style, and what makes you unique..."
+                                value={data.description}
+                                onChange={(e) => onUpdate({ description: e.target.value })}
+                                className="min-h-[160px]"
+                                hint="Services with detailed descriptions get significantly more inquiries."
+                            />
+                        </div>
+                    </section>
 
-                                        {/* Drag Handle Overlay */}
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                            <span className="bg-white/90 p-1.5 rounded-full shadow-sm">
-                                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="12" r="1" /><circle cx="9" cy="5" r="1" /><circle cx="9" cy="19" r="1" /><circle cx="15" cy="12" r="1" /><circle cx="15" cy="5" r="1" /><circle cx="15" cy="19" r="1" /></svg>
-                                            </span>
-                                        </div>
-
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // Prevent drag start
-                                                handleRemoveImage(idx);
-                                            }}
-                                            className="absolute top-2 right-2 p-1.5 bg-white/90 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:text-red-600 hover:bg-white z-10"
-                                        >
-                                            <X size={14} />
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <div className={cn(
-                                "flex flex-col items-center justify-center p-8 border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50 mb-4 transition-colors",
-                                (isDraggingFile || isUploading) ? "border-blue-500 bg-blue-50" : "hover:bg-gray-50 hover:border-blue-300"
-                            )}>
-                                {isUploading ? (
-                                    <>
-                                        <div className="h-10 w-10 text-blue-500 mb-2 animate-spin rounded-full border-4 border-blue-500 border-t-transparent" />
-                                        <p className="text-sm font-semibold text-blue-700">Uploading images...</p>
-                                    </>
-                                ) : isDraggingFile ? (
-                                    <>
-                                        <UploadCloud className="h-10 w-10 text-blue-500 mb-2 animate-bounce" />
-                                        <p className="text-sm font-semibold text-blue-700">Drop images here</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <ImageIcon className="h-10 w-10 text-gray-300 mb-2" />
-                                        <p className="text-sm text-gray-500 text-center">
-                                            Click to browse or drag & drop images here
-                                        </p>
-                                    </>
-                                )}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Add Image Input */}
-                    <div className="flex gap-2">
-                        <ModernInput
-                            placeholder="Paste image URL..."
-                            value={activeImageInput}
-                            onChange={(e) => setActiveImageInput(e.target.value)}
-                            icon={LinkIcon}
-                            width="full"
-                            wrapperClassName="flex-1"
-                            onKeyDown={(e) => e.key === "Enter" && handleAddImage()}
+                    {/* Highlights */}
+                    <section>
+                        <SectionLabel
+                            number={2}
+                            title="Key Highlights"
+                            subtitle="Short tags shown on your listing card in search results. Keep them snappy."
                         />
-                        <Button
-                            variant="secondary"
-                            className="mt-[22px] h-10 border border-gray-200 shadow-sm bg-white hover:bg-gray-50 hover:border-blue-300 text-gray-700"
-                            onClick={handleAddImage}
-                            disabled={!activeImageInput}
+                        <div className="mt-5">
+                            <FeatureTagInput
+                                label="Service Highlights"
+                                value={data.highlights}
+                                onChange={(tags) => onUpdate({ highlights: tags })}
+                                placeholder="e.g. Instant Delivery, Verified Pro…"
+                                hint="Paste a comma-separated or line-separated list to add multiple at once"
+                                maxTags={5}
+                            />
+                        </div>
+                    </section>
+                </div>
+
+                {/* Vertical divider */}
+                <div className="w-px bg-gray-100 shrink-0 self-stretch" />
+
+                {/* ═══════════════════════════════════════
+                    RIGHT PANE — Visual Gallery
+                    ═══════════════════════════════════════ */}
+                <div className="flex-[45] flex flex-col min-w-0">
+                    <div className="flex items-start justify-between mb-5">
+                        <SectionLabel
+                            number={3}
+                            title="Visual Gallery"
+                            subtitle="Showcase your best work. High-quality images increase bookings."
+                        />
+                        <button
+                            onClick={() => setIsPickerOpen(true)}
+                            className="flex items-center gap-1.5 shrink-0 ml-4 mt-0.5 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors shadow-sm shadow-blue-600/30"
                         >
-                            <Plus className="h-4 w-4 mr-2" />
+                            <ImagePlus size={15} />
                             Add Image
-                        </Button>
+                        </button>
                     </div>
-                    <p className="text-xs text-gray-400 ml-1">
-                        Use valid image URLs (jpg, png, webp). We'll support file upload soon.
-                    </p>
+
+                    {data.images.length === 0 ? (
+                        /* Single clean empty zone */
+                        <div
+                            onClick={() => setIsPickerOpen(true)}
+                            className="cursor-pointer group w-full aspect-video rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center transition-colors hover:border-blue-300 hover:bg-blue-50/40"
+                        >
+                            <ImagePlus size={32} className="text-gray-300 group-hover:text-blue-400 mb-2 transition-colors" />
+                            <p className="text-sm font-medium text-gray-400 group-hover:text-blue-500 transition-colors">
+                                Click to add your first photo
+                            </p>
+                            <p className="text-xs text-gray-300 mt-1 group-hover:text-blue-400 transition-colors">
+                                Or use the Add Image button above
+                            </p>
+                        </div>
+                    ) : (
+                        /* Filled image grid */
+                        <div className="flex flex-col gap-3">
+                            {/* Cover image — full width, taller */}
+                            {data.images[0] && (
+                                <div
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, 0)}
+                                    onDragOver={(e) => handleDragOver(e, 0)}
+                                    onDrop={(e) => handleDrop(e, 0)}
+                                    onDragEnd={handleDragEnd}
+                                    className={cn(
+                                        "group relative w-full aspect-video rounded-xl overflow-hidden bg-gray-100 border border-gray-200 cursor-move transition-all duration-200",
+                                        dragOverIndex === 0 && "opacity-50 scale-[0.98] ring-2 ring-blue-500"
+                                    )}
+                                >
+                                    <img
+                                        src={data.images[0]}
+                                        alt="Cover"
+                                        className="w-full h-full object-cover pointer-events-none"
+                                    />
+                                    {/* Cover badge */}
+                                    <div className="absolute top-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-0.5 rounded-full tracking-wide">
+                                        COVER
+                                    </div>
+                                    <ImageHoverOverlay
+                                        onRemove={(e) => {
+                                            e.stopPropagation();
+                                            handleRemoveImage(0);
+                                        }}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Remaining images — 3-col grid */}
+                            {data.images.length > 1 && (
+                                <div className="grid grid-cols-3 gap-3">
+                                    {data.images.slice(1).map((url, relIdx) => {
+                                        const idx = relIdx + 1;
+                                        return (
+                                            <div
+                                                key={idx}
+                                                draggable
+                                                onDragStart={(e) => handleDragStart(e, idx)}
+                                                onDragOver={(e) => handleDragOver(e, idx)}
+                                                onDrop={(e) => handleDrop(e, idx)}
+                                                onDragEnd={handleDragEnd}
+                                                className={cn(
+                                                    "group relative aspect-square rounded-xl overflow-hidden bg-gray-100 border border-gray-200 cursor-move transition-all duration-200",
+                                                    dragOverIndex === idx && "opacity-50 scale-95 ring-2 ring-blue-500"
+                                                )}
+                                            >
+                                                <img
+                                                    src={url}
+                                                    alt={`Image ${idx}`}
+                                                    className="w-full h-full object-cover pointer-events-none"
+                                                />
+                                                <ImageHoverOverlay
+                                                    onRemove={(e) => {
+                                                        e.stopPropagation();
+                                                        handleRemoveImage(idx);
+                                                    }}
+                                                />
+                                            </div>
+                                        );
+                                    })}
+
+                                    {/* Add more slot */}
+                                    {data.images.length < 10 && (
+                                        <button
+                                            onClick={() => setIsPickerOpen(true)}
+                                            className="aspect-square rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center text-gray-400 hover:border-blue-300 hover:bg-blue-50/40 hover:text-blue-500 transition-all"
+                                        >
+                                            <Plus size={20} />
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Pro tip */}
+                            <p className="text-xs text-gray-400 mt-1">
+                                <span className="font-semibold text-gray-500">Tip:</span> Drag images to reorder them. The first image is your cover photo.
+                            </p>
+                        </div>
+                    )}
                 </div>
             </div>
+        </>
+    );
+}
 
-            {/* 3. Highlights Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-1">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-1">Key Highlights</h3>
-                    <p className="text-sm text-gray-500">
-                        Quick tags that appear on search results cards. Keep them short.
-                    </p>
-                </div>
-                <div className="lg:col-span-2">
-                    <FeatureTagInput
-                        label="Service Highlights"
-                        value={data.highlights}
-                        onChange={(tags) => onUpdate({ highlights: tags })}
-                        placeholder="e.g. Instant Delivery, Verified Pro..."
-                        hint="Enter up to 5 highlights"
-                        maxTags={5}
-                    />
-                </div>
+/* ─── Sub-components ─── */
+
+function SectionLabel({
+    number,
+    title,
+    subtitle,
+}: {
+    number: number;
+    title: string;
+    subtitle: string;
+}) {
+    return (
+        <div className="flex items-start gap-3">
+            <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white text-xs font-bold">
+                {number}
+            </span>
+            <div>
+                <h3 className="text-base font-semibold text-gray-900 leading-snug">{title}</h3>
+                <p className="mt-0.5 text-sm text-gray-500">{subtitle}</p>
             </div>
         </div>
     );
 }
 
-// Helper icon component since 'X' was blocked by import
-function X({ size = 24, className }: { size?: number, className?: string }) {
+function ImageHoverOverlay({ onRemove }: { onRemove: (e: React.MouseEvent) => void }) {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={className}
-        >
-            <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-        </svg>
-    )
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors flex items-start justify-between p-2 opacity-0 group-hover:opacity-100">
+            {/* Drag handle */}
+            <span className="bg-white/90 p-1 rounded-md shadow-sm text-gray-600">
+                <GripVertical size={14} />
+            </span>
+            {/* Remove button */}
+            <button
+                onClick={onRemove}
+                className="bg-white/90 p-1 rounded-md shadow-sm text-gray-600 hover:text-red-600 hover:bg-white transition-colors"
+            >
+                <XIcon size={14} />
+            </button>
+        </div>
+    );
 }
