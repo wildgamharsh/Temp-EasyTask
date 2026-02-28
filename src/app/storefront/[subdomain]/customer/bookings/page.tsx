@@ -19,7 +19,6 @@ import {
     LayoutGrid,
     List,
     Table2,
-    Building2,
     ChevronRight,
 } from "lucide-react";
 import { startConversation } from "@/lib/supabase-chat";
@@ -130,62 +129,77 @@ function CardGrid({ bookings, onView, onMessage, getBreakdown }: {
             {bookings.map((booking) => (
                 <div
                     key={booking.id}
-                    className="bg-white rounded-2xl border border-blue-100/80 shadow-sm hover:shadow-md hover:border-blue-200 transition-all duration-200 flex flex-col overflow-hidden group"
+                    className="bg-white rounded-2xl border border-slate-200/70 shadow-sm hover:shadow-lg hover:border-blue-200 hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden group"
                 >
-                    {/* Accent top stripe */}
-                    <div className="h-1 bg-gradient-to-r from-blue-500 to-blue-400" />
-
-                    <div className="p-5 flex-1 flex flex-col gap-3">
-                        {/* Service + status */}
-                        <div className="flex items-start justify-between gap-2">
-                            <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2">
-                                {booking.service_name}
-                            </h3>
+                    {/* ── Gradient Header Zone ── */}
+                    <div
+                        className="px-5 pt-5 pb-4"
+                        style={{ background: "linear-gradient(160deg, #f8faff 0%, #eef2ff 60%, #f0f7ff 100%)" }}
+                    >
+                        {/* Status + organizer row */}
+                        <div className="flex items-center justify-between mb-3">
                             <StatusPill status={booking.status} />
-                        </div>
-
-                        {/* Organizer */}
-                        <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                            <Building2 className="h-3 w-3 flex-shrink-0" />
-                            <span className="truncate">{booking.organizer?.business_name || booking.organizer_name}</span>
-                        </div>
-
-                        {/* Date chip */}
-                        <div className="flex items-center gap-2">
-                            <div className="flex items-center gap-1.5 bg-blue-50 border border-blue-100 text-blue-700 rounded-lg px-2.5 py-1.5 text-xs font-medium">
-                                <CalendarIcon className="h-3.5 w-3.5" />
-                                {format(new Date(booking.event_date), "MMM d, yyyy")}
-                            </div>
-                            {booking.event_time && (
-                                <span className="text-xs text-slate-400">{booking.event_time}</span>
-                            )}
-                        </div>
-
-                        {/* Price */}
-                        <div className="mt-auto pt-3 border-t border-slate-50 flex items-center justify-between">
-                            <span className="text-xl font-bold text-blue-700">
-                                {formatPrice(booking, getBreakdown)}
+                            <span className="text-[11px] text-slate-400 truncate max-w-[110px] text-right">
+                                {booking.organizer?.business_name || booking.organizer_name}
                             </span>
+                        </div>
+
+                        {/* Service name — primary title */}
+                        <h3 className="font-bold text-slate-800 text-[15px] leading-snug line-clamp-2 mb-3">
+                            {booking.service_name}
+                        </h3>
+
+                        {/* Price — prominent */}
+                        <div className="flex items-end justify-between">
+                            <div>
+                                <p className="text-[10px] text-slate-400 font-medium uppercase tracking-wider mb-0.5">Total</p>
+                                <span className="text-2xl font-extrabold text-blue-700 leading-none tracking-tight">
+                                    {formatPrice(booking, getBreakdown)}
+                                </span>
+                            </div>
+                            {/* Calendar date block */}
+                            <div className="flex flex-col items-center justify-center bg-white rounded-xl border border-slate-200/80 px-3 py-1.5 shadow-sm min-w-[56px]">
+                                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest leading-none">
+                                    {format(new Date(booking.event_date), "MMM")}
+                                </span>
+                                <span className="text-xl font-extrabold text-slate-800 leading-tight">
+                                    {format(new Date(booking.event_date), "d")}
+                                </span>
+                                <span className="text-[9px] text-slate-400 leading-none">
+                                    {format(new Date(booking.event_date), "yyyy")}
+                                </span>
+                            </div>
                         </div>
                     </div>
 
-                    {/* Action footer */}
-                    <div className="px-5 pb-4 flex items-center gap-2">
-                        <Button
-                            size="sm"
-                            className="flex-1 h-8 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+                    {/* ── Body / Meta Zone ── */}
+                    <div className="px-5 py-3 border-t border-slate-100 flex items-center gap-3">
+                        <CalendarIcon className="h-3.5 w-3.5 text-slate-300 flex-shrink-0" />
+                        <span className="text-xs text-slate-500 font-medium">
+                            {format(new Date(booking.event_date), "EEEE, MMM d")}
+                            {booking.event_time && (
+                                <span className="text-slate-400 font-normal"> · {booking.event_time}</span>
+                            )}
+                        </span>
+                    </div>
+
+                    {/* ── Action Footer ── */}
+                    <div className="px-5 pb-4 flex items-center justify-between gap-2">
+                        <button
                             onClick={() => onView(booking)}
+                            className="flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors group/btn"
                         >
-                            <Eye className="h-3.5 w-3.5 mr-1.5" /> View Details
-                        </Button>
-                        <Button
-                            size="sm"
-                            variant="outline"
-                            className="h-8 w-8 p-0 rounded-lg border-blue-100 text-blue-500 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200"
+                            <Eye className="h-3.5 w-3.5" />
+                            View Details
+                            <ChevronRight className="h-3 w-3 opacity-0 group-hover/btn:opacity-100 -ml-0.5 transition-opacity" />
+                        </button>
+                        <button
                             onClick={() => onMessage(booking)}
+                            className="h-8 w-8 flex items-center justify-center rounded-xl border border-slate-200 text-slate-400 hover:text-blue-600 hover:border-blue-200 hover:bg-blue-50 transition-all"
+                            title="Message organizer"
                         >
                             <MessageSquare className="h-3.5 w-3.5" />
-                        </Button>
+                        </button>
                     </div>
                 </div>
             ))}
@@ -217,7 +231,7 @@ function DetailList({ bookings, onView, onMessage, getBreakdown }: {
                         <div className="flex-1 min-w-0">
                             <p className="font-bold text-slate-800 text-base truncate">{booking.service_name}</p>
                             <div className="flex items-center gap-1.5 mt-0.5">
-                                <Building2 className="h-3 w-3 text-slate-300 flex-shrink-0" />
+                                <span className="h-1 w-1 rounded-full bg-slate-300 flex-shrink-0" />
                                 <span className="text-xs text-slate-400 truncate">
                                     {booking.organizer?.business_name || booking.organizer_name}
                                 </span>
@@ -364,7 +378,7 @@ export default function CustomerBookingsPage() {
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
     const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-    const [viewMode, setViewMode] = useState<ViewMode>("list");
+    const [viewMode, setViewMode] = useState<ViewMode>("grid");
     const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
     const supabase = createClient();

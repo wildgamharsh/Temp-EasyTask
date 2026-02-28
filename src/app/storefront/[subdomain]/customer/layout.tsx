@@ -7,14 +7,11 @@ import { cn } from "@/lib/utils";
 import {
     LayoutDashboard,
     Calendar,
-    Menu,
     LogOut,
     MessageSquare,
     ChevronRight,
-    Bell,
     Store,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
@@ -54,20 +51,23 @@ function CustomerSidebarContent({
     return (
         <div className="flex h-full flex-col" style={{ background: "linear-gradient(180deg, #0f1e3c 0%, #0d1b37 100%)" }}>
             {/* Brand */}
-            <div className="flex h-16 items-center px-5 border-b border-white/5">
+            <div className="flex flex-col items-center justify-center px-5 py-5 border-b border-white/5">
                 <Link
                     href={`/storefront/${subdomain}/customer`}
-                    className="flex items-center gap-2"
+                    className="flex flex-col items-center gap-2 w-full"
                     onClick={() => setIsMobileOpen(false)}
                 >
                     <Image
-                        src="/images/logo_zaaro_croped.png"
+                        src="/images/logo-transparent-dark-br.png"
                         alt="Zaaro"
-                        width={100}
-                        height={32}
-                        className="h-8 w-auto brightness-0 invert"
+                        width={160}
+                        height={40}
+                        className="w-full max-w-[140px] h-auto"
                         priority
                     />
+                    <span className="text-[10px] font-semibold tracking-[0.2em] text-white/30 uppercase mt-0.5">
+                        Customer Hub
+                    </span>
                 </Link>
             </div>
 
@@ -272,51 +272,6 @@ export default function CustomerDashboardLayout({
 
             {/* Main Content Area */}
             <div className="flex flex-1 flex-col overflow-hidden min-w-0">
-                {/* Top Bar */}
-                <header className="flex h-14 items-center justify-between border-b border-blue-100/60 bg-white/80 backdrop-blur-sm px-4 lg:px-6 flex-shrink-0">
-                    <div className="flex items-center gap-3">
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="lg:hidden h-8 w-8 text-slate-500"
-                            onClick={() => setIsMobileOpen(true)}
-                        >
-                            <Menu className="h-5 w-5" />
-                        </Button>
-                        <div className="hidden lg:flex items-center gap-2 text-sm text-slate-400">
-                            <span className="font-medium text-slate-700">{pageTitle}</span>
-                        </div>
-                        <h1 className="text-base font-semibold text-slate-800 lg:hidden">{pageTitle}</h1>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        {/* Messages notification for mobile/top bar */}
-                        <Link
-                            href={`/storefront/${subdomain}/customer/messages`}
-                            className="relative h-8 w-8 flex items-center justify-center rounded-xl text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                        >
-                            <Bell className="h-4.5 w-4.5 h-[18px] w-[18px]" />
-                            {unreadCount > 0 && (
-                                <span className="absolute -top-0.5 -right-0.5 h-4 min-w-[16px] flex items-center justify-center rounded-full bg-blue-600 text-[9px] font-bold text-white px-1">
-                                    {unreadCount}
-                                </span>
-                            )}
-                        </Link>
-                        {/* Avatar shortcut on top bar (desktop) */}
-                        <div className="hidden lg:flex items-center gap-2 pl-2 border-l border-slate-100">
-                            <Avatar className="h-7 w-7">
-                                <AvatarImage src={customer?.avatar_url || user?.user_metadata?.avatar_url} />
-                                <AvatarFallback className="bg-blue-600 text-white text-[10px] font-bold">
-                                    {(customer?.name || user?.email || "U").slice(0, 2).toUpperCase()}
-                                </AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm font-medium text-slate-700 max-w-[120px] truncate">
-                                {customer?.name || user?.email?.split("@")[0]}
-                            </span>
-                        </div>
-                    </div>
-                </header>
-
                 {/* Page Content */}
                 <main className="flex-1 overflow-y-auto p-4 lg:p-6">
                     {children}

@@ -1,8 +1,6 @@
 "use client";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
     Calendar as CalendarIcon,
     Clock,
@@ -11,10 +9,9 @@ import {
     User,
     Check,
     Tag,
-    X,
-    Filter,
     Copy,
     MessageSquare,
+    X,
 } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -26,16 +23,14 @@ import {
     Service as PricingService,
     PricingMode,
     ConfigStep,
-    Rule
+    Rule,
 } from "@/types/pricing";
 import { evaluatePrice } from "@/lib/pricing/pricing-engine";
 
-// Local Booking interface to support additional fields
-interface Booking extends Omit<GlobalBooking, 'customer_name'> {
-    organizer?: {
-        business_name: string;
-        subdomain: string;
-    };
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+interface Booking extends Omit<GlobalBooking, "customer_name"> {
+    organizer?: { business_name: string; subdomain: string };
     configuration_snapshot?: any;
     selection_state?: SelectionState;
     step_quantities?: QuantityState;
@@ -61,330 +56,305 @@ interface BookingOverviewModalProps {
     booking: Booking | null;
     isOpen: boolean;
     onClose: () => void;
-    userRole: 'customer' | 'organizer'; // To adapt display
+    userRole: "customer" | "organizer";
     onMessage?: (bookingId: string) => void;
 }
+
+// ─── Status config ────────────────────────────────────────────────────────────
+
+const statusConfig: Record<string, { label: string; pill: string; dot: string }> = {
+    pending: {
+        label: "Pending",
+        pill: "bg-amber-50 text-amber-700 border border-amber-200",
+        dot: "bg-amber-400",
+    },
+    confirmed: {
+        label: "Confirmed",
+        pill: "bg-blue-50 text-blue-700 border border-blue-200",
+        dot: "bg-blue-500",
+    },
+    completed: {
+        label: "Completed",
+        pill: "bg-slate-100 text-slate-600 border border-slate-200",
+        dot: "bg-slate-400",
+    },
+    cancelled: {
+        label: "Cancelled",
+        pill: "bg-red-50 text-red-500 border border-red-100",
+        dot: "bg-red-400",
+    },
+    rejected: {
+        label: "Rejected",
+        pill: "bg-red-50 text-red-600 border border-red-100",
+        dot: "bg-red-500",
+    },
+};
+
+// ─── Info Row Component ───────────────────────────────────────────────────────
+
+function InfoRow({ icon: Icon, label, value }: { icon: any; label: string; value: React.ReactNode }) {
+    return (
+        <div className="flex items-center gap-3 py-3 border-b border-slate-50 last:border-0">
+            <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-blue-50 flex-shrink-0">
+                <Icon className="h-4 w-4 text-blue-500" />
+            </div>
+            <div className="flex-1 min-w-0 flex items-center justify-between gap-2">
+                <span className="text-xs font-medium text-slate-400 uppercase tracking-wider flex-shrink-0">{label}</span>
+                <span className="text-sm font-semibold text-slate-800 text-right truncate">{value}</span>
+            </div>
+        </div>
+    );
+}
+
+// ─── Main Modal ───────────────────────────────────────────────────────────────
 
 export function BookingOverviewModal({
     booking,
     isOpen,
     onClose,
     userRole,
-    onMessage
+    onMessage,
 }: BookingOverviewModalProps) {
-    const [activeTab, setActiveTab] = useState<'overview' | 'configuration'>('overview');
+    const [activeTab, setActiveTab] = useState<"overview" | "configuration">("overview");
+    const [copied, setCopied] = useState(false);
 
     if (!booking) return null;
 
-    // --- Calculation Logic from CustomerBookingsPage ---
-    const getCalculatedBreakdown = (booking: Booking) => {
-        if (!booking.configuration_snapshot || !booking.selection_state) return null;
-
+    // Pricing engine
+    const getCalculatedBreakdown = (b: Booking) => {
+        if (!b.configuration_snapshot || !b.selection_state) return null;
         try {
-            const config = booking.configuration_snapshot;
-
-            // Construct Pricing Service Object
+            const config = b.configuration_snapshot;
             const engineService: PricingService = {
-                id: booking.id,
-                name: booking.service_name,
+                id: b.id,
+                name: b.service_name,
                 description: "",
                 basePrice: 0,
                 pricingMode: PricingMode.CONFIGURED,
                 steps: (config.steps || []) as ConfigStep[],
-                rules: (config.rules || []) as Rule[]
+                rules: (config.rules || []) as Rule[],
             };
-
-            const result = evaluatePrice(
-                engineService,
-                booking.selection_state || {},
-                1, // Global quantity
-                booking.step_quantities || {}
-            );
-
-            return result;
-        } catch (e) {
-            console.error("Error calculating price breakdown:", e);
+            return evaluatePrice(engineService, b.selection_state || {}, 1, b.step_quantities || {});
+        } catch {
             return null;
         }
     };
 
     const calculatedResult = getCalculatedBreakdown(booking);
-
-    // Helpers
+    const statusCfg = statusConfig[booking.status] ?? statusConfig.pending;
     const organizerName = (booking as any).organizer?.business_name || booking.organizer_name;
     const customerName = booking.customer_name;
-    const eventDate = booking.event_date ? format(new Date(booking.event_date), "MMMM d, yyyy") : "N/A";
+    const eventDate = booking.event_date
+        ? format(new Date(booking.event_date), "EEEE, MMMM d, yyyy")
+        : "N/A";
+    const shortId = `#${booking.id.split("-")[0].toUpperCase()}`;
 
-    const statusConfig: Record<string, { label: string; className: string }> = {
-        pending: { label: "Pending", className: "bg-orange-50 text-orange-600 border-orange-100" },
-        confirmed: { label: "Confirmed", className: "bg-blue-50 text-blue-600 border-blue-100" },
-        completed: { label: "Completed", className: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-        cancelled: { label: "Cancelled", className: "bg-slate-50 text-slate-500 border-slate-100" },
-        rejected: { label: "Rejected", className: "bg-red-50 text-red-600 border-red-100" }
+    const handleCopyId = () => {
+        navigator.clipboard.writeText(booking.id);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
     };
 
-    const status = statusConfig[booking.status] || statusConfig.pending;
+    // Resolve display price
+    const resolveTotal = (fallbackCalc?: number): string => {
+        const b = booking as any;
+        if (b.proposed_price && b.proposed_price > 0)
+            return `$${b.proposed_price.toFixed(2)}`;
+        if (booking.pricing_display !== false && fallbackCalc != null)
+            return `$${fallbackCalc.toFixed(2)}`;
+        if (booking.pricing_display !== false) {
+            const p = b.pricing_breakdown?.total || b.total_price || 0;
+            return `$${p.toFixed(2)}`;
+        }
+        return "Not Specified";
+    };
 
-    const copyBookingId = () => {
-        navigator.clipboard.writeText(booking.id);
-        // Assuming toast is available or just let it fail silently if not imported, 
-        // but better to omit toast if not imported. 
-        // I won't add toast import to avoid errors if sonner isn't there, 
-        // unless I see it was there. It wasn't in the snippet I wrote previously.
+    const timeDisplay = () => {
+        if (booking.start_time && booking.end_time) {
+            return `${format(new Date(`2000-01-01T${booking.start_time}`), "h:mm a")} – ${format(new Date(`2000-01-01T${booking.end_time}`), "h:mm a")}`;
+        }
+        if (booking.event_time) {
+            return booking.event_time.includes("M")
+                ? booking.event_time
+                : format(new Date(`2000-01-01T${booking.event_time}`), "h:mm a");
+        }
+        return "Not specified";
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-lg max-w-xl p-0 overflow-hidden bg-white gap-0 rounded-2xl border-0 shadow-2xl">
-                <div className="px-6 pt-6 pb-0">
-                    <DialogTitle className="text-lg leading-none font-semibold sr-only">Booking Details</DialogTitle>
-                    <div className="flex justify-between items-start mb-4">
-                        <h2 className="text-xl font-semibold text-gray-900">{booking.service_name}</h2>
-                        <Badge variant="outline" className={cn("px-3 py-1 rounded-full text-xs font-medium border", status.className)}>
-                            {status.label}
-                        </Badge>
+            <DialogContent showCloseButton={false} className="sm:max-w-lg p-0 overflow-hidden bg-white gap-0 rounded-2xl border-0 shadow-2xl focus:outline-none focus-visible:ring-0 focus-visible:outline-none">
+                <DialogTitle className="sr-only">Booking Details</DialogTitle>
+
+                {/* ── Gradient Header ──────────────────────────────────── */}
+                <div
+                    className="px-6 pt-6 pb-5 relative"
+                    style={{ background: "linear-gradient(145deg, #1e3a8a 0%, #1d4ed8 50%, #3b82f6 100%)" }}
+                >
+                    {/* Close button */}
+                    <button
+                        onClick={onClose}
+                        className="absolute top-4 right-4 h-8 w-8 flex items-center justify-center rounded-lg bg-white/10 text-white/70 hover:bg-white/20 hover:text-white transition-all focus:outline-none"
+                    >
+                        <X className="h-4 w-4" />
+                    </button>
+
+                    {/* Status pill */}
+                    <div className="mb-3">
+                        <span className={cn(
+                            "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold bg-white/15 text-white border border-white/20"
+                        )}>
+                            <span className={cn("h-1.5 w-1.5 rounded-full", statusCfg.dot)} />
+                            {statusCfg.label}
+                        </span>
                     </div>
-                    <div className="flex items-center text-sm mb-4 pb-4 border-b border-slate-100">
-                        <span className="text-gray-500">Booking ID:</span>
-                        <span className="ml-2 font-mono font-medium text-slate-700">#{booking.id.split('-')[0].toUpperCase()}</span>
+
+                    {/* Service name */}
+                    <h2 className="text-xl font-bold text-white leading-snug mb-4 pr-10">
+                        {booking.service_name}
+                    </h2>
+
+                    {/* Booking ID */}
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-white/50 font-medium">Booking</span>
+                        <span className="text-xs font-mono font-bold text-white/80">{shortId}</span>
                         <button
-                            onClick={copyBookingId}
-                            className="ml-2 text-primary hover:text-primary/70 transition-colors"
-                            aria-label="Copy booking ID"
+                            onClick={handleCopyId}
+                            className="flex items-center gap-1.5 text-[10px] bg-white/10 hover:bg-white/20 text-white/60 hover:text-white px-2 py-1 rounded-md transition-all focus:outline-none"
                         >
-                            <Copy className="h-3.5 w-3.5" />
+                            {copied ? (
+                                <><Check className="h-3 w-3 text-green-300" /> Copied</>
+                            ) : (
+                                <><Copy className="h-3 w-3" /> Copy</>
+                            )}
                         </button>
                     </div>
                 </div>
 
-                {/* Tabs Navigation */}
-                <div className="flex border-b border-slate-200 px-6">
-                    <button
-                        onClick={() => setActiveTab('overview')}
-                        className={cn(
-                            "pb-3 pt-1 px-1 font-medium text-sm transition-all border-b-2 mr-6",
-                            activeTab === 'overview'
-                                ? "border-primary text-primary"
-                                : "border-transparent text-slate-500 hover:text-slate-700"
-                        )}
-                    >
-                        Overview
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('configuration')}
-                        className={cn(
-                            "pb-3 pt-1 px-1 font-medium text-sm transition-all border-b-2",
-                            activeTab === 'configuration'
-                                ? "border-primary text-primary"
-                                : "border-transparent text-slate-500 hover:text-slate-700"
-                        )}
-                    >
-                        Configuration & Pricing
-                    </button>
+                {/* ── Tab Switcher ─────────────────────────────────────── */}
+                <div className="flex items-center gap-1.5 px-6 py-3 border-b border-slate-100 bg-slate-50/60">
+                    {(["overview", "configuration"] as const).map((tab) => (
+                        <button
+                            key={tab}
+                            onClick={() => setActiveTab(tab)}
+                            className={cn(
+                                "px-4 py-1.5 rounded-lg text-xs font-semibold transition-all duration-150 focus:outline-none",
+                                activeTab === tab
+                                    ? "bg-blue-600 text-white shadow-sm shadow-blue-600/25"
+                                    : "text-slate-500 hover:text-slate-700 hover:bg-slate-100"
+                            )}
+                        >
+                            {tab === "overview" ? "Overview" : "Pricing"}
+                        </button>
+                    ))}
                 </div>
 
-                {/* Tab Content */}
-                <div className="p-6 min-h-[300px] max-h-[60vh] overflow-y-auto">
-                    {activeTab === 'overview' ? (
-                        <div className="space-y-4 fade-in animate-in slide-in-from-bottom-2 duration-300">
-                            {/* Event Date */}
-                            <div className="flex items-start">
-                                <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                    <CalendarIcon className="h-4 w-4 text-slate-400" /> Event Date
-                                </div>
-                                <div className="font-medium text-slate-900">{eventDate}</div>
-                            </div>
-
-                            {/* Time */}
-                            <div className="flex items-start">
-                                <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                    <Clock className="h-4 w-4 text-slate-400" /> Time
-                                </div>
-                                <div className="font-medium text-slate-900">
-                                    {booking.start_time && booking.end_time ? (
-                                        <span>
-                                            {format(new Date(`2000-01-01T${booking.start_time}`), 'h:mm a')} - {format(new Date(`2000-01-01T${booking.end_time}`), 'h:mm a')}
-                                        </span>
-                                    ) : booking.event_time ? (
-                                        <span>
-                                            {booking.event_time.includes('M') ? booking.event_time : format(new Date(`2000-01-01T${booking.event_time}`), 'h:mm a')}
-                                        </span>
-                                    ) : (
-                                        <span className="text-slate-400">Not specified</span>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Organizer / Customer */}
-                            {userRole === 'customer' && (
-                                <div className="flex items-start">
-                                    <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                        <Briefcase className="h-4 w-4 text-slate-400" /> Organizer
-                                    </div>
-                                    <div className="font-medium text-slate-900">{organizerName}</div>
-                                </div>
+                {/* ── Tab Content ──────────────────────────────────────── */}
+                <div className="px-6 py-4 min-h-[260px] max-h-[52vh] overflow-y-auto">
+                    {activeTab === "overview" ? (
+                        <div className="animate-in slide-in-from-bottom-1 duration-200">
+                            <InfoRow icon={CalendarIcon} label="Date" value={eventDate} />
+                            <InfoRow icon={Clock} label="Time" value={timeDisplay()} />
+                            {userRole === "customer" && (
+                                <InfoRow icon={Briefcase} label="Organizer" value={organizerName || "—"} />
                             )}
-                            {userRole === 'organizer' && (
-                                <div className="flex items-start">
-                                    <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                        <User className="h-4 w-4 text-slate-400" /> Customer
-                                    </div>
-                                    <div className="font-medium text-slate-900">{customerName || 'Unknown'}</div>
-                                </div>
+                            {userRole === "organizer" && (
+                                <InfoRow icon={User} label="Customer" value={customerName || "Unknown"} />
                             )}
-
-                            {/* Location */}
-                            <div className="flex items-start">
-                                <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                    <MapPin className="h-4 w-4 text-slate-400" /> Location
-                                </div>
-                                <div className="font-medium text-slate-900">{booking.location || "Not specified"}</div>
-                            </div>
-
-                            {/* Service Type */}
-                            <div className="flex items-start">
-                                <div className="w-32 text-slate-500 text-sm flex items-center gap-2">
-                                    <Tag className="h-4 w-4 text-slate-400" /> Service Type
-                                </div>
-                                <div className="font-medium text-slate-900">{booking.service_name}</div>
-                            </div>
-
-                            {/* Actions Footer Inside Overview */}
-                            <div className="mt-8 flex gap-3 pt-4 border-t border-slate-100">
-                                <Button
-                                    variant="secondary"
-                                    className="bg-primary/5 text-primary hover:bg-primary/10 border-0 h-9 px-4 py-2"
-                                    onClick={copyBookingId}
-                                >
-                                    <Copy className="mr-2 h-4 w-4" />
-                                    Copy ID
-                                </Button>
-                                {onMessage && (
-                                    <Button
-                                        variant="outline"
-                                        className="text-slate-700 hover:bg-slate-50 h-9 px-4 py-2"
-                                        onClick={() => onMessage(booking.id)}
-                                    >
-                                        <MessageSquare className="mr-2 h-4 w-4" />
-                                        Message {userRole === 'customer' ? 'Organizer' : 'Customer'}
-                                    </Button>
-                                )}
-                            </div>
+                            <InfoRow icon={MapPin} label="Location" value={booking.location || "Not specified"} />
+                            <InfoRow icon={Tag} label="Service" value={booking.service_name} />
                         </div>
                     ) : (
-                        <div className="space-y-6 fade-in animate-in slide-in-from-bottom-2 duration-300">
-                            {/* Pricing Breakdown Logic - Kept mostly same but wrapped with fade-in */}
+                        <div className="animate-in slide-in-from-bottom-1 duration-200 space-y-4">
                             {calculatedResult ? (
-                                <div className="space-y-4">
-                                    <h3 className="font-medium text-sm text-slate-900">Detailed Breakdown</h3>
-                                    <div className="space-y-3">
-                                        {calculatedResult.breakdown.map((item, index) => (
-                                            <div key={index} className="flex justify-between text-sm group">
-                                                <div className="flex items-start gap-2 max-w-[70%]">
-                                                    <Check className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                                                    <span className="text-slate-600">
-                                                        {item.label}
-                                                    </span>
+                                <>
+                                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Breakdown</p>
+                                    <div className="space-y-2">
+                                        {calculatedResult.breakdown.map((item, i) => (
+                                            <div
+                                                key={i}
+                                                className="flex items-center justify-between py-2.5 px-3 rounded-xl bg-slate-50 border border-slate-100"
+                                            >
+                                                <div className="flex items-center gap-2.5 min-w-0">
+                                                    <div className="h-5 w-5 rounded-md bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                                        <Check className="h-3 w-3 text-blue-600" />
+                                                    </div>
+                                                    <span className="text-sm text-slate-600 truncate">{item.label}</span>
                                                 </div>
-                                                <div className="font-medium text-slate-900 shrink-0">
-                                                    {(booking as any).pricing_display === false ?
-                                                        <span className="text-slate-400 italic">Included</span> :
+                                                <span className="text-sm font-semibold text-slate-800 flex-shrink-0 ml-3">
+                                                    {(booking as any).pricing_display === false ? (
+                                                        <span className="text-slate-400 italic text-xs">Included</span>
+                                                    ) : (
                                                         `$${item.finalPrice.toFixed(2)}`
-                                                    }
-                                                </div>
+                                                    )}
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
-                                    <div className="pt-4 border-t border-slate-200 mt-4">
-                                        <div className="flex justify-between items-center font-bold text-lg">
-                                            <span>Total</span>
-                                            <span>
-                                                {(() => {
-                                                    const b = booking as any;
-                                                    // DEBUG: Log price rendering logic
-                                                    console.log(`BookingModal Render ${booking.id}:`, { proposed: b.proposed_price, display: booking.pricing_display, calc: calculatedResult.totalPrice });
 
-                                                    if (b.proposed_price && b.proposed_price > 0) {
-                                                        return `$${b.proposed_price.toFixed(2)}`;
-                                                    }
-                                                    if (booking.pricing_display !== false) {
-                                                        return `$${calculatedResult.totalPrice.toFixed(2)}`;
-                                                    }
-                                                    return "Not Specified";
-                                                })()}
-                                            </span>
-                                        </div>
+                                    {/* Total */}
+                                    <div className="mt-4 flex items-center justify-between px-4 py-3 rounded-xl bg-blue-600 text-white">
+                                        <span className="text-sm font-semibold">Total</span>
+                                        <span className="text-xl font-extrabold tracking-tight">
+                                            {resolveTotal(calculatedResult.totalPrice)}
+                                        </span>
                                     </div>
-                                </div>
+                                </>
                             ) : booking.pricing_breakdown ? (
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center pb-4 border-b border-slate-100">
-                                        <div className="text-sm font-medium text-slate-900">Base Price</div>
-                                        <div className="text-sm font-medium text-slate-900">
-                                            ${booking.pricing_breakdown.base_amount?.toFixed(2) || "0.00"}
-                                        </div>
+                                <>
+                                    <p className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-3">Breakdown</p>
+                                    <div className="flex items-center justify-between py-2.5 px-3 rounded-xl bg-slate-50 border border-slate-100">
+                                        <span className="text-sm text-slate-600">Base Price</span>
+                                        <span className="text-sm font-semibold text-slate-800">
+                                            ${booking.pricing_breakdown.base_amount?.toFixed(2) ?? "0.00"}
+                                        </span>
                                     </div>
 
-                                    {/* Addons */}
-                                    {booking.pricing_breakdown.addons && booking.pricing_breakdown.addons.length > 0 && (
-                                        <div className="space-y-3 pt-2">
-                                            <div className="text-xs font-medium text-slate-500 uppercase tracking-wider">Add-ons</div>
-                                            {booking.pricing_breakdown.addons.map((addon, i) => (
-                                                <div key={i} className="flex justify-between text-sm">
-                                                    <div className="text-slate-600 flex items-center gap-2">
-                                                        <Tag className="h-3 w-3" /> {addon.name}
-                                                    </div>
-                                                    <div className="font-medium text-slate-900">
-                                                        ${addon.price.toFixed(2)}
-                                                    </div>
-                                                </div>
-                                            ))}
+                                    {booking.pricing_breakdown.addons?.map((addon, i) => (
+                                        <div key={i} className="flex items-center justify-between py-2.5 px-3 rounded-xl bg-slate-50 border border-slate-100">
+                                            <div className="flex items-center gap-2">
+                                                <Tag className="h-3.5 w-3.5 text-slate-400" />
+                                                <span className="text-sm text-slate-600">{addon.name}</span>
+                                            </div>
+                                            <span className="text-sm font-semibold text-slate-800">${addon.price.toFixed(2)}</span>
                                         </div>
-                                    )}
+                                    ))}
 
-                                    {/* Calculated Total */}
-                                    <div className="pt-4 border-t border-slate-200 mt-4">
-                                        <div className="flex justify-between items-center font-bold text-lg">
-                                            <span>Total</span>
-                                            <span>
-                                                {(() => {
-                                                    const b = booking as any;
-                                                    if (b.proposed_price && b.proposed_price > 0) {
-                                                        return `$${b.proposed_price.toFixed(2)}`;
-                                                    }
-                                                    if (booking.pricing_display !== false) {
-                                                        return `$${(booking.pricing_breakdown?.total || booking.total_price || 0).toFixed(2)}`;
-                                                    }
-                                                    return "Not Specified";
-                                                })()}
-                                            </span>
-                                        </div>
+                                    <div className="mt-4 flex items-center justify-between px-4 py-3 rounded-xl bg-blue-600 text-white">
+                                        <span className="text-sm font-semibold">Total</span>
+                                        <span className="text-xl font-extrabold tracking-tight">{resolveTotal()}</span>
                                     </div>
-                                </div>
+                                </>
                             ) : (
-                                <div className="text-center py-12">
-                                    <p className="text-slate-500">No detailed configuration available.</p>
-                                    <div className="mt-2 text-2xl font-bold text-slate-900">
-                                        {(() => {
-                                            const b = booking as any;
-                                            if (b.proposed_price && b.proposed_price > 0) {
-                                                return `$${b.proposed_price.toLocaleString()}`;
-                                            }
-                                            if (booking.pricing_display !== false) {
-                                                const p = b.pricing_breakdown?.total || b.total_price || 0;
-                                                return `$${p.toLocaleString()}`;
-                                            }
-                                            return <span className="text-slate-500 italic">Not Specified</span>;
-                                        })()}
+                                <div className="flex flex-col items-center justify-center py-10 text-center">
+                                    <div className="h-12 w-12 rounded-2xl bg-blue-50 flex items-center justify-center mb-3">
+                                        <Tag className="h-5 w-5 text-blue-400" />
                                     </div>
+                                    <p className="text-sm font-medium text-slate-600">No detailed configuration available</p>
+                                    <p className="text-2xl font-extrabold text-blue-700 mt-3">{resolveTotal()}</p>
                                 </div>
                             )}
                         </div>
                     )}
                 </div>
 
-                <div className="bg-slate-50 p-4 border-t border-slate-100 flex justify-end">
-                    <Button variant="outline" onClick={onClose}>Close</Button>
+                {/* ── Action Footer ─────────────────────────────────────── */}
+                <div className="px-6 py-4 border-t border-slate-100 flex items-center justify-between gap-3">
+                    {onMessage ? (
+                        <button
+                            onClick={() => onMessage(booking.id)}
+                            className="flex-1 flex items-center justify-center gap-2 h-9 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors focus:outline-none"
+                        >
+                            <MessageSquare className="h-4 w-4" />
+                            Message {userRole === "customer" ? "Organizer" : "Customer"}
+                        </button>
+                    ) : <div />}
+                    <button
+                        onClick={onClose}
+                        className="h-9 px-5 text-sm font-semibold text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-xl transition-colors focus:outline-none"
+                    >
+                        Close
+                    </button>
                 </div>
             </DialogContent>
         </Dialog>
