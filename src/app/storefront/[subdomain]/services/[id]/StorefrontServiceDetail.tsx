@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -34,6 +34,7 @@ import { MarketplaceBookingModal } from "@/components/marketplace/booking/Market
 import { Service, OrganizerProfile, PricingConfiguration, serviceToLegacy } from "@/lib/database.types";
 import { StorefrontGlobalStyles } from "@/components/storefront/StorefrontGlobalStyles";
 import { ReviewsSection } from "@/components/storefront/ReviewsSection";
+import { SharedPricingDisplay } from "@/components/pricing/SharedPricingDisplay";
 
 interface StorefrontServiceDetailProps {
     service: Service;
@@ -393,112 +394,22 @@ export function StorefrontServiceDetail({ service, organizer, subdomain, startin
                                     </div>
 
                                     <div className="space-y-8">
-                                        {richService.steps.sort((a: any, b: any) => a.order - b.order).map((step: any) => {
-                                            if (!isStepVisible(richService, step.id, selections)) return null;
-                                            return (
-                                                <div key={step.id} className="animate-in fade-in duration-500">
-                                                    <label className="block text-sm font-bold text-[var(--color-muted)] mb-3 uppercase tracking-wider">
-                                                        {step.name} {step.required && <span className="text-red-500">*</span>}
-                                                    </label>
-
-                                                    {/* Selection Renderers */}
-                                                    {(step.selectionType === 'single' || step.selectionType === 'fixed') && (
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                                            {step.options.map((option: any) => {
-                                                                const active = isSelected(step.id, option.id);
-                                                                return (
-                                                                    <div
-                                                                        key={option.id}
-                                                                        onClick={() => toggleSelection(step.id, option.id, step.selectionType as any)}
-                                                                        className={`
-                                                                            border-2 rounded-xl p-4 cursor-pointer transition-all duration-300 relative
-                                                                            ${active
-                                                                                ? 'border-[var(--color-primary)] bg-[var(--color-background)] shadow-md transform scale-[1.02]'
-                                                                                : 'border-[var(--color-border)] hover:border-[var(--color-primary)] hover:bg-[var(--color-background)]/50'
-                                                                            }
-                                                                        `}
-                                                                    >
-                                                                        <div className="flex items-center justify-between mb-2">
-                                                                            <span className={`font-bold ${active ? 'text-[var(--color-primary)]' : 'text-[var(--color-text)]'}`}>{option.label}</span>
-                                                                            {active && <CheckCircle2 className="w-5 h-5 text-[var(--color-primary)]" />}
-                                                                        </div>
-                                                                        {showPricing && (
-                                                                            <div className="text-lg font-black text-[var(--color-text)] mb-1">
-                                                                                {option.baseDelta > 0 ? `$${option.baseDelta}` : 'Included'}
-                                                                            </div>
-                                                                        )}
-                                                                        {option.description && (
-                                                                            <p className="text-xs text-[var(--color-muted)]">{option.description}</p>
-                                                                        )}
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    )}
-
-                                                    {step.selectionType === 'multi' && (
-                                                        <div className="space-y-3">
-                                                            {step.options.map((option: any) => {
-                                                                const active = isSelected(step.id, option.id);
-                                                                return (
-                                                                    <div
-                                                                        key={option.id}
-                                                                        onClick={() => toggleSelection(step.id, option.id, 'multi')}
-                                                                        className={`flex items-center justify-between p-4 rounded-xl cursor-pointer border transition-all duration-200 ${active ? 'bg-[var(--color-background)] border-[var(--color-primary)]' : 'bg-white border-[var(--color-border)] hover:border-[var(--color-primary)]'
-                                                                            }`}
-                                                                    >
-                                                                        <div className="flex items-center gap-4">
-                                                                            <div className={`w-6 h-6 rounded-md border flex items-center justify-center transition-colors ${active ? 'bg-[var(--color-primary)] border-[var(--color-primary)]' : 'border-[var(--color-muted)]'}`}>
-                                                                                {active && <Check className="w-4 h-4 text-white" />}
-                                                                            </div>
-                                                                            <div>
-                                                                                <p className="font-bold text-[var(--color-text)]">{option.label}</p>
-                                                                                {option.description && <p className="text-xs text-[var(--color-muted)]">{option.description}</p>}
-                                                                            </div>
-                                                                        </div>
-                                                                        {showPricing && (
-                                                                            <span className="font-bold text-[var(--color-text)]">
-                                                                                {option.baseDelta > 0 ? `+$${option.baseDelta}` : 'Free'}
-                                                                            </span>
-                                                                        )}
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    )}
-
-                                                    {step.selectionType === 'quantity' && (
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                            {step.options.map((option: any) => (
-                                                                <div key={option.id} className="bg-[var(--color-background)]/30 rounded-xl p-4 border border-[var(--color-border)]">
-                                                                    <label className="block text-sm font-bold text-[var(--color-text)] mb-3">{option.label}</label>
-                                                                    <div className="flex items-center space-x-4">
-                                                                        <button
-                                                                            onClick={() => updateQuantity(step.id, -1, option.id)}
-                                                                            className="w-10 h-10 flex items-center justify-center border border-[var(--color-border)] rounded-lg hover:bg-white transition-colors bg-white text-[var(--color-text)]"
-                                                                        >
-                                                                            -
-                                                                        </button>
-                                                                        <span className="text-xl font-black text-[var(--color-text)] w-12 text-center">
-                                                                            {stepQuantities[step.id] || 0}
-                                                                        </span>
-                                                                        <button
-                                                                            onClick={() => updateQuantity(step.id, 1, option.id)}
-                                                                            className="w-10 h-10 flex items-center justify-center border border-[var(--color-border)] rounded-lg hover:bg-white transition-colors bg-white text-[var(--color-text)]"
-                                                                        >
-                                                                            +
-                                                                        </button>
-                                                                        {showPricing && (
-                                                                            <span className="text-sm text-[var(--color-muted)] font-medium">× ${option.baseDelta} each</span>
-                                                                        )}
-                                                                    </div>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
+                                        <SharedPricingDisplay
+                                            steps={richService.steps}
+                                            selections={selections}
+                                            stepQuantities={stepQuantities}
+                                            onSelectionChange={(stepId, optionId, type, quantity) => {
+                                                if (type === 'quantity') {
+                                                    updateQuantity(stepId, quantity !== undefined ? quantity - (stepQuantities[stepId] || 0) : 0, optionId);
+                                                } else {
+                                                    toggleSelection(stepId, optionId, type);
+                                                }
+                                            }}
+                                            readonly={false}
+                                            showPricing={showPricing}
+                                            isQuoteMode={!showPricing}
+                                            containerClassName="space-y-8"
+                                        />
                                     </div>
                                 </section>
                             )}

@@ -61,7 +61,7 @@ export default function StorefrontLoginPage() {
             console.log("DEBUG: Google OAuth Redirect URL:", redirectBase);
 
             const queryParams: any = {
-                next: '/',
+                next: `/storefront/${subdomain}`,
                 role: 'customer',
                 organizer_id: organizer?.id || ''
             };
