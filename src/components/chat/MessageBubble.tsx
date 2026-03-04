@@ -3,7 +3,8 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { ReactionPicker } from "./ReactionPicker";
 import { createClient } from "@/lib/supabase/client";
-import { MessageReaction } from "@/lib/database.types";
+import { MessageReaction, MessageAttachment } from "@/lib/database.types";
+import { FileText, Image as ImageIcon, Film, Music, Archive, Download, ExternalLink } from "lucide-react";
 
 interface MessageBubbleProps {
     messageId: string;
@@ -14,8 +15,9 @@ interface MessageBubbleProps {
     isRead?: boolean;
     currentUserId: string;
     reactions?: MessageReaction[];
+    attachments?: MessageAttachment[];
     onProposalAction?: (action: 'accept' | 'reject', messageId: string) => void;
-    quoteStatus?: string; // Added prop
+    quoteStatus?: string;
 }
 
 interface GroupedReaction {
@@ -33,8 +35,9 @@ export function MessageBubble({
     isRead,
     currentUserId,
     reactions = [],
+    attachments = [],
     onProposalAction,
-    quoteStatus // Destructure
+    quoteStatus
 }: MessageBubbleProps) {
     const supabase = createClient();
 
@@ -112,6 +115,23 @@ export function MessageBubble({
     }, [isQuoteRequest, content]);
 
     // Use the prop directly
+
+    const getFileIcon = (type: string) => {
+        if (type.startsWith("image/")) return ImageIcon;
+        if (type.startsWith("video/")) return Film;
+        if (type.startsWith("audio/")) return Music;
+        if (type.includes("pdf") || type.includes("document") || type.includes("text")) return FileText;
+        if (type.includes("zip") || type.includes("archive") || type.includes("compressed")) return Archive;
+        return FileText;
+    };
+
+    const formatFileSize = (bytes: number): string => {
+        if (bytes === 0) return "0 Bytes";
+        const k = 1024;
+        const sizes = ["Bytes", "KB", "MB", "GB"];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+    };
 
     return (
         <div className={cn("flex w-full mb-4", isOwn ? "justify-end" : "justify-start")}>
@@ -206,6 +226,82 @@ export function MessageBubble({
                         )}
                     >
                         <p className="text-sm leading-relaxed antialiased font-medium whitespace-pre-wrap">{content}</p>
+
+                        {/* Attachments */}
+                        {attachments && attachments.length > 0 && (
+                            <div className={cn(
+                                "mt-2 space-y-2",
+                                isOwn ? "border-t border-white/20 pt-2" : "border-t border-slate-200 pt-2"
+                            )}>
+                                {attachments.map((attachment, index) => {
+                                    const Icon = getFileIcon(attachment.type);
+                                    const isImage = attachment.type.startsWith("image/");
+                                    
+                                    if (isImage && attachment.url) {
+                                        return (
+                                            <a
+                                                key={index}
+                                                href={attachment.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="block"
+                                            >
+                                                <div className="relative rounded-lg overflow-hidden border border-black/10 group">
+                                                    <img
+                                                        src={attachment.url}
+                                                        alt={attachment.name}
+                                                        className="w-full max-w-[200px] h-auto object-cover"
+                                                    />
+                                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <ExternalLink className="w-5 h-5 text-white" />
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        );
+                                    }
+                                    
+                                    return (
+                                        <a
+                                            key={index}
+                                            href={attachment.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={cn(
+                                                "flex items-center gap-3 p-2.5 rounded-lg border transition-all hover:scale-[1.02]",
+                                                isOwn 
+                                                    ? "bg-white/10 border-white/20 hover:bg-white/20" 
+                                                    : "bg-white border-slate-200 hover:border-slate-300"
+                                            )}
+                                        >
+                                            <div className={cn(
+                                                "w-10 h-10 rounded-lg flex items-center justify-center shrink-0",
+                                                isOwn ? "bg-white/20" : "bg-slate-100"
+                                            )}>
+                                                <Icon className={cn("w-5 h-5", isOwn ? "text-white" : "text-slate-500")} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className={cn(
+                                                    "text-sm font-medium truncate",
+                                                    isOwn ? "text-white" : "text-slate-700"
+                                                )}>
+                                                    {attachment.name}
+                                                </p>
+                                                <p className={cn(
+                                                    "text-xs",
+                                                    isOwn ? "text-white/60" : "text-slate-400"
+                                                )}>
+                                                    {formatFileSize(attachment.size)}
+                                                </p>
+                                            </div>
+                                            <Download className={cn(
+                                                "w-4 h-4 shrink-0",
+                                                isOwn ? "text-white/60" : "text-slate-400"
+                                            )} />
+                                        </a>
+                                    );
+                                })}
+                            </div>
+                        )}
 
                         <div className={cn(
                             "flex items-center gap-1.5 mt-1 opacity-60 text-[10px] font-bold",

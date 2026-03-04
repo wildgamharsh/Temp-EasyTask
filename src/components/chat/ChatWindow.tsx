@@ -3,9 +3,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import { MessageBubble } from "./MessageBubble";
 import { ChatInput } from "./ChatInput";
-import { getMessages, sendMessage, markAsRead, subscribeToMessages, subscribeToReactions } from "@/lib/supabase-chat";
+import { getMessages, sendMessage, markAsRead, subscribeToMessages, subscribeToReactions, uploadChatAttachment } from "@/lib/supabase-chat";
 import { createClient } from "@/lib/supabase/client";
-import { Message, MessageReaction, ChatParticipant } from "@/lib/database.types";
+import { Message, MessageReaction, ChatParticipant, MessageAttachment } from "@/lib/database.types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +28,7 @@ export function ChatWindow({ conversationId, currentUser, partner, bookingId, ty
     const [loading, setLoading] = useState(true);
     const [partnerTyping, setPartnerTyping] = useState(false);
     const [highlightedMessageId, setHighlightedMessageId] = useState<string | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const messageRefs = useRef<{ [key: string]: HTMLDivElement }>({});
 
@@ -164,7 +165,7 @@ export function ChatWindow({ conversationId, currentUser, partner, bookingId, ty
         }
     };
 
-    const handleSend = async (content: string) => {
+    const handleSend = async (content: string, attachments: File[] = []) => {
         if (quoteStatus === 'completed' || quoteStatus === 'cancelled') return;
 
         const tempId = `temp-${Date.now()}`;
@@ -175,14 +176,36 @@ export function ChatWindow({ conversationId, currentUser, partner, bookingId, ty
             sender_id: currentUser.id,
             content: content,
             created_at: new Date().toISOString(),
-            is_read: false
+            is_read: false,
+            attachments: attachments.map(file => ({
+                name: file.name,
+                url: '',
+                type: file.type,
+                size: file.size
+            }))
         };
 
         setMessages((prev) => [...prev, optimisticMessage]);
         stopTyping();
 
         try {
-            const newMessage = await sendMessage(conversationId, currentUser.id, content, type);
+            let uploadedAttachments: MessageAttachment[] = [];
+            
+            if (attachments.length > 0) {
+                setIsUploading(true);
+                uploadedAttachments = await Promise.all(
+                    attachments.map(file => uploadChatAttachment(file, conversationId))
+                );
+                setIsUploading(false);
+            }
+
+            const newMessage = await sendMessage(
+                conversationId, 
+                currentUser.id, 
+                content, 
+                type,
+                uploadedAttachments
+            );
             setMessages((prev) => prev.map((msg) => msg.id === tempId ? newMessage : msg));
         } catch (error) {
             console.error("Failed to send message:", error);
@@ -311,6 +334,7 @@ export function ChatWindow({ conversationId, currentUser, partner, bookingId, ty
                                     showStatus={index === messages.length - 1}
                                     isRead={msg.is_read}
                                     reactions={msg.reactions}
+                                    attachments={msg.attachments}
                                     currentUserId={currentUser.id}
                                     // onProposalAction logic...
                                     // For now, if we want inline buttons we can pass a simplified handler:

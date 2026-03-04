@@ -1,5 +1,5 @@
 import { createClient } from "./supabase/client";
-import { Conversation, Message, ConversationWithDetails, Quote, QuoteWithDetails, MessageReaction } from "./database.types";
+import { Conversation, Message, ConversationWithDetails, Quote, QuoteWithDetails, MessageReaction, MessageAttachment } from "./database.types";
 
 /**
  * Fetch all conversations for the current user
@@ -82,7 +82,7 @@ export async function getMessages(id: string, type: 'conversation' | 'quote' = '
 /**
  * Send a new message
  */
-export async function sendMessage(id: string, senderId: string, content: string, type: 'conversation' | 'quote' = 'conversation') {
+export async function sendMessage(id: string, senderId: string, content: string, type: 'conversation' | 'quote' = 'conversation', attachments?: MessageAttachment[]) {
     const supabase = createClient();
 
     const payload: any = {
@@ -94,6 +94,10 @@ export async function sendMessage(id: string, senderId: string, content: string,
         payload.conversation_id = id;
     } else {
         payload.quote_id = id;
+    }
+
+    if (attachments && attachments.length > 0) {
+        payload.attachments = attachments;
     }
 
     const { data, error } = await supabase
@@ -291,4 +295,37 @@ export async function startConversation(customerId: string, organizerId: string,
 
     if (error) throw error;
     return created.id;
+}
+
+/**
+ * Upload attachment to Supabase storage
+ */
+export async function uploadChatAttachment(file: File, conversationId: string): Promise<MessageAttachment> {
+    const supabase = createClient();
+    
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${conversationId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+    
+    const { data, error } = await supabase.storage
+        .from('chat_attachments')
+        .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false
+        });
+
+    if (error) {
+        console.error("Error uploading attachment:", error);
+        throw error;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+        .from('chat_attachments')
+        .getPublicUrl(fileName);
+
+    return {
+        name: file.name,
+        url: publicUrl,
+        type: file.type,
+        size: file.size
+    };
 }

@@ -969,6 +969,13 @@ export interface QuoteWithDetails extends Quote {
     booking?: { service_name: string; event_date: string };
 }
 
+export interface MessageAttachment {
+    name: string;
+    url: string;
+    type: string;
+    size: number;
+}
+
 export interface Message {
     id: string;
     conversation_id?: string | null;
@@ -978,6 +985,7 @@ export interface Message {
     is_read: boolean;
     created_at: string;
     reactions?: MessageReaction[];
+    attachments?: MessageAttachment[];
 }
 
 export interface ConversationWithDetails extends Conversation {
