@@ -6,8 +6,12 @@ import Link from "next/link";
 import { LandingNavbar, LandingFooter } from "@/components/layout";
 import BeforeAfterSlider from "@/components/marketing/BeforeAfterSlider";
 import Features from "@/components/marketing/Features";
+import PricingCards from "@/components/marketing/PricingCards";
 import FAQ from "@/components/marketing/FAQ";
 import { toast } from "sonner";
+// ... (Skipping to the relevant insertion point)
+
+// Later in the file...
 
 
 const notifications = [
@@ -284,6 +288,9 @@ export default function LandingPage() {
         {/* Features Grid */}
         {/* Features Grid - Redesigned */}
         <Features />
+
+        {/* Pricing Cards Section */}
+        <PricingCards />
 
         {/* Philosophy / Dark Section - Redesigned */}
         <section className="py-32 bg-[#0a0c14] relative overflow-hidden">
