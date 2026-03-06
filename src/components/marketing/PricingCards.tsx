@@ -59,7 +59,7 @@ export default function PricingCards() {
     const [isAnnual, setIsAnnual] = useState(false);
 
     return (
-        <section className="relative overflow-x-hidden font-sans text-slate-800 bg-[#f7f8fa] py-20 lg:py-32" id="pricing">
+        <section className="relative overflow-hidden font-sans text-slate-800 bg-[#f7f8fa] py-20 lg:py-32" id="pricing">
             <style dangerouslySetInnerHTML={{
                 __html: `
                 .pricing-glass-card {
