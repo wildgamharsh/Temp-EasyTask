@@ -140,6 +140,9 @@ export function LandingNavbar() {
                         <Link href="/about" className="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">
                             About Us
                         </Link>
+                        <Link href="/pricing" className="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors">
+                            Pricing
+                        </Link>
                     </div>
 
                     {/* CTA */}
@@ -263,6 +266,13 @@ export function LandingNavbar() {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 About Us
+                            </Link>
+                            <Link
+                                href="/pricing"
+                                className="text-sm font-medium text-slate-600 hover:text-brand-600 transition-colors"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                Pricing
                             </Link>
                             <div className="pt-4 border-t border-slate-200 flex flex-col space-y-3">
                                 {user ? (
