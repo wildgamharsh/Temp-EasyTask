@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Auxir SaaS Light Gradient Pricing Page</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2559f4",
+                        "secondary": "#a855f7",
+                        "slate-blue": "#1e293b",
+                        "light-bg-start": "#f0f4ff",
+                        "light-bg-end": "#f5f3ff",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer components {
+            .glass-header {
+                background: rgba(255, 255, 255, 0.6);
+                backdrop-filter: blur(12px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            }
+            .glass-card {
+                background: rgba(255, 255, 255, 0.5);
+                backdrop-filter: blur(16px);
+                border: 1px solid rgba(255, 255, 255, 0.6);
+                box-shadow: 0 10px 30px -10px rgba(37, 89, 244, 0.08);
+                transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+            .glass-card:hover {
+                border-color: rgba(168, 85, 247, 0.3);
+                transform: translateY(-4px);
+                box-shadow: 0 20px 40px -15px rgba(37, 89, 244, 0.15);
+            }
+            .gradient-text {
+                background: linear-gradient(135deg, #2559f4 0%, #a855f7 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .gradient-bg {
+                background: linear-gradient(135deg, #2559f4 0%, #a855f7 100%);
+            }
+            .radial-glow {
+                background: radial-gradient(circle at 50% 50%, rgba(37, 89, 244, 0.1) 0%, transparent 70%);
+            }
+            .body-bg {
+                background: linear-gradient(135deg, #f0f4ff 0%, #f7f1ff 50%, #f5f3ff 100%);
+            }
+        }
+    </style>
+</head>
+
+<body class="body-bg font-display text-slate-blue min-h-screen relative overflow-x-hidden">
+    <div class="fixed top-[-10%] left-[-10%] w-[60%] h-[60%] radial-glow pointer-events-none"></div>
+    <div class="fixed bottom-[-10%] right-[-10%] w-[60%] h-[60%] radial-glow pointer-events-none opacity-60"></div>
+    <header class="glass-header sticky top-0 z-50 px-6 lg:px-20 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="size-8 gradient-bg rounded-lg flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-xl">bolt</span>
+                </div>
+                <h2 class="text-xl font-extrabold tracking-tight text-slate-900">Auxir</h2>
+            </div>
+            <nav class="hidden md:flex items-center gap-10">
+                <a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors"
+                    href="#">Product</a>
+                <a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors"
+                    href="#">Solutions</a>
+                <a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors"
+                    href="#">Resources</a>
+                <a class="text-sm font-semibold text-slate-600 hover:text-primary transition-colors"
+                    href="#">Pricing</a>
+            </nav>
+            <div class="flex items-center gap-4">
+                <button class="text-sm font-semibold text-slate-600 px-4 py-2 hover:text-primary transition-colors">Log
+                    In</button>
+                <button
+                    class="gradient-bg text-white text-sm font-bold px-6 py-2.5 rounded-full shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity">
+                    Start Free Trial
+                </button>
+            </div>
+        </div>
+    </header>
+    <main class="relative z-10 px-6 py-20 lg:py-32">
+        <div class="max-w-4xl mx-auto text-center mb-20">
+            <span
+                class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest mb-6 border border-primary/20">
+                Flexible Plans for Every Scale
+            </span>
+            <h1 class="text-5xl lg:text-7xl font-black mb-8 leading-[1.1] tracking-tight text-slate-900">
+                Scale your business with <span class="gradient-text">Auxir Intelligence</span>
+            </h1>
+            <p class="text-slate-500 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed">
+                Choose the perfect plan for your team's needs. Unlock powerful analytics, seamless integrations, and
+                world-class support.
+            </p>
+        </div>
+        <div class="flex items-center justify-center gap-4 mb-16">
+            <span class="text-sm font-semibold text-slate-500">Monthly</span>
+            <div
+                class="relative w-16 h-8 bg-white/50 rounded-full p-1 cursor-pointer border border-slate-200 shadow-sm shadow-slate-100">
+                <div class="absolute right-1 top-1 size-6 bg-primary rounded-full shadow-md"></div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold text-slate-900">Yearly</span>
+                <span
+                    class="px-2 py-0.5 rounded-md bg-secondary/10 text-secondary text-[10px] font-bold uppercase border border-secondary/20">
+                    20% Off
+                </span>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+            <div class="glass-card rounded-2xl p-8 flex flex-col">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-2 text-slate-900">Basic</h3>
+                    <p class="text-slate-500 text-sm">Perfect for individuals and small startups.</p>
+                </div>
+                <div class="mb-8 flex items-baseline gap-1">
+                    <span class="text-5xl font-black gradient-text">$29</span>
+                    <span class="text-slate-400 font-semibold">/mo</span>
+                </div>
+                <button
+                    class="w-full py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm transition-colors mb-10 border border-slate-200 shadow-sm">
+                    Get Started
+                </button>
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">5 Managed Projects</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Standard Analytics</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Community Access</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">1GB Cloud Storage</span>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="glass-card rounded-2xl p-8 flex flex-col relative ring-2 ring-primary/20 shadow-2xl shadow-primary/5 scale-105 z-20">
+                <div
+                    class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 gradient-bg text-white text-[10px] font-black px-4 py-1 rounded-full uppercase tracking-widest">
+                    Most Popular
+                </div>
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-2 text-slate-900">Professional</h3>
+                    <p class="text-slate-500 text-sm">Best for growing teams needing scale.</p>
+                </div>
+                <div class="mb-8 flex items-baseline gap-1">
+                    <span class="text-5xl font-black gradient-text">$79</span>
+                    <span class="text-slate-400 font-semibold">/mo</span>
+                </div>
+                <button
+                    class="w-full py-3 rounded-xl gradient-bg text-white font-bold text-sm transition-opacity hover:opacity-90 mb-10 shadow-lg shadow-primary/25">
+                    Try Professional
+                </button>
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-700 font-bold">Unlimited Projects</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-700 font-bold">Advanced AI Insights</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Priority 24/7 Support</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">10GB Cloud Storage</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Custom Domain Integration</span>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-8 flex flex-col">
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-2 text-slate-900">Enterprise</h3>
+                    <p class="text-slate-500 text-sm">Advanced security and control for orgs.</p>
+                </div>
+                <div class="mb-8 flex items-baseline gap-1">
+                    <span class="text-5xl font-black gradient-text">$149</span>
+                    <span class="text-slate-400 font-semibold">/mo</span>
+                </div>
+                <button
+                    class="w-full py-3 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm transition-colors mb-10 border border-slate-200 shadow-sm">
+                    Contact Sales
+                </button>
+                <div class="space-y-4 flex-grow">
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600 font-semibold italic">Everything in Pro</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Dedicated Account Manager</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Unlimited Data Storage</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">SSO &amp; Advanced Security</span>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-secondary text-lg">check_circle</span>
+                        <span class="text-sm text-slate-600">Custom API Rate Limits</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-24 text-center">
+            <p class="text-slate-500 mb-6 font-medium">Need a custom solution for your high-growth company?</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a class="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all" href="#">
+                    View detailed feature comparison
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+                <span class="hidden sm:block text-slate-300 px-4">|</span>
+                <a class="inline-flex items-center gap-2 text-slate-600 font-bold hover:text-primary transition-colors"
+                    href="#">
+                    Talk to an expert
+                    <span class="material-symbols-outlined text-sm">chat_bubble</span>
+                </a>
+            </div>
+        </div>
+    </main>
+    <footer class="border-t border-slate-200 py-12 px-6 lg:px-20 mt-20 relative z-10 bg-white/30 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <div class="size-6 gradient-bg rounded flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-sm">bolt</span>
+                </div>
+                <span class="font-bold text-slate-900">Auxir</span>
+            </div>
+            <div class="flex gap-8 text-xs text-slate-500 font-semibold">
+                <a class="hover:text-primary transition-colors" href="#">Terms of Service</a>
+                <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+                <a class="hover:text-primary transition-colors" href="#">Cookie Settings</a>
+                <a class="hover:text-primary transition-colors" href="#">GDPR Compliance</a>
+            </div>
+            <div class="flex gap-4">
+                <a class="size-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-primary hover:border-primary/30 transition-all shadow-sm"
+                    href="#">
+                    <span class="material-symbols-outlined text-lg">language</span>
+                </a>
+                <a class="size-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-primary hover:border-primary/30 transition-all shadow-sm"
+                    href="#">
+                    <span class="material-symbols-outlined text-lg">public</span>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto text-center mt-8 text-[10px] text-slate-400 uppercase tracking-widest font-bold">
+            © 2024 Auxir Intelligence Inc. All rights reserved.
+        </div>
+    </footer>
+
+</body>
+
+</html>
